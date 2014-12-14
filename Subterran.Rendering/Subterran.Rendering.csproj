@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CA6493F3-A13C-4DFF-B31D-E2D96148211F}</ProjectGuid>
+    <ProjectGuid>{1E0B810E-F186-4A59-BC48-11E1BB71B069}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Subterran</RootNamespace>
-    <AssemblyName>Subterran</AssemblyName>
+    <RootNamespace>Subterran.Rendering</RootNamespace>
+    <AssemblyName>Subterran.Rendering</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,10 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StInstance.cs" />
-    <Compile Include="Loop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="StMath.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Subterran\Subterran.csproj">
+      <Project>{ca6493f3-a13c-4dff-b31d-e2d96148211f}</Project>
+      <Name>Subterran</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
