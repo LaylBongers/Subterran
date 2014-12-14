@@ -68,7 +68,7 @@ namespace Subterran
 
 			public Loop PerSecond()
 			{
-				return _loop.WithDeltaOf(TimeSpan.FromSeconds(1.0 / _amount));
+				return _loop.WithDeltaOf(TimeSpan.FromSeconds(1.0/_amount));
 			}
 		}
 

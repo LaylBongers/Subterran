@@ -1,4 +1,5 @@
-﻿using Subterran;
+﻿using System;
+using Subterran;
 
 namespace TropicalIsland
 {
@@ -13,12 +14,11 @@ namespace TropicalIsland
 		{
 			var data = new GameData();
 
-			instance
-				.AddLoop(Loop
-					.ThatCalls(() => Update(data))
-					.WithRateOf(120).PerSecond())
-				.AddLoop(Loop
-					.ThatCalls(() => Render(data)));
+			instance.Loops.Add(Loop
+				.ThatCalls(() => Update(data))
+				.WithRateOf(120).PerSecond());
+			instance.Loops.Add(Loop
+				.ThatCalls(() => Render(data)));
 
 			instance.Uninitialize += (s, e) => Uninitialize();
 		}
@@ -29,10 +29,12 @@ namespace TropicalIsland
 
 		private static void Update(GameData data)
 		{
+			Console.WriteLine("Update");
 		}
 
 		private static void Render(GameData data)
 		{
+			Console.WriteLine("Render");
 		}
 
 		private class GameData

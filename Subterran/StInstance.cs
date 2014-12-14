@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading;
@@ -8,7 +9,6 @@ namespace Subterran
 {
 	public sealed class StInstance
 	{
-		private readonly List<Loop> _loops;
 		private readonly Thread _thread;
 		private bool _keepRunning = true;
 
@@ -18,7 +18,7 @@ namespace Subterran
 		/// <param name="initializer">Is called before starting the loops.</param>
 		public StInstance(Action<StInstance> initializer)
 		{
-			_loops = new List<Loop>();
+			Loops = new Collection<Loop>();
 
 			_thread = new Thread(() => Run(initializer)) {Name = "Subterran Thread"};
 			_thread.Start();
@@ -28,6 +28,8 @@ namespace Subterran
 		///     Gets if the instance is currently running.
 		/// </summary>
 		public bool IsRunning { get; private set; }
+
+		public Collection<Loop> Loops { get; set; }
 
 		/// <summary>
 		///     Triggers after existing the main instance loop.
@@ -44,7 +46,7 @@ namespace Subterran
 			while (_keepRunning)
 			{
 				// Sanity check to make sure we're not just running 100% CPU with no loops
-				if (!_loops.Any())
+				if (!Loops.Any())
 				{
 					throw new InvalidOperationException("Cannot run instance main loop with no loops attached.");
 				}
@@ -54,7 +56,7 @@ namespace Subterran
 				stopwatch.Restart();
 
 				// Notify all loops of the time passed
-				foreach (var loop in _loops)
+				foreach (var loop in Loops)
 				{
 					loop.ExecuteTicks(elapsed);
 				}
@@ -79,15 +81,5 @@ namespace Subterran
 		{
 			_thread.Join();
 		}
-
-		#region Fluent Interface
-
-		public StInstance AddLoop(Loop loop)
-		{
-			_loops.Add(loop);
-			return this;
-		}
-
-		#endregion
 	}
 }
