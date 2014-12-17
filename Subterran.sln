@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Rendering", "Subt
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Tests", "Subterran.Tests\Subterran.Tests.csproj", "{B8D8CA19-31B6-43BE-8016-0E8508F78105}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Basic", "Subterran.Basic\Subterran.Basic.csproj", "{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,6 +37,10 @@ Global
 		{B8D8CA19-31B6-43BE-8016-0E8508F78105}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8D8CA19-31B6-43BE-8016-0E8508F78105}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B8D8CA19-31B6-43BE-8016-0E8508F78105}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

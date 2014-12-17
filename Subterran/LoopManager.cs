@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
@@ -7,21 +6,16 @@ using System.Threading;
 
 namespace Subterran
 {
-	public sealed class StInstance
+	public sealed class LoopManager
 	{
-		private readonly Thread _thread;
 		private bool _keepRunning = true;
 
 		/// <summary>
 		///     Creates and starts a new instance of the Subterran engine.
 		/// </summary>
-		/// <param name="initializer">Is called before starting the loops.</param>
-		public StInstance(Action<StInstance> initializer)
+		public LoopManager()
 		{
 			Loops = new Collection<Loop>();
-
-			_thread = new Thread(() => Run(initializer)) {Name = "Subterran Thread"};
-			_thread.Start();
 		}
 
 		/// <summary>
@@ -31,16 +25,8 @@ namespace Subterran
 
 		public Collection<Loop> Loops { get; set; }
 
-		/// <summary>
-		///     Triggers after existing the main instance loop.
-		/// </summary>
-		public event EventHandler Uninitialize = (s, e) => { };
-
-		private void Run(Action<StInstance> initializer)
+		public void Run()
 		{
-			// Initialize our instance
-			initializer(this);
-
 			// Run our main instance loop
 			var stopwatch = new Stopwatch();
 			while (_keepRunning)
@@ -68,18 +54,11 @@ namespace Subterran
 					Thread.Sleep(0);
 				}
 			}
-
-			Uninitialize(this, EventArgs.Empty);
 		}
 
 		public void Stop()
 		{
 			_keepRunning = false;
-		}
-
-		public void WaitForStopped()
-		{
-			_thread.Join();
 		}
 	}
 }

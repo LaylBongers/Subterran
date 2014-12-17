@@ -1,44 +1,28 @@
-﻿using System;
-using Subterran;
+﻿using System.Diagnostics;
+using Subterran.Basic;
 
 namespace TropicalIsland
 {
-	internal static class TropicalIsland
+	internal sealed class TropicalIsland : BasicSubterranGame
 	{
-		public static StInstance CreateGame()
+		public TropicalIsland()
 		{
-			return new StInstance(Initialize);
+			Trace.TraceInformation("Initialize()");
 		}
 
-		private static void Initialize(StInstance instance)
+		protected override void Uninitialize()
 		{
-			var data = new GameData();
-
-			instance.Loops.Add(Loop
-				.ThatCalls(() => Update(data))
-				.WithRateOf(120).PerSecond());
-			instance.Loops.Add(Loop
-				.ThatCalls(() => Render(data)));
-
-			instance.Uninitialize += (s, e) => Uninitialize();
+			Trace.TraceInformation("Uninitialize()");
 		}
 
-		private static void Uninitialize()
+		protected override void Update()
 		{
+			Trace.TraceInformation("Update()");
 		}
 
-		private static void Update(GameData data)
+		protected override void Render()
 		{
-			Console.WriteLine("Update");
-		}
-
-		private static void Render(GameData data)
-		{
-			Console.WriteLine("Render");
-		}
-
-		private class GameData
-		{
+			Trace.TraceInformation("Render()");
 		}
 	}
 }

@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace Subterran
 {
-	public sealed class Loop
+	public sealed class Loop : ICloneable
 	{
 		private TimeSpan _accumulator;
 		private Action _callback;
@@ -11,6 +11,13 @@ namespace Subterran
 
 		private Loop()
 		{
+		}
+
+		public object Clone()
+		{
+			var loop = (Loop) MemberwiseClone();
+			// Perform any sub-object cloning here
+			return loop;
 		}
 
 		public void ExecuteTicks(TimeSpan elapsed)
@@ -42,8 +49,7 @@ namespace Subterran
 		[Pure]
 		public static Loop ThatCalls(Action action)
 		{
-			var loop = new Loop {_callback = action};
-			return loop;
+			return new Loop {_callback = action};
 		}
 
 		[Pure]
@@ -55,7 +61,7 @@ namespace Subterran
 		[Pure]
 		public Loop WithDeltaOf(TimeSpan amount)
 		{
-			var loop = (Loop) MemberwiseClone();
+			var loop = (Loop) Clone();
 			loop._targetDelta = amount;
 			return loop;
 		}
