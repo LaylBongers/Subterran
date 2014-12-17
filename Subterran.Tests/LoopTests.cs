@@ -14,7 +14,7 @@ namespace Subterran.Tests
 			var loop = Loop.ThatCalls(func);
 
 			// Act
-			loop.WithDeltaOf(TimeSpan.FromSeconds(1));
+			loop = loop.WithDeltaOf(TimeSpan.FromSeconds(0.9999));
 
 			// Assert
 			loop.ExecuteTicks(TimeSpan.FromSeconds(1));
@@ -29,7 +29,7 @@ namespace Subterran.Tests
 			var loop = Loop.ThatCalls(func);
 
 			// Act
-			loop.WithDeltaOf(TimeSpan.FromSeconds(0.5));
+			loop = loop.WithDeltaOf(TimeSpan.FromSeconds(0.4999));
 
 			// Assert
 			loop.ExecuteTicks(TimeSpan.FromSeconds(1));
@@ -58,7 +58,7 @@ namespace Subterran.Tests
 			var loop = Loop.ThatCalls(func);
 
 			// Act
-			loop.WithRateOf(2).PerSecond();
+			loop = loop.WithRateOf(2).PerSecond();
 
 			// Assert
 			loop.ExecuteTicks(TimeSpan.FromSeconds(1));

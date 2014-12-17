@@ -1,4 +1,5 @@
 ﻿using System;
+using JetBrains.Annotations;
 
 namespace Subterran
 {
@@ -38,21 +39,25 @@ namespace Subterran
 
 		#region Fluent Interface
 
+		[Pure]
 		public static Loop ThatCalls(Action action)
 		{
 			var loop = new Loop {_callback = action};
 			return loop;
 		}
 
+		[Pure]
 		public WithRateOfInterface WithRateOf(int amount)
 		{
 			return new WithRateOfInterface(this, amount);
 		}
 
+		[Pure]
 		public Loop WithDeltaOf(TimeSpan amount)
 		{
-			_targetDelta = amount;
-			return this;
+			var loop = (Loop) MemberwiseClone();
+			loop._targetDelta = amount;
+			return loop;
 		}
 
 		public class WithRateOfInterface
@@ -66,6 +71,7 @@ namespace Subterran
 				_amount = amount;
 			}
 
+			[Pure]
 			public Loop PerSecond()
 			{
 				return _loop.WithDeltaOf(TimeSpan.FromSeconds(1.0/_amount));
