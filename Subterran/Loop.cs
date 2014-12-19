@@ -3,7 +3,7 @@ using JetBrains.Annotations;
 
 namespace Subterran
 {
-	public sealed class Loop : ICloneable
+	public sealed class Loop
 	{
 		private TimeSpan _accumulator;
 		private Action _callback;
@@ -12,14 +12,7 @@ namespace Subterran
 		private Loop()
 		{
 		}
-
-		public object Clone()
-		{
-			var loop = (Loop) MemberwiseClone();
-			// Perform any sub-object cloning here
-			return loop;
-		}
-
+		
 		public void ExecuteTicks(TimeSpan elapsed)
 		{
 			// If we don't have a target delta we execute once
@@ -46,10 +39,9 @@ namespace Subterran
 
 		#region Fluent Interface
 
-		[Pure]
 		public static Loop ThatCalls(Action action)
 		{
-			return new Loop {_callback = action};
+			return new Loop { _callback = action };
 		}
 
 		[Pure]
@@ -58,12 +50,10 @@ namespace Subterran
 			return new WithRateOfInterface(this, amount);
 		}
 
-		[Pure]
 		public Loop WithDeltaOf(TimeSpan amount)
 		{
-			var loop = (Loop) Clone();
-			loop._targetDelta = amount;
-			return loop;
+			_targetDelta = amount;
+			return this;
 		}
 
 		public class WithRateOfInterface
@@ -77,7 +67,6 @@ namespace Subterran
 				_amount = amount;
 			}
 
-			[Pure]
 			public Loop PerSecond()
 			{
 				return _loop.WithDeltaOf(TimeSpan.FromSeconds(1.0/_amount));

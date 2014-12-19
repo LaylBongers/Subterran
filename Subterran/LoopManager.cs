@@ -41,11 +41,8 @@ namespace Subterran
 				var elapsed = stopwatch.Elapsed;
 				stopwatch.Restart();
 
-				// Notify all loops of the time passed
-				foreach (var loop in Loops)
-				{
-					loop.ExecuteTicks(elapsed);
-				}
+				// Run the actual tick with the data we've measured
+				RunTick(elapsed);
 
 				// Use yield to give the rest of our thread's time to another thread
 				if (!Thread.Yield())
@@ -53,6 +50,19 @@ namespace Subterran
 					// We couldn't yield, sleep a bit instead
 					Thread.Sleep(0);
 				}
+			}
+		}
+
+		private void RunTick(TimeSpan elapsed)
+		{
+			// Notify all loops of the time passed
+			foreach (var loop in Loops)
+			{
+				// If we have been told to stop in another frame, we need to do so
+				if (!_keepRunning)
+					return;
+
+				loop.ExecuteTicks(elapsed);
 			}
 		}
 

@@ -1,10 +1,12 @@
-﻿namespace Subterran.Basic
+﻿using Subterran.Rendering;
+
+namespace Subterran.Basic
 {
 	public abstract class BasicSubterranGame : Disposable
 	{
 		private readonly LoopManager _loopManager = new LoopManager();
 
-		protected BasicSubterranGame()
+		protected BasicSubterranGame(string name)
 		{
 			// Set up our game loops
 			_loopManager = new LoopManager();
@@ -13,7 +15,16 @@
 				.WithRateOf(120).PerSecond());
 			_loopManager.Loops.Add(Loop
 				.ThatCalls(Render));
+
+			// Set up our window and renderer
+			Window = Window.WithSize(1280, 720).WithTitle(name);
+			Window.Closing += (s, e) => _loopManager.Stop();
+			Renderer = Renderer.For(Window);
 		}
+
+		protected Window Window { get; set; }
+
+		protected Renderer Renderer { get; set; }
 
 		public void Run()
 		{
@@ -28,10 +39,17 @@
 			}
 		}
 
-		protected abstract void Uninitialize();
+		protected virtual void Uninitialize()
+		{
+		}
 
-		protected abstract void Update();
+		protected virtual void Update()
+		{
+			Window.ProcessEvents();
+		}
 
-		protected abstract void Render();
+		protected virtual void Render()
+		{
+		}
 	}
 }

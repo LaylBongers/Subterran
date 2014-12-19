@@ -5,7 +5,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
     <ProjectGuid>{A0321BEB-1149-4096-A88B-6AD8AE1FF361}</ProjectGuid>
-    <OutputType>Exe</OutputType>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>TropicalIsland</RootNamespace>
     <AssemblyName>TropicalIsland</AssemblyName>
@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -52,6 +55,10 @@
     <ProjectReference Include="..\..\Subterran.Basic\Subterran.Basic.csproj">
       <Project>{fd41c4ed-9387-48d1-bf6f-bb1347dfa10c}</Project>
       <Name>Subterran.Basic</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Subterran.Rendering\Subterran.Rendering.csproj">
+      <Project>{1E0B810E-F186-4A59-BC48-11E1BB71B069}</Project>
+      <Name>Subterran.Rendering</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Subterran\Subterran.csproj">
       <Project>{ca6493f3-a13c-4dff-b31d-e2d96148211f}</Project>
