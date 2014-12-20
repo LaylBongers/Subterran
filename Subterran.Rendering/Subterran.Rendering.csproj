@@ -51,6 +51,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="Window.cs" />
+    <Compile Include="WorldVectorsExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Subterran\Subterran.csproj">

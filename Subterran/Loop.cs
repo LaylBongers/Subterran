@@ -6,7 +6,7 @@ namespace Subterran
 	public sealed class Loop
 	{
 		private TimeSpan _accumulator;
-		private Action _callback;
+		private Action<TimeSpan> _callback;
 		private TimeSpan _targetDelta;
 
 		private Loop()
@@ -18,7 +18,7 @@ namespace Subterran
 			// If we don't have a target delta we execute once
 			if (_targetDelta == TimeSpan.Zero)
 			{
-				_callback();
+				_callback(elapsed);
 				return;
 			}
 
@@ -33,13 +33,13 @@ namespace Subterran
 				_accumulator -= _targetDelta;
 
 				// Run our actual tick
-				_callback();
+				_callback(_targetDelta);
 			}
 		}
 
 		#region Fluent Interface
 
-		public static Loop ThatCalls(Action action)
+		public static Loop ThatCalls(Action<TimeSpan> action)
 		{
 			return new Loop { _callback = action };
 		}

@@ -11,7 +11,7 @@ namespace Subterran.Tests
 		{
 			// Arrange
 			var func = Substitute.For<Action>();
-			var loop = Loop.ThatCalls(func);
+			var loop = Loop.ThatCalls(_ => func());
 
 			// Act
 			loop = loop.WithDeltaOf(TimeSpan.FromSeconds(0.9999));
@@ -26,7 +26,7 @@ namespace Subterran.Tests
 		{
 			// Arrange
 			var func = Substitute.For<Action>();
-			var loop = Loop.ThatCalls(func);
+			var loop = Loop.ThatCalls(_ => func());
 
 			// Act
 			loop = loop.WithDeltaOf(TimeSpan.FromSeconds(0.4999));
@@ -41,7 +41,7 @@ namespace Subterran.Tests
 		{
 			// Arrange
 			var func = Substitute.For<Action>();
-			var loop = Loop.ThatCalls(func);
+			var loop = Loop.ThatCalls(_ => func());
 
 			// Act
 			loop.ExecuteTicks(TimeSpan.FromSeconds(1));
@@ -55,7 +55,7 @@ namespace Subterran.Tests
 		{
 			// Arrange
 			var func = Substitute.For<Action>();
-			var loop = Loop.ThatCalls(func);
+			var loop = Loop.ThatCalls(_ => func());
 
 			// Act
 			loop = loop.WithRateOf(2).PerSecond();

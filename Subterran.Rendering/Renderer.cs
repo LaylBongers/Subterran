@@ -43,30 +43,41 @@ namespace Subterran.Rendering
 		private static RenderData CollapseEntityTree(Entity entity)
 		{
 			var data = new RenderData();
-			CollapseEntityTreeTo(entity, data);
+			CollapseEntityTreeTo(entity, data, Matrix4.Identity);
 			return data;
 		}
 
-		private static void CollapseEntityTreeTo(Entity entity, RenderData data)
+		private static void CollapseEntityTreeTo(Entity entity, RenderData data, Matrix4 modelMatrix)
 		{
-			// TODO: Actually get the mesh from the current entity if it exists
+			// Multiply the model matrix to a new one
+			var rotation = entity.Transform.Rotation;
+			var entityMatrix =
+				Matrix4.CreateRotationX(rotation.X)*
+				Matrix4.CreateRotationY(rotation.Y)*
+				Matrix4.CreateRotationZ(rotation.Z)*
+				Matrix4.CreateTranslation(entity.Transform.Position.ToVector3());
+			modelMatrix = modelMatrix*entityMatrix;
+
 			data.Renderables.AddRange(entity
 				.GetComponents<IRenderable>()
 				.Select(c => new RenderableData
 				{
-					Matrix = Matrix4.Identity,
+					Matrix = modelMatrix,
 					Renderable = c
 				}));
 
 			foreach (var child in entity.Children)
 			{
-				CollapseEntityTreeTo(child, data);
+				CollapseEntityTreeTo(child, data, modelMatrix);
 			}
 		}
 
-		public void RenderMesh(Matrix4 modelMatrix)
+		public void RenderMesh(ref Matrix4 modelMatrix)
 		{
 			// TODO: Actually make this do stuff other than render a triangle at 0,0,0 for every mesh
+
+			GL.MatrixMode(MatrixMode.Modelview);
+			GL.LoadMatrix(ref modelMatrix);
 
 			GL.Begin(PrimitiveType.Triangles);
 

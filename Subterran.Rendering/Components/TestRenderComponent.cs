@@ -6,7 +6,7 @@ namespace Subterran.Rendering.Components
 	{
 		public void Render(Renderer renderer, Matrix4 modelMatrix)
 		{
-			renderer.RenderMesh(modelMatrix);
+			renderer.RenderMesh(ref modelMatrix);
 		}
 	}
 }

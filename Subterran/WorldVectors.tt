@@ -1,0 +1,24 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System" #>
+<#@ include file="Vectors.ttinclude" #>
+namespace Subterran
+{
+<#
+	Vector3Struct("WorldPosition", "float", new []
+	{
+		"WorldDistance",
+		"WorldSize"
+	});
+	Vector3Struct("WorldDistance", "float", new []
+	{
+		"WorldDistance"
+	});
+	Vector3Struct("WorldSize", "float", new []
+	{
+		"WorldSize"
+	});
+
+	Vector3Struct("WorldRotation", "float", new string[0]);
+#>
+}

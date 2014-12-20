@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using Subterran.Rendering;
 
 namespace Subterran.Basic
@@ -15,7 +16,7 @@ namespace Subterran.Basic
 				.ThatCalls(Update)
 				.WithRateOf(120).PerSecond());
 			_loopManager.Loops.Add(Loop
-				.ThatCalls(Render));
+				.ThatCalls(_ => Render()));
 
 			// Set up our window and renderer
 			Window = new Window(new ScreenSize(1280, 720)) {Title = name};
@@ -41,7 +42,7 @@ namespace Subterran.Basic
 		{
 		}
 
-		protected virtual void Update()
+		protected virtual void Update(TimeSpan elapsed)
 		{
 			Window.ProcessEvents();
 		}
