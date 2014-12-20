@@ -1,0 +1,22 @@
+﻿<#@ template debug="true" hostSpecific="true" #>
+<#@ output extension=".cs" #>
+<#@ import namespace="System" #>
+<#@ include file="Vectors.ttinclude" #>
+namespace Subterran
+{
+<#
+	Vector2Struct("ScreenPosition", "int", new []
+	{
+		"ScreenDistance",
+		"ScreenSize"
+	});
+	Vector2Struct("ScreenDistance", "int", new []
+	{
+		"ScreenDistance"
+	});
+	Vector2Struct("ScreenSize", "int", new []
+	{
+		"ScreenSize"
+	});
+#>
+}

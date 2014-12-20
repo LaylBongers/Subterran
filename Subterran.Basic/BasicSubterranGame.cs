@@ -18,10 +18,15 @@ namespace Subterran.Basic
 				.ThatCalls(Render));
 
 			// Set up our window and renderer
-			Window = new Window(1280, 720) {Title = name};
+			Window = new Window(new ScreenSize(1280, 720)) {Title = name};
 			Window.Closing += (s, e) => _loopManager.Stop();
 			Renderer = new Renderer(Window);
+
+			// Set up the game world
+			World = new Entity();
 		}
+
+		protected Entity World { get; set; }
 
 		protected Window Window { get; set; }
 
@@ -45,7 +50,7 @@ namespace Subterran.Basic
 		{
 			Renderer.Clear(Color.CornflowerBlue);
 
-			Renderer.RenderTest();
+			Renderer.RenderWorld(World);
 
 			Window.SwapBuffers();
 		}

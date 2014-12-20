@@ -1,5 +1,6 @@
-﻿using System.Diagnostics;
+﻿using Subterran;
 using Subterran.Basic;
+using Subterran.Rendering.Components;
 
 namespace TropicalIsland
 {
@@ -8,14 +9,20 @@ namespace TropicalIsland
 		public TropicalIsland()
 			: base("Tropical Island")
 		{
-			Trace.TraceInformation("Initializing...");
+			World.Children.Add(new Entity
+			{
+				Components =
+				{
+					new TestRenderComponent()
+				}
+			});
 		}
 
 		protected override void Dispose(bool managed)
 		{
 			if (managed)
 			{
-				Trace.TraceInformation("Disposing...");
+				// Dispose stuff here
 			}
 
 			base.Dispose(managed);

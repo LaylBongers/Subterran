@@ -1,0 +1,33 @@
+﻿<#@ IntelliSenseLanguage processor="tangibleT4Editor" language="C#" #>
+<#+
+void Vector2Struct(string name, string type, string[] allowedAdditions)
+{#>
+	public struct <#= name #>
+	{
+		private readonly <#= type #> _x;
+		private readonly <#= type #> _y;
+
+		public <#= name #>(<#= type #> x, <#= type #> y)
+		{
+			_x = x;
+			_y = y;
+		}
+
+		public <#= type #> X { get { return _x; } }
+		public <#= type #> Y { get { return _y; } }
+
+<#+	
+	foreach (var addition in allowedAdditions)
+	{
+#>
+		public static <#= name #> operator +(<#= name #> left, <#= addition #> right)
+		{
+			return new <#= name #>(left.X + right.X, left.Y + right.Y);
+		}
+<#+
+	}
+#>
+	}
+<#+
+}
+#>
