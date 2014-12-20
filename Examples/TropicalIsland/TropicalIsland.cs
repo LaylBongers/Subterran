@@ -6,32 +6,19 @@ namespace TropicalIsland
 	internal sealed class TropicalIsland : BasicSubterranGame
 	{
 		public TropicalIsland()
-			:base("Tropical Island")
+			: base("Tropical Island")
 		{
-			Trace.TraceInformation("Initialize()");
+			Trace.TraceInformation("Initializing...");
 		}
 
-		protected override void Uninitialize()
+		protected override void Dispose(bool managed)
 		{
-			Trace.TraceInformation("Uninitialize()");
+			if (managed)
+			{
+				Trace.TraceInformation("Disposing...");
+			}
 
-			base.Uninitialize();
-		}
-
-		protected override void Update()
-		{
-			base.Update();
-
-			// Update stuff here
-		}
-
-		protected override void Render()
-		{
-			base.Render();
-
-			Renderer.RenderTest();
-
-			Window.SwapBuffers();
+			base.Dispose(managed);
 		}
 	}
 }

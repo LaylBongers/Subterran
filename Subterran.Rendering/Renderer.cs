@@ -1,18 +1,21 @@
-﻿using OpenTK.Graphics.OpenGL;
+﻿using System.Drawing;
+using OpenTK.Graphics.OpenGL;
 
 namespace Subterran.Rendering
 {
 	public class Renderer
 	{
-		private readonly Window _window;
+		private readonly Window _targetWindow;
 
-		private Renderer(Window window)
+		public Renderer(Window targetWindow)
 		{
-			_window = window;
+			_targetWindow = targetWindow;
 		}
 
 		public void RenderTest()
 		{
+			_targetWindow.MakeCurrent();
+
 			// TODO: Make this OpenGL4
 			GL.Begin(PrimitiveType.Triangles);
 
@@ -23,9 +26,10 @@ namespace Subterran.Rendering
 			GL.End();
 		}
 
-		public static Renderer For(Window window)
+		public void Clear(Color color)
 		{
-			return new Renderer(window);
+			GL.ClearColor(color);
+			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 		}
 	}
 }

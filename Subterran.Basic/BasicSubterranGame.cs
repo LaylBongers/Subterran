@@ -1,4 +1,5 @@
-﻿using Subterran.Rendering;
+﻿using System.Drawing;
+using Subterran.Rendering;
 
 namespace Subterran.Basic
 {
@@ -17,9 +18,9 @@ namespace Subterran.Basic
 				.ThatCalls(Render));
 
 			// Set up our window and renderer
-			Window = Window.WithSize(1280, 720).WithTitle(name);
+			Window = new Window(1280, 720) {Title = name};
 			Window.Closing += (s, e) => _loopManager.Stop();
-			Renderer = Renderer.For(Window);
+			Renderer = new Renderer(Window);
 		}
 
 		protected Window Window { get; set; }
@@ -33,14 +34,6 @@ namespace Subterran.Basic
 
 		protected override void Dispose(bool managed)
 		{
-			if (managed)
-			{
-				Uninitialize();
-			}
-		}
-
-		protected virtual void Uninitialize()
-		{
 		}
 
 		protected virtual void Update()
@@ -50,6 +43,11 @@ namespace Subterran.Basic
 
 		protected virtual void Render()
 		{
+			Renderer.Clear(Color.CornflowerBlue);
+
+			Renderer.RenderTest();
+
+			Window.SwapBuffers();
 		}
 	}
 }
