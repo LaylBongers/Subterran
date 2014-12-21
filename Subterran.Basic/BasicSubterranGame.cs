@@ -15,7 +15,7 @@ namespace Subterran.Basic
 		{
 			// Set up our game loops
 			_loopManager = new LoopManager();
-			_loopManager.Loops.Add(new Loop(Update, 520));
+			_loopManager.Loops.Add(new Loop(Update, 120));
 			_loopManager.Loops.Add(new Loop(_ => Render()));
 
 			// Set up our window and renderer
