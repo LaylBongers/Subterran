@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using JetBrains.Annotations;
@@ -30,6 +31,19 @@ namespace Subterran
 		public IEnumerable<T> GetComponents<T>()
 		{
 			return Components.OfType<T>();
+		}
+
+		public void Update(TimeSpan elapsed)
+		{
+			foreach (var component in Components)
+			{
+				component.Update(this, elapsed);
+			}
+
+			foreach (var child in Children)
+			{
+				child.Update(elapsed);
+			}
 		}
 	}
 }

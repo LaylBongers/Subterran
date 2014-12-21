@@ -4,7 +4,7 @@
 	{
 		private static void Main()
 		{
-			using (var application = new TropicalIsland())
+			using (var application = TropicalIsland.Create())
 			{
 				application.Run();
 			}

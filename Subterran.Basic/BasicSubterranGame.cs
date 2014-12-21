@@ -6,12 +6,12 @@ using Subterran.Rendering;
 
 namespace Subterran.Basic
 {
-	public abstract class BasicSubterranGame : Disposable
+	public sealed class BasicSubterranGame : Disposable
 	{
 		private readonly LoopManager _loopManager = new LoopManager();
 		private TimeSpan _slownessTimer;
 
-		protected BasicSubterranGame(string name)
+		public BasicSubterranGame(string name)
 		{
 			// Set up our game loops
 			_loopManager = new LoopManager();
@@ -27,11 +27,11 @@ namespace Subterran.Basic
 			World = new Entity();
 		}
 
-		protected Entity World { get; set; }
+		public Entity World { get; set; }
 
-		protected Window Window { get; set; }
+		public Window Window { get; set; }
 
-		protected Renderer Renderer { get; set; }
+		public Renderer Renderer { get; set; }
 
 		public void Run()
 		{
@@ -42,7 +42,7 @@ namespace Subterran.Basic
 		{
 		}
 
-		protected virtual void Update(TimeSpan elapsed)
+		private void Update(TimeSpan elapsed)
 		{
 			Window.ProcessEvents();
 
@@ -53,11 +53,14 @@ namespace Subterran.Basic
 				_slownessTimer = TimeSpan.FromSeconds(5);
 			}
 
-			// Make sure the timer for the previous warning resets
+			// Reduce the timer if it's above TimeSpan.Zero
 			_slownessTimer = StMath.Max(_slownessTimer - elapsed, TimeSpan.Zero);
+
+			// Update the entire world
+			World.Update(elapsed);
 		}
 
-		protected virtual void Render()
+		private void Render()
 		{
 			Renderer.Clear(Color.CornflowerBlue);
 
