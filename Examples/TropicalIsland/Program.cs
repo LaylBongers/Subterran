@@ -1,6 +1,4 @@
-﻿using System.Threading;
-
-namespace TropicalIsland
+﻿namespace TropicalIsland
 {
 	internal static class Program
 	{

@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 using Subterran.Rendering;
 
 namespace Subterran.Basic
@@ -7,16 +9,14 @@ namespace Subterran.Basic
 	public abstract class BasicSubterranGame : Disposable
 	{
 		private readonly LoopManager _loopManager = new LoopManager();
+		private TimeSpan _slownessTimer;
 
 		protected BasicSubterranGame(string name)
 		{
 			// Set up our game loops
 			_loopManager = new LoopManager();
-			_loopManager.Loops.Add(Loop
-				.ThatCalls(Update)
-				.WithRateOf(120).PerSecond());
-			_loopManager.Loops.Add(Loop
-				.ThatCalls(_ => Render()));
+			_loopManager.Loops.Add(new Loop(Update, 520));
+			_loopManager.Loops.Add(new Loop(_ => Render()));
 
 			// Set up our window and renderer
 			Window = new Window(new ScreenSize(1280, 720)) {Title = name};
@@ -45,6 +45,16 @@ namespace Subterran.Basic
 		protected virtual void Update(TimeSpan elapsed)
 		{
 			Window.ProcessEvents();
+
+			// Make sure the developer knows if we're running slow
+			if (_loopManager.Loops.Any(l => l.RunningSlow) && _slownessTimer == TimeSpan.Zero)
+			{
+				Trace.TraceInformation("A loop is running slow!");
+				_slownessTimer = TimeSpan.FromSeconds(5);
+			}
+
+			// Make sure the timer for the previous warning resets
+			_slownessTimer = StMath.Max(_slownessTimer - elapsed, TimeSpan.Zero);
 		}
 
 		protected virtual void Render()
