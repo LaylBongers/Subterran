@@ -1,9 +1,20 @@
 configuration: Release
 
-# restore NuGet packages before running MSBuild
+# Restore NuGet packages before running MSBuild
 before_build:
   - nuget restore
 
-# package Web Application project for Web Deploy
 build:
   verbosity: minimal
+
+artifacts:
+  - path: .\*.nupkg
+
+# Deploy the build to NuGet
+deploy:
+  provider: NuGet
+  api_key:
+    secure: dkYApyftz6PXyNgyXm+BUvctSdOu2LuuendpqDRCJpi6g5t8xVDXVmaTJRHOdvJX
+  skip_symbols: false
+  artifact: /.*\.nupkg/
+  
