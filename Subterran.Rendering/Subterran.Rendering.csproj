@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Components\CameraComponent.cs" />
     <Compile Include="Components\TestRenderComponent.cs" />
     <Compile Include="IRenderable.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
