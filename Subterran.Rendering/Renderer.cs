@@ -74,7 +74,7 @@ namespace Subterran.Rendering
 
 		public void RenderMesh(ref Matrix4 modelMatrix)
 		{
-			// TODO: Actually make this do stuff other than render a triangle at 0,0,0 for every mesh
+			// TODO: Actually make this do stuff other than render a triangle for every mesh
 
 			GL.MatrixMode(MatrixMode.Modelview);
 			GL.LoadMatrix(ref modelMatrix);

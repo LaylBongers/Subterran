@@ -16,7 +16,7 @@ namespace Subterran.Basic
 			// Set up our game loops
 			_loopManager = new LoopManager();
 			_loopManager.Loops.Add(new Loop(Update, 120));
-			_loopManager.Loops.Add(new Loop(_ => Render()));
+			_loopManager.Loops.Add(new Loop(Render));
 
 			// Set up our window and renderer
 			Window = new Window(new ScreenSize(1280, 720)) {Title = name};
@@ -40,6 +40,7 @@ namespace Subterran.Basic
 
 		protected override void Dispose(bool managed)
 		{
+			base.Dispose(managed);
 		}
 
 		private void Update(TimeSpan elapsed)
@@ -47,9 +48,9 @@ namespace Subterran.Basic
 			Window.ProcessEvents();
 
 			// Make sure the developer knows if we're running slow
-			if (_loopManager.Loops.Any(l => l.RunningSlow) && _slownessTimer == TimeSpan.Zero)
+			if (_loopManager.Loops.Any(l => l.IsRunningSlow) && _slownessTimer == TimeSpan.Zero)
 			{
-				Trace.TraceInformation("A loop is running slow!");
+				Trace.TraceInformation("The game is running slow!");
 				_slownessTimer = TimeSpan.FromSeconds(5);
 			}
 
@@ -60,7 +61,7 @@ namespace Subterran.Basic
 			World.Update(elapsed);
 		}
 
-		private void Render()
+		private void Render(TimeSpan elapsed)
 		{
 			Renderer.Clear(Color.CornflowerBlue);
 

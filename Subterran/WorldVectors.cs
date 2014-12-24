@@ -1,6 +1,9 @@
 ﻿
 namespace Subterran
 {
+	/// <summary>
+	///		Stores an ordered pair of integers, which specify an X and Y position in world units.
+	/// </summary>
 	public struct WorldPosition
 	{
 		private readonly float _x;
@@ -33,6 +36,10 @@ namespace Subterran
 			return new WorldPosition(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
 		}
 	}
+	
+	/// <summary>
+	///		Stores an ordered pair of integers, which specify an X and Y distance in world units.
+	/// </summary>
 	public struct WorldDistance
 	{
 		private readonly float _x;
@@ -61,6 +68,10 @@ namespace Subterran
 			return new WorldDistance(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
 		}
 	}
+	
+	/// <summary>
+	///		Stores an ordered pair of integers, which specify an X and Y size in world units.
+	/// </summary>
 	public struct WorldSize
 	{
 		private readonly float _x;

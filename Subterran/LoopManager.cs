@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
-using System.Threading;
 
 namespace Subterran
 {
@@ -27,8 +26,10 @@ namespace Subterran
 
 		public void Run()
 		{
-			// Run our main instance loop
+			IsRunning = true;
 			var stopwatch = new Stopwatch();
+
+			// Run our main instance loop
 			while (_keepRunning)
 			{
 				// Sanity check to make sure we're not just running 100% CPU with no loops
@@ -43,14 +44,9 @@ namespace Subterran
 
 				// Run the actual tick with the data we've measured
 				RunTick(elapsed);
-
-				// Use yield to give the rest of our thread's time to another thread
-				if (!Thread.Yield())
-				{
-					// We couldn't yield, sleep a bit instead
-					Thread.Sleep(0);
-				}
 			}
+
+			IsRunning = false;
 		}
 
 		private void RunTick(TimeSpan elapsed)

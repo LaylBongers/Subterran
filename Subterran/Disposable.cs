@@ -4,9 +4,12 @@ namespace Subterran
 {
 	public abstract class Disposable : IDisposable
 	{
+		public bool IsDisposed { get; private set; }
+
 		public void Dispose()
 		{
 			Dispose(true);
+			GC.SuppressFinalize(this);
 		}
 
 		~Disposable()
@@ -14,6 +17,12 @@ namespace Subterran
 			Dispose(false);
 		}
 
-		protected abstract void Dispose(bool managed);
+		protected virtual void Dispose(bool managed)
+		{
+			if (managed)
+			{
+				IsDisposed = true;
+			}
+		}
 	}
 }

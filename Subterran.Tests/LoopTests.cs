@@ -33,5 +33,33 @@ namespace Subterran.Tests
 			loop.ExecuteTicks(TimeSpan.FromSeconds(1));
 			func.Received(2).Invoke();
 		}
+
+		[Fact]
+		public void ExecuteTicks_MoreTimeThanFourTicks_RunsOnlyFourTicks()
+		{
+			// Arrange
+			var func = Substitute.For<Action>();
+			var loop = new Loop(_ => func(), 4);
+
+			// Act
+			loop.ExecuteTicks(TimeSpan.FromSeconds(2));
+
+			// Assert
+			func.Received(4).Invoke();
+		}
+
+		[Fact]
+		public void ExecuteTicks_MoreTimeThanFourTicks_SetsIsRunningSlowTrue()
+		{
+			// Arrange
+			var func = Substitute.For<Action>();
+			var loop = new Loop(_ => func(), 4);
+
+			// Act
+			loop.ExecuteTicks(TimeSpan.FromSeconds(2));
+
+			// Assert
+			Assert.True(loop.IsRunningSlow);
+		}
 	}
 }

@@ -14,7 +14,7 @@ namespace Subterran
 			_callback = callback;
 		}
 
-		public bool RunningSlow { get; set; }
+		public bool IsRunningSlow { get; set; }
 
 		public Loop(Action<TimeSpan> callback, int rate)
 			: this(callback)
@@ -40,11 +40,11 @@ namespace Subterran
 			if (_accumulator > _accumulationLimit)
 			{
 				_accumulator = _accumulationLimit;
-				RunningSlow = true;
+				IsRunningSlow = true;
 			}
 			else
 			{
-				RunningSlow = false;
+				IsRunningSlow = false;
 			}
 
 			// Continue till our accumulator is under our target delta
