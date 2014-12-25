@@ -63,7 +63,9 @@ namespace TropicalIsland
 				{
 					new CameraComponent
 					{
-						VerticalFoV = 0.2f*StMath.Tau
+						VerticalFoV = 0.2f*StMath.Tau,
+						ZNear = 0.1f,
+						ZFar = 100f
 					}
 				},
 				Behaviors =

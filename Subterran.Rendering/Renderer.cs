@@ -38,9 +38,6 @@ namespace Subterran.Rendering
 			// For each camera
 			foreach (var camera in data.Cameras)
 			{
-				var projection = Matrix4.CreatePerspectiveFieldOfView(camera.Component.VerticalFoV, 1920f/1080f, 0.1f, 100);
-				var projectionView = camera.Matrix.Inverted()*projection;
-
 				// If the size is a Zero, we need to default to full screen
 				var size = camera.Component.Size == ScreenSize.Zero
 					? _targetWindow.Size
@@ -48,6 +45,12 @@ namespace Subterran.Rendering
 
 				// Set the viewport where we will render to on the screen
 				GL.Viewport(camera.Component.Position.ToPoint(), size.ToSize());
+
+				// Set up the matrices we will need to actually render
+				var projection = Matrix4.CreatePerspectiveFieldOfView(
+					camera.Component.VerticalFoV, (float) size.X/size.Y,
+					camera.Component.ZNear, camera.Component.ZFar);
+				var projectionView = camera.Matrix.Inverted()*projection;
 
 				// Render all renderable things
 				foreach (var renderable in data.Renderables)

@@ -4,11 +4,13 @@ Subterran is an open source 3D game engine written in C#.
 
 ### Getting Started
 
-Subterran can be downloaded in binary form [from AppVeyor](https://ci.appveyor.com/project/LaylConway/subterran/build/artifacts), or as source via git:
+You can download the latest Subterran release from GitHub [as binary from releases](https://github.com/LaylConway/Subterran/releases), or as source by cloning the git repository:
 
 ```Shell
 git clone https://github.com/LaylConway/Subterran.git
 ```
+
+Latest development builds can be downloaded [from AppVeyor](https://ci.appveyor.com/project/LaylConway/subterran/build/artifacts).
 
 [No NuGet packages are available yet.](https://github.com/LaylConway/Subterran/issues/1)
 
