@@ -38,13 +38,21 @@ namespace Subterran.Rendering
 			// For each camera
 			foreach (var camera in data.Cameras)
 			{
-				var projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(70), 1920f/1080f, 0.1f, 100);
+				var projection = Matrix4.CreatePerspectiveFieldOfView(camera.Component.VerticalFoV, 1920f/1080f, 0.1f, 100);
 				var projectionView = camera.Matrix.Inverted()*projection;
+
+				// If the size is a Zero, we need to default to full screen
+				var size = camera.Component.Size == ScreenSize.Zero
+					? _targetWindow.Size
+					: camera.Component.Size;
+
+				// Set the viewport where we will render to on the screen
+				GL.Viewport(camera.Component.Position.ToPoint(), size.ToSize());
 
 				// Render all renderable things
 				foreach (var renderable in data.Renderables)
 				{
-					renderable.Component.Render(this, renderable.Matrix*projectionView);
+					renderable.Behavior.Render(this, renderable.Matrix*projectionView);
 				}
 			}
 		}
@@ -76,7 +84,7 @@ namespace Subterran.Rendering
 					.Select(c => new RenderableData
 					{
 						Matrix = modelMatrix,
-						Component = c
+						Behavior = c
 					})
 				);
 			data.Cameras.AddRange(
@@ -85,7 +93,7 @@ namespace Subterran.Rendering
 					.Select(c => new CameraData
 					{
 						Matrix = modelMatrix,
-						Behavior = c
+						Component = c
 					})
 				);
 
@@ -118,7 +126,7 @@ namespace Subterran.Rendering
 
 		private class CameraData
 		{
-			public CameraComponent Behavior { get; set; }
+			public CameraComponent Component { get; set; }
 			public Matrix4 Matrix { get; set; }
 		}
 
@@ -136,7 +144,7 @@ namespace Subterran.Rendering
 
 		private class RenderableData
 		{
-			public RenderEntityBehavior Component { get; set; }
+			public RenderEntityBehavior Behavior { get; set; }
 			public Matrix4 Matrix { get; set; }
 		}
 	}

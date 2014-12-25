@@ -4,9 +4,9 @@ namespace Subterran.Rendering.Components
 {
 	public class TestRenderBehavior : RenderEntityBehavior
 	{
-		public override void Render(Renderer renderer, Matrix4 modelMatrix)
+		public override void Render(Renderer renderer, Matrix4 matrix)
 		{
-			renderer.RenderMesh(ref modelMatrix);
+			renderer.RenderMesh(ref matrix);
 		}
 	}
 }

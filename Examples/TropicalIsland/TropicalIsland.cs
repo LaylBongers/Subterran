@@ -61,7 +61,10 @@ namespace TropicalIsland
 				},
 				Components =
 				{
-					new CameraComponent()
+					new CameraComponent
+					{
+						VerticalFoV = 0.2f*StMath.Tau
+					}
 				},
 				Behaviors =
 				{

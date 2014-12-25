@@ -2,5 +2,9 @@
 {
 	public sealed class CameraComponent : IEntityComponent
 	{
+		public ScreenPosition Position { get; set; }
+		public ScreenSize Size { get; set; }
+
+		public float VerticalFoV { get; set; }
 	}
 }

@@ -4,8 +4,10 @@
 // Creates a new Vector2-style struct
 void Vector2Struct(string name, string type, string[] allowedAdditions)
 {#>
-	public struct <#= name #>
+	public struct <#= name #> : IEquatable<<#= name #>>
 	{
+		public static readonly <#= name #> Zero = new <#= name #>();
+
 		private readonly <#= type #> _x;
 		private readonly <#= type #> _y;
 
@@ -29,6 +31,35 @@ void Vector2Struct(string name, string type, string[] allowedAdditions)
 <#+
 	}
 #>
+		
+		public bool Equals(<#= name #> other)
+		{
+			return _x.Equals(other._x) && _y.Equals(other._y);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			return obj is <#= name #> && Equals((<#= name #>) obj);
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				return (_x*397) ^ _y;
+			}
+		}
+
+		public static bool operator ==(<#= name #> left, <#= name #> right)
+		{
+			return left.Equals(right);
+		}
+
+		public static bool operator !=(<#= name #> left, <#= name #> right)
+		{
+			return !left.Equals(right);
+		}
 	}
 <#+
 }
@@ -36,8 +67,10 @@ void Vector2Struct(string name, string type, string[] allowedAdditions)
 // Creates a new Vector3-style struct
 void Vector3Struct(string name, string type, string[] allowedAdditions)
 {#>
-	public struct <#= name #>
+	public struct <#= name #> : IEquatable<<#= name #>>
 	{
+		public static readonly <#= name #> Zero = new <#= name #>();
+
 		private readonly <#= type #> _x;
 		private readonly <#= type #> _y;
 		private readonly <#= type #> _z;
@@ -70,6 +103,38 @@ void Vector3Struct(string name, string type, string[] allowedAdditions)
 <#+
 	}
 #>
+		
+		public bool Equals(<#= name #> other)
+		{
+			return _x.Equals(other._x) && _y.Equals(other._y) && _z.Equals(other._z);
+		}
+
+		public override bool Equals(object obj)
+		{
+			if (ReferenceEquals(null, obj)) return false;
+			return obj is <#= name #> && Equals((<#= name #>) obj);
+		}
+
+		public override int GetHashCode()
+		{
+			unchecked
+			{
+				int hashCode = _x.GetHashCode();
+				hashCode = (hashCode*397) ^ _y.GetHashCode();
+				hashCode = (hashCode*397) ^ _z.GetHashCode();
+				return hashCode;
+			}
+		}
+
+		public static bool operator ==(<#= name #> left, <#= name #> right)
+		{
+			return left.Equals(right);
+		}
+
+		public static bool operator !=(<#= name #> left, <#= name #> right)
+		{
+			return !left.Equals(right);
+		}
 	}
 <#+
 }
