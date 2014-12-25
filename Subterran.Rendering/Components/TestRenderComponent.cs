@@ -2,7 +2,7 @@
 
 namespace Subterran.Rendering.Components
 {
-	public class TestRenderBehavior : RenderEntityBehavior
+	public class TestRenderComponent : RenderEntityComponent
 	{
 		public override void Render(Renderer renderer, Matrix4 matrix)
 		{

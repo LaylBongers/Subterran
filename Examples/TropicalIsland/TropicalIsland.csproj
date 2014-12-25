@@ -45,8 +45,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TestCameraRotateBehavior.cs" />
-    <Compile Include="TestMovementBehavior.cs" />
+    <Compile Include="TestCameraRotateComponent.cs" />
+    <Compile Include="TestMovementComponent.cs" />
     <Compile Include="TropicalIsland.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

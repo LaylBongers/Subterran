@@ -3,7 +3,7 @@ using Subterran;
 
 namespace TropicalIsland
 {
-	internal class TestMovementBehavior : EntityBehavior
+	internal class TestMovementComponent : EntityComponent
 	{
 		private double _accumulator;
 

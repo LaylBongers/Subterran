@@ -1,6 +1,6 @@
 ﻿namespace Subterran.Rendering.Components
 {
-	public sealed class CameraComponent : IEntityComponent
+	public sealed class CameraComponent : EntityComponent
 	{
 		public ScreenPosition Position { get; set; }
 		public ScreenSize Size { get; set; }

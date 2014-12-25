@@ -55,7 +55,7 @@ namespace Subterran.Rendering
 				// Render all renderable things
 				foreach (var renderable in data.Renderables)
 				{
-					renderable.Behavior.Render(this, renderable.Matrix*projectionView);
+					renderable.Component.Render(this, renderable.Matrix*projectionView);
 				}
 			}
 		}
@@ -83,11 +83,11 @@ namespace Subterran.Rendering
 			// Add all the entities we're interested in to the list
 			data.Renderables.AddRange(
 				entity
-					.GetBehaviors<RenderEntityBehavior>()
+					.GetComponents<RenderEntityComponent>()
 					.Select(c => new RenderableData
 					{
 						Matrix = modelMatrix,
-						Behavior = c
+						Component = c
 					})
 				);
 			data.Cameras.AddRange(
@@ -147,7 +147,7 @@ namespace Subterran.Rendering
 
 		private class RenderableData
 		{
-			public RenderEntityBehavior Behavior { get; set; }
+			public RenderEntityComponent Component { get; set; }
 			public Matrix4 Matrix { get; set; }
 		}
 	}

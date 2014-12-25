@@ -12,21 +12,18 @@ namespace Subterran
 		{
 			Transform = new Transform();
 			Children = new Collection<Entity>();
-			Components = new Collection<IEntityComponent>();
-			Behaviors = new Collection<EntityBehavior>();
+			Components = new Collection<EntityComponent>();
 		}
 
 		public Transform Transform { get; set; }
 
 		public Collection<Entity> Children { get; set; }
 
-		public Collection<IEntityComponent> Components { get; set; }
-
-		public Collection<EntityBehavior> Behaviors { get; set; }
+		public Collection<EntityComponent> Components { get; set; }
 
 		[Pure]
 		public T GetComponent<T>()
-			where T : IEntityComponent
+			where T : EntityComponent
 		{
 			return GetComponents<T>().FirstOrDefault();
 		}
@@ -34,29 +31,14 @@ namespace Subterran
 		[Pure]
 		[LinqTunnel]
 		public IEnumerable<T> GetComponents<T>()
-			where T : IEntityComponent
+			where T : EntityComponent
 		{
 			return Components.OfType<T>();
 		}
 
-		[Pure]
-		public T GetBehavior<T>()
-			where T : EntityBehavior
-		{
-			return GetBehaviors<T>().FirstOrDefault();
-		}
-
-		[Pure]
-		[LinqTunnel]
-		public IEnumerable<T> GetBehaviors<T>()
-			where T : EntityBehavior
-		{
-			return Behaviors.OfType<T>();
-		}
-
 		public void Update(TimeSpan elapsed)
 		{
-			foreach (var component in Behaviors)
+			foreach (var component in Components)
 			{
 				component.Update(this, elapsed);
 			}

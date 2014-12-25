@@ -28,10 +28,10 @@ namespace TropicalIsland
 		{
 			return new Entity
 			{
-				Behaviors =
+				Components =
 				{
-					new TestRenderBehavior(),
-					new TestMovementBehavior()
+					new TestRenderComponent(),
+					new TestMovementComponent()
 				},
 				Children =
 				{
@@ -42,9 +42,9 @@ namespace TropicalIsland
 						{
 							Rotation = new WorldRotation(0, (float) Math.PI, 0)
 						},
-						Behaviors =
+						Components =
 						{
-							new TestRenderBehavior()
+							new TestRenderComponent()
 						}
 					}
 				}
@@ -66,11 +66,8 @@ namespace TropicalIsland
 						VerticalFoV = 0.2f*StMath.Tau,
 						ZNear = 0.1f,
 						ZFar = 100f
-					}
-				},
-				Behaviors =
-				{
-					new TestCameraRotateBehavior()
+					},
+					new TestCameraRotateComponent()
 				}
 			};
 		}
