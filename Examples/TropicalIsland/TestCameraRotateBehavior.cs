@@ -3,7 +3,7 @@ using Subterran;
 
 namespace TropicalIsland
 {
-	public class TestCameraRotateComponent : EntityComponent
+	public class TestCameraRotateBehavior : EntityBehavior
 	{
 		private double _accumulator;
 

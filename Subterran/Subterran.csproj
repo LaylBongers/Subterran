@@ -44,7 +44,8 @@
   <ItemGroup>
     <Compile Include="Disposable.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="EntityComponent.cs" />
+    <Compile Include="EntityBehavior.cs" />
+    <Compile Include="IEntityComponent.cs" />
     <Compile Include="LoopManager.cs" />
     <Compile Include="Loop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

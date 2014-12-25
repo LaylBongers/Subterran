@@ -72,7 +72,7 @@ namespace Subterran.Rendering
 			// Add all the entities we're interested in to the list
 			data.Renderables.AddRange(
 				entity
-					.GetComponents<IRenderable>()
+					.GetBehaviors<RenderEntityBehavior>()
 					.Select(c => new RenderableData
 					{
 						Matrix = modelMatrix,
@@ -85,7 +85,7 @@ namespace Subterran.Rendering
 					.Select(c => new CameraData
 					{
 						Matrix = modelMatrix,
-						Component = c
+						Behavior = c
 					})
 				);
 
@@ -118,7 +118,7 @@ namespace Subterran.Rendering
 
 		private class CameraData
 		{
-			public CameraComponent Component { get; set; }
+			public CameraComponent Behavior { get; set; }
 			public Matrix4 Matrix { get; set; }
 		}
 
@@ -136,7 +136,7 @@ namespace Subterran.Rendering
 
 		private class RenderableData
 		{
-			public IRenderable Component { get; set; }
+			public RenderEntityBehavior Component { get; set; }
 			public Matrix4 Matrix { get; set; }
 		}
 	}

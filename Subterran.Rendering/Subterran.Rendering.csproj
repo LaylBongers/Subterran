@@ -47,8 +47,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Components\CameraComponent.cs" />
-    <Compile Include="Components\TestRenderComponent.cs" />
-    <Compile Include="IRenderable.cs" />
+    <Compile Include="Components\TestRenderBehavior.cs" />
+    <Compile Include="RenderEntityBehavior.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="Window.cs" />
