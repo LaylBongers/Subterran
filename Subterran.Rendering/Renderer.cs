@@ -105,9 +105,13 @@ namespace Subterran.Rendering
 
 			GL.Begin(PrimitiveType.Triangles);
 
-			GL.Vertex3(0, 1, 0);
-			GL.Vertex3(-1, -1, 0);
-			GL.Vertex3(1, -1, 0);
+			GL.Vertex3(-1, 1, 0); // Left Top
+			GL.Vertex3(-1, -1, 0); // Left Bottom
+			GL.Vertex3(1, -1, 0); // Right Bottom
+
+			GL.Vertex3(-1, 1, 0); // Left Top
+			GL.Vertex3(1, -1, 0); // Right Bottom
+			GL.Vertex3(1, 1, 0); // Right Top
 
 			GL.End();
 		}
