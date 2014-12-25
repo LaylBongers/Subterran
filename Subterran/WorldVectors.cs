@@ -123,5 +123,9 @@ namespace Subterran
 			return new WorldRotation(left.X * right, left.Y * right, left.Z * right);
 		} 
 
+		public static WorldRotation operator +(WorldRotation left, WorldRotation right)
+		{
+			return new WorldRotation(left.X + right.X, left.Y + right.Y, left.Z + right.Z);
+		}
 	}
 }

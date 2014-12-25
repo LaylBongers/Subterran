@@ -39,7 +39,7 @@ namespace Subterran.Rendering
 			foreach (var camera in data.Cameras)
 			{
 				var projection = Matrix4.CreatePerspectiveFieldOfView(MathHelper.DegreesToRadians(70), 1920f/1080f, 0.1f, 100);
-				var projectionView = camera.Matrix*projection;
+				var projectionView = camera.Matrix.Inverted()*projection;
 
 				// Render all renderable things
 				foreach (var renderable in data.Renderables)

@@ -34,6 +34,9 @@ namespace Subterran
 		"WorldSize"
 	});
 
-	Vector3Struct("WorldRotation", "float", new string[0]);
+	Vector3Struct("WorldRotation", "float", new []
+	{
+		"WorldRotation"
+	});
 #>
 }

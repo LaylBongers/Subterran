@@ -16,7 +16,7 @@ namespace TropicalIsland
 					Children =
 					{
 						CreateTestEntity(),
-						CreateTestCameraEntity(new WorldPosition(0, 0, -2))
+						CreateTestCameraEntity(new WorldPosition(0, 0, 2))
 					}
 				}
 			};
@@ -31,7 +31,7 @@ namespace TropicalIsland
 				Components =
 				{
 					new TestRenderComponent(),
-					new TestMovementComponent()
+					//new TestMovementComponent()
 				},
 				Children =
 				{
@@ -40,7 +40,7 @@ namespace TropicalIsland
 					{
 						Transform =
 						{
-							Rotation = new WorldRotation(0, (float)Math.PI, 0)
+							Rotation = new WorldRotation(0, (float) Math.PI, 0)
 						},
 						Components =
 						{
@@ -61,7 +61,8 @@ namespace TropicalIsland
 				},
 				Components =
 				{
-					new CameraComponent()
+					new CameraComponent(),
+					new TestCameraRotateComponent()
 				}
 			};
 		}
