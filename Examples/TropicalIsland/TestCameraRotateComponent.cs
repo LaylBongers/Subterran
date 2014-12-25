@@ -5,9 +5,12 @@ namespace TropicalIsland
 {
 	public class TestCameraRotateComponent : EntityComponent
 	{
+		private double _accumulator;
+
 		public override void Update(Entity entity, TimeSpan elapsed)
 		{
-			entity.Transform.Rotation += new WorldRotation(0, 0.01f, 0);
+			_accumulator += elapsed.TotalSeconds;
+			entity.Transform.Rotation = new WorldRotation((float)Math.Sin(_accumulator) / 5, 0, 0);
 		}
 	}
 }

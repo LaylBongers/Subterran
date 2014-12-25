@@ -31,7 +31,7 @@ namespace TropicalIsland
 				Components =
 				{
 					new TestRenderComponent(),
-					//new TestMovementComponent()
+					new TestMovementComponent()
 				},
 				Children =
 				{
