@@ -54,14 +54,17 @@ namespace Subterran
 			// Notify all loops of the time passed
 			foreach (var loop in Loops)
 			{
-				// If we have been told to stop in another frame, we need to do so
+				loop.ExecuteTicks(elapsed);
+
+				// If we have been told to stop in the run loop, do so immediately
 				if (!_keepRunning)
 					return;
-
-				loop.ExecuteTicks(elapsed);
 			}
 		}
 
+		/// <summary>
+		///     Stops the loop manager's Run() execution.
+		/// </summary>
 		public void Stop()
 		{
 			_keepRunning = false;

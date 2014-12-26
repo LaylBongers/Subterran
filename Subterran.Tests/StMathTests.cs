@@ -13,10 +13,12 @@ namespace Subterran.Tests
 			var big = TimeSpan.FromSeconds(2);
 
 			// Act
-			var result = StMath.Min(small, big);
+			var result1 = StMath.Min(small, big);
+			var result2 = StMath.Min(big, small);
 
 			// Assert
-			Assert.Equal(small, result);
+			Assert.Equal(small, result1);
+			Assert.Equal(small, result2);
 		}
 
 		[Fact]
@@ -27,10 +29,12 @@ namespace Subterran.Tests
 			var big = TimeSpan.FromSeconds(2);
 
 			// Act
-			var result = StMath.Max(small, big);
+			var result1 = StMath.Max(small, big);
+			var result2 = StMath.Max(big, small);
 
 			// Assert
-			Assert.Equal(big, result);
+			Assert.Equal(big, result1);
+			Assert.Equal(big, result2);
 		}
 	}
 }

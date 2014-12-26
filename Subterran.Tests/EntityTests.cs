@@ -1,4 +1,5 @@
-﻿using NSubstitute;
+﻿using System;
+using NSubstitute;
 using Xunit;
 
 namespace Subterran.Tests
@@ -59,6 +60,37 @@ namespace Subterran.Tests
 
 			// Assert
 			Assert.Same(componentA, result);
+		}
+
+		[Fact]
+		public void Update_OneComponent_UpdatesComponent()
+		{
+			// Arrange
+			var component = Substitute.For<EntityComponent>();
+			var entity = new Entity {Components = {component}};
+
+			// Act
+			entity.Update(TimeSpan.FromSeconds(1));
+
+			// Assert
+			component.Received(1).Update(entity, TimeSpan.FromSeconds(1));
+		}
+
+		[Fact]
+		public void Update_OneChild_UpdatesChildren()
+		{
+			// This assumes Update_OneComponent_UpdatesComponent passes
+
+			// Arrange
+			var component = Substitute.For<EntityComponent>();
+			var childEntity = new Entity {Components = {component}};
+			var entity = new Entity {Children = {childEntity}};
+
+			// Act
+			entity.Update(TimeSpan.FromSeconds(1));
+
+			// Assert
+			component.Received(1).Update(childEntity, TimeSpan.FromSeconds(1));
 		}
 
 		public abstract class ComponentA : EntityComponent
