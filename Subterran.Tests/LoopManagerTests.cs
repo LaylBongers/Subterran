@@ -24,7 +24,7 @@ namespace Subterran.Tests
 			manager.Loops.Add(new Loop(_ =>
 			{
 				// By putting this check in front, it runs twice
-				if(called)
+				if (called)
 					manager.Stop();
 
 				called = true;

@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Tests", "Subterra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Basic", "Subterran.Basic\Subterran.Basic.csproj", "{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Voxels", "Subterran.Voxels\Subterran.Voxels.csproj", "{E341E90D-0FAC-47CB-B68F-314FFBD90B5E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,10 @@ Global
 		{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E341E90D-0FAC-47CB-B68F-314FFBD90B5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E341E90D-0FAC-47CB-B68F-314FFBD90B5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E341E90D-0FAC-47CB-B68F-314FFBD90B5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E341E90D-0FAC-47CB-B68F-314FFBD90B5E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
