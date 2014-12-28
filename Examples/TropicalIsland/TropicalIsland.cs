@@ -1,6 +1,6 @@
 ﻿using Subterran;
 using Subterran.Basic;
-using Subterran.Rendering.Components;
+using Subterran.OpenTK.Components;
 using Subterran.Voxels;
 
 namespace TropicalIsland
@@ -28,6 +28,7 @@ namespace TropicalIsland
 		{
 			var voxelMapComponent = new FixedVoxelMapComponent(5, 5, 5);
 
+			// Fill the bottom of the voxel map
 			var voxels = voxelMapComponent.Voxels;
 			for (var x = 0; x < voxels.Length; x++)
 			{

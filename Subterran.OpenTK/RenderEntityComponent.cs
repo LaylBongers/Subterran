@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace Subterran.Rendering
+namespace Subterran.OpenTK
 {
 	public abstract class RenderEntityComponent : EntityComponent
 	{

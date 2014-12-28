@@ -19,18 +19,10 @@ build:
   verbosity: minimal
 
 artifacts:
-  - path: Subterran\bin\$(configuration)
-    name: Subterran Core
-    type: zip
-
-  - path: Subterran.Rendering\bin\$(configuration)
-    name: Subterran Rendering
-    type: zip
-
   - path: Subterran.Basic\bin\$(configuration)
-    name: Subterran Basic
+    name: Subterran Libraries
     type: zip
 
   - path: Examples\TropicalIsland\bin\$(configuration)
-    name: Example TropicalIsland
+    name: TropicalIsland Example
     type: zip

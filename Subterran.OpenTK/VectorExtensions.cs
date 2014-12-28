@@ -1,7 +1,7 @@
 ﻿using System.Drawing;
 using OpenTK;
 
-namespace Subterran.Rendering
+namespace Subterran.OpenTK
 {
 	internal static class VectorExtensions
 	{

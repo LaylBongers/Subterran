@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{07
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TropicalIsland", "Examples\TropicalIsland\TropicalIsland.csproj", "{A0321BEB-1149-4096-A88B-6AD8AE1FF361}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Rendering", "Subterran.Rendering\Subterran.Rendering.csproj", "{1E0B810E-F186-4A59-BC48-11E1BB71B069}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.OpenTK", "Subterran.OpenTK\Subterran.OpenTK.csproj", "{1E0B810E-F186-4A59-BC48-11E1BB71B069}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Tests", "Subterran.Tests\Subterran.Tests.csproj", "{B8D8CA19-31B6-43BE-8016-0E8508F78105}"
 EndProject

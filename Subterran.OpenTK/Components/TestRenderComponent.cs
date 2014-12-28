@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace Subterran.Rendering.Components
+namespace Subterran.OpenTK.Components
 {
 	public class TestRenderComponent : RenderEntityComponent
 	{

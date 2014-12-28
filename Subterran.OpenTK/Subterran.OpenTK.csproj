@@ -7,8 +7,8 @@
     <ProjectGuid>{1E0B810E-F186-4A59-BC48-11E1BB71B069}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Subterran.Rendering</RootNamespace>
-    <AssemblyName>Subterran.Rendering</AssemblyName>
+    <RootNamespace>Subterran.OpenTK</RootNamespace>
+    <AssemblyName>Subterran.OpenTK</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,6 +39,7 @@
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -46,8 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AimEventArgs.cs" />
     <Compile Include="Components\CameraComponent.cs" />
     <Compile Include="Components\TestRenderComponent.cs" />
+    <Compile Include="InputManager.cs" />
     <Compile Include="RenderEntityComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />

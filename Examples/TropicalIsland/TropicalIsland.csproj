@@ -57,9 +57,9 @@
       <Project>{fd41c4ed-9387-48d1-bf6f-bb1347dfa10c}</Project>
       <Name>Subterran.Basic</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Subterran.Rendering\Subterran.Rendering.csproj">
+    <ProjectReference Include="..\..\Subterran.OpenTK\Subterran.OpenTK.csproj">
       <Project>{1E0B810E-F186-4A59-BC48-11E1BB71B069}</Project>
-      <Name>Subterran.Rendering</Name>
+      <Name>Subterran.OpenTK</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Subterran.Voxels\Subterran.Voxels.csproj">
       <Project>{e341e90d-0fac-47cb-b68f-314ffbd90b5e}</Project>

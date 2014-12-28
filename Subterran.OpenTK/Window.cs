@@ -4,15 +4,13 @@ using System.Drawing;
 using OpenTK;
 using OpenTK.Graphics;
 
-namespace Subterran.Rendering
+namespace Subterran.OpenTK
 {
-	public sealed class Window
+	public sealed class Window : Disposable
 	{
-		private readonly GameWindow _window;
-
 		public Window(ScreenSize size)
 		{
-			_window = new GameWindow(
+			OpenTkWindow = new GameWindow(
 				size.X, size.Y,
 				// Deferred rendering so no samples.
 				// If you want AA, it has to be post-process.
@@ -23,38 +21,50 @@ namespace Subterran.Rendering
 				Visible = true,
 				VSync = VSyncMode.Adaptive
 			};
-			_window.Closing += OnClosing;
+			OpenTkWindow.Closing += OnClosing;
 		}
+
+		internal GameWindow OpenTkWindow { get; set; }
 
 		public string Title
 		{
-			get { return _window.Title; }
-			set { _window.Title = value; }
+			get { return OpenTkWindow.Title; }
+			set { OpenTkWindow.Title = value; }
 		}
 
 		public ScreenSize Size
 		{
-			get { return new ScreenSize(_window.Width, _window.Height); }
-			set { _window.Size = new Size(value.X, value.Y); }
+			get { return new ScreenSize(OpenTkWindow.Width, OpenTkWindow.Height); }
+			set { OpenTkWindow.Size = new Size(value.X, value.Y); }
 		}
 
 		public event EventHandler Closing = (s, e) => { };
 
+		protected override void Dispose(bool managed)
+		{
+			if (managed)
+			{
+				OpenTkWindow.Dispose();
+			}
+
+			base.Dispose(managed);
+		}
+
 		public void ProcessEvents()
 		{
-			_window.ProcessEvents();
+			OpenTkWindow.ProcessEvents();
 		}
 
 		public void SwapBuffers()
 		{
-			_window.SwapBuffers();
+			OpenTkWindow.SwapBuffers();
 		}
 
 		public void MakeCurrent()
 		{
-			if (!_window.Context.IsCurrent)
+			if (!OpenTkWindow.Context.IsCurrent)
 			{
-				_window.MakeCurrent();
+				OpenTkWindow.MakeCurrent();
 			}
 		}
 

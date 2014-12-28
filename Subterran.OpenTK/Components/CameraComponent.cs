@@ -1,4 +1,4 @@
-﻿namespace Subterran.Rendering.Components
+﻿namespace Subterran.OpenTK.Components
 {
 	public sealed class CameraComponent : EntityComponent
 	{
