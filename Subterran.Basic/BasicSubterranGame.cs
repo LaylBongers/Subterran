@@ -69,6 +69,7 @@ namespace Subterran.Basic
 			Input.Update();
 
 			// Close the game on specific key presses
+			// TODO: Make sure OpenTK isn't used by this assembly.
 			var keyState = Keyboard.GetState();
 			if (// Alt-F4
 				(keyState.IsKeyDown(Key.F4) && keyState.IsKeyDown(Key.AltLeft)) ||
