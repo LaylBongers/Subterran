@@ -6,20 +6,13 @@ namespace Subterran.Voxels
 	public class FixedSizeVoxelMapComponent : RenderEntityComponent
 	{
 		public FixedSizeVoxelMapComponent()
+			: this(0, 0, 0)
 		{
 		}
 
 		public FixedSizeVoxelMapComponent(int width, int height, int depth)
 		{
-			Voxels = new bool[width][][];
-			for (var x = 0; x < Voxels.Length; x++)
-			{
-				Voxels[x] = new bool[height][];
-				for (var y = 0; y < Voxels[x].Length; y++)
-				{
-					Voxels[x][y] = new bool[depth];
-				}
-			}
+			Voxels = StArray.CreateJagged<bool[][][]>(width, height, depth);
 		}
 
 		public bool[][][] Voxels { get; set; }
@@ -62,8 +55,8 @@ namespace Subterran.Voxels
 						renderer.RenderMesh(ref backVoxelMatrix);
 
 						var topVoxelMatrix =
-							Matrix4.CreateRotationX(-0.25f * StMath.Tau) *
-							Matrix4.CreateTranslation(0, 0.5f, -0.5f) *
+							Matrix4.CreateRotationX(-0.25f*StMath.Tau)*
+							Matrix4.CreateTranslation(0, 0.5f, -0.5f)*
 							voxelMatrix;
 						renderer.RenderMesh(ref topVoxelMatrix);
 					}

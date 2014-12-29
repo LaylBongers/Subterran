@@ -1,11 +1,15 @@
 ﻿using System;
+using Subterran;
 
 namespace TropicalIsland
 {
 	public static class VoxelMapGenerator
 	{
-		public static void GenerateFlatIn(bool[][][] voxels)
+		public static bool[][][] GenerateFlat(int size, int height)
 		{
+			var voxels = StArray.CreateJagged<bool[][][]>(size, height, size);
+
+			// Generate the voxel data
 			for (var x = 0; x < voxels.Length; x++)
 			{
 				for (var z = 0; z < voxels[x][0].Length; z++)
@@ -13,24 +17,31 @@ namespace TropicalIsland
 					voxels[x][0][z] = true;
 				}
 			}
+
+			return voxels;
 		}
 
-		public static void GenerateRandomIn(bool[][][] voxels)
+		public static bool[][][] GenerateRandom(int size, int height)
 		{
+			var voxels = StArray.CreateJagged<bool[][][]>(size, height, size);
+
 			var random = new Random();
 			var maxHeight = voxels[0].Length;
 
+			// Generate the voxel data
 			for (var x = 0; x < voxels.Length; x++)
 			{
 				for (var z = 0; z < voxels[x][0].Length; z++)
 				{
-					var height = random.Next(maxHeight);
-					for (var y = 0; y < height; y++)
+					var columnHeight = random.Next(maxHeight);
+					for (var y = 0; y < columnHeight; y++)
 					{
 						voxels[x][y][z] = true;
 					}
 				}
 			}
+
+			return voxels;
 		}
 	}
 }

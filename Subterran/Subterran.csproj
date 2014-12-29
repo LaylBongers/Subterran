@@ -48,6 +48,7 @@
     <Compile Include="LoopManager.cs" />
     <Compile Include="Loop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="StArray.cs" />
     <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="StMath.cs" />
     <Compile Include="Vector3i.cs" />
