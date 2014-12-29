@@ -19,7 +19,7 @@ build:
   verbosity: minimal
 
 after_test:
-  - ps: Get-ChildItem $(APPVEYOR_BUILD_FOLDER)Subterran.Basic\bin\$(configuration) -include *.pdb,*.xml -recurse -force | Remove-Item -force
+  - ps: Get-ChildItem "($env:APPVEYOR_BUILD_FOLDER)Subterran.Basic\bin\$($env:configuration)" -include *.pdb,*.xml -recurse -force | Remove-Item -force
 
 artifacts:
   - path: Subterran.Basic\bin\$(configuration)
