@@ -5,9 +5,9 @@ using Subterran.OpenTK;
 
 namespace Subterran.Basic
 {
-	public class FlyingCameraMovementComponent : EntityComponent
+	public class NoclipMovementComponent : EntityComponent
 	{
-		public FlyingCameraMovementComponent(InputManager input)
+		public NoclipMovementComponent(InputManager input)
 		{
 			// Default values, once C# 6.0 rolls around we can do this inline
 			Speed = 1.0f;

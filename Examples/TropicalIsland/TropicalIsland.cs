@@ -26,17 +26,11 @@ namespace TropicalIsland
 
 		private static Entity CreateWorldMapEntity()
 		{
-			var voxelMapComponent = new FixedVoxelMapComponent(5, 5, 5);
+			var voxelMapComponent = new FixedSizeVoxelMapComponent(5, 5, 5);
 
 			// Fill the bottom of the voxel map
 			var voxels = voxelMapComponent.Voxels;
-			for (var x = 0; x < voxels.Length; x++)
-			{
-				for (var z = 0; z < voxels[x][0].Length; z++)
-				{
-					voxels[x][0][z] = true;
-				}
-			}
+			VoxelMapGenerator.GenerateRandomIn(voxels);
 
 			return new Entity
 			{
@@ -61,7 +55,7 @@ namespace TropicalIsland
 						ZNear = 0.1f,
 						ZFar = 100f
 					},
-					new FlyingCameraMovementComponent(input)
+					new NoclipMovementComponent(input)
 				}
 			};
 		}

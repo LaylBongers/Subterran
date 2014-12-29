@@ -44,7 +44,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicSubterranGame.cs" />
-    <Compile Include="FlyingCameraMovementComponent.cs" />
+    <Compile Include="NoclipMovementComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
