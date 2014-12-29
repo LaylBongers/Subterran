@@ -1,9 +1,11 @@
-﻿namespace Subterran.OpenTK.Components
+﻿using System.Drawing;
+
+namespace Subterran.OpenTK.Components
 {
 	public sealed class CameraComponent : EntityComponent
 	{
-		public ScreenPosition Position { get; set; }
-		public ScreenSize Size { get; set; }
+		public Point Position { get; set; }
+		public Size Size { get; set; }
 
 		public float VerticalFoV { get; set; }
 

@@ -8,10 +8,10 @@ namespace Subterran.OpenTK
 {
 	public sealed class Window : Disposable
 	{
-		public Window(ScreenSize size)
+		public Window(Size size)
 		{
 			OpenTkWindow = new GameWindow(
-				size.X, size.Y,
+				size.Width, size.Height,
 				// Deferred rendering so no samples.
 				// If you want AA, it has to be post-process.
 				new GraphicsMode(32, 16, 0, 0),
@@ -32,10 +32,10 @@ namespace Subterran.OpenTK
 			set { OpenTkWindow.Title = value; }
 		}
 
-		public ScreenSize Size
+		public Size Size
 		{
-			get { return new ScreenSize(OpenTkWindow.Width, OpenTkWindow.Height); }
-			set { OpenTkWindow.Size = new Size(value.X, value.Y); }
+			get { return OpenTkWindow.Size; }
+			set { OpenTkWindow.Size = value; }
 		}
 
 		public event EventHandler Closing = (s, e) => { };

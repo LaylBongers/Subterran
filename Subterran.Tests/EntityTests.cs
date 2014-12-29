@@ -73,7 +73,7 @@ namespace Subterran.Tests
 			entity.Update(TimeSpan.FromSeconds(1));
 
 			// Assert
-			component.Received(1).Update(entity, TimeSpan.FromSeconds(1));
+			component.Received(1).Update(TimeSpan.FromSeconds(1));
 		}
 
 		[Fact]
@@ -90,7 +90,7 @@ namespace Subterran.Tests
 			entity.Update(TimeSpan.FromSeconds(1));
 
 			// Assert
-			component.Received(1).Update(childEntity, TimeSpan.FromSeconds(1));
+			component.Received(1).Update(TimeSpan.FromSeconds(1));
 		}
 
 		public abstract class ComponentA : EntityComponent

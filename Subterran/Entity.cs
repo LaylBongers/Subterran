@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Collections.Specialized;
 using System.Linq;
-using JetBrains.Annotations;
+using OpenTK;
 
 namespace Subterran
 {
@@ -10,26 +11,46 @@ namespace Subterran
 	{
 		public Entity()
 		{
-			Transform = new Transform();
 			Children = new Collection<Entity>();
-			Components = new Collection<EntityComponent>();
+			Components = new ObservableCollection<EntityComponent>();
+			Components.CollectionChanged += Components_CollectionChanged;
 		}
 
-		public Transform Transform { get; set; }
+		public Vector3 Position { get; set; }
 
-		public Collection<Entity> Children { get; set; }
+		public Vector3 Rotation { get; set; }
 
-		public Collection<EntityComponent> Components { get; set; }
+		public Collection<Entity> Children { get; private set; }
 
-		[Pure]
+		public ObservableCollection<EntityComponent> Components { get; private set; }
+
+		private void Components_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			if (e.NewItems != null)
+			{
+				// Set this class as entity for the new added components
+				foreach (var item in e.NewItems.Cast<EntityComponent>())
+				{
+					item.UpdateEntityBinding(this);
+				}
+			}
+
+			if (e.OldItems != null)
+			{
+				// Unset this class as entity for the old removed components
+				foreach (var item in e.OldItems.Cast<EntityComponent>())
+				{
+					item.UpdateEntityBinding(null);
+				}
+			}
+		}
+
 		public T GetComponent<T>()
 			where T : EntityComponent
 		{
 			return GetComponents<T>().FirstOrDefault();
 		}
 
-		[Pure]
-		[LinqTunnel]
 		public IEnumerable<T> GetComponents<T>()
 			where T : EntityComponent
 		{
@@ -40,7 +61,7 @@ namespace Subterran
 		{
 			foreach (var component in Components)
 			{
-				component.Update(this, elapsed);
+				component.Update(elapsed);
 			}
 
 			foreach (var child in Children)

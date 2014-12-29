@@ -17,7 +17,7 @@ namespace Subterran.Basic
 		public BasicSubterranGame(string name)
 		{
 			// Set up our window
-			Window = new Window(new ScreenSize(1280, 720)) {Title = name};
+			Window = new Window(new Size(1280, 720)) {Title = name};
 			Window.Closing += (s, e) => _loopManager.Stop();
 
 			// Set up our engine's modules

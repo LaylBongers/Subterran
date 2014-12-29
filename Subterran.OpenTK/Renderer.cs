@@ -39,16 +39,16 @@ namespace Subterran.OpenTK
 			foreach (var camera in data.Cameras)
 			{
 				// If the size is a Zero, we need to default to full screen
-				var size = camera.Component.Size == ScreenSize.Zero
+				var size = camera.Component.Size == Size.Empty
 					? _targetWindow.Size
 					: camera.Component.Size;
 
 				// Set the viewport where we will render to on the screen
-				GL.Viewport(camera.Component.Position.ToPoint(), size.ToSize());
+				GL.Viewport(camera.Component.Position, size);
 
 				// Set up the matrices we will need to actually render
 				var projection = Matrix4.CreatePerspectiveFieldOfView(
-					camera.Component.VerticalFoV, (float) size.X/size.Y,
+					camera.Component.VerticalFoV, (float) size.Width/size.Height,
 					camera.Component.ZNear, camera.Component.ZFar);
 				var projectionView = camera.Matrix.Inverted()*projection;
 
@@ -70,12 +70,11 @@ namespace Subterran.OpenTK
 		private static void CollapseEntityTreeTo(Entity entity, RenderData data, Matrix4 modelMatrix)
 		{
 			// Create a multiply matrix representing this entity
-			var rotation = entity.Transform.Rotation;
 			var entityMatrix =
-				Matrix4.CreateRotationX(rotation.X)*
-				Matrix4.CreateRotationY(rotation.Y)*
-				Matrix4.CreateRotationZ(rotation.Z)*
-				Matrix4.CreateTranslation(entity.Transform.Position.ToVector3());
+				Matrix4.CreateRotationX(entity.Rotation.X)*
+				Matrix4.CreateRotationY(entity.Rotation.Y)*
+				Matrix4.CreateRotationZ(entity.Rotation.Z)*
+				Matrix4.CreateTranslation(entity.Position);
 
 			// Multiply the model matrix with the previously created entity matrix
 			modelMatrix = entityMatrix*modelMatrix;

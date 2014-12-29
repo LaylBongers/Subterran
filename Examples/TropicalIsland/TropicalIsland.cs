@@ -1,5 +1,7 @@
-﻿using Subterran;
+﻿using OpenTK;
+using Subterran;
 using Subterran.Basic;
+using Subterran.OpenTK;
 using Subterran.OpenTK.Components;
 using Subterran.Voxels;
 
@@ -9,18 +11,16 @@ namespace TropicalIsland
 	{
 		public static BasicSubterranGame Create()
 		{
-			var game = new BasicSubterranGame("Tropical Island")
+			var game = new BasicSubterranGame("Tropical Island");
+			game.World = new Entity
 			{
-				World =
+				Children =
 				{
-					Children =
-					{
-						CreateWorldMapEntity(),
-						CreateCameraEntity()
-					}
+					CreateCameraEntity(game.Input),
+					CreateWorldMapEntity()
 				}
 			};
-
+			
 			return game;
 		}
 
@@ -47,15 +47,12 @@ namespace TropicalIsland
 			};
 		}
 
-		private static Entity CreateCameraEntity()
+		private static Entity CreateCameraEntity(InputManager input)
 		{
 			return new Entity
 			{
-				Transform =
-				{
-					Position = new WorldPosition(0, 2, 4),
-					Rotation = new WorldRotation(-0.05f*StMath.Tau, 0, 0)
-				},
+				Position = new Vector3(0, 2, 4),
+				Rotation = new Vector3(-0.05f * StMath.Tau, 0, 0),
 				Components =
 				{
 					new CameraComponent
@@ -63,7 +60,8 @@ namespace TropicalIsland
 						VerticalFoV = 0.2f*StMath.Tau,
 						ZNear = 0.1f,
 						ZFar = 100f
-					}
+					},
+					new FlyingCameraMovementComponent(input)
 				}
 			};
 		}

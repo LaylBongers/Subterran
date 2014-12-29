@@ -1,4 +1,5 @@
 ﻿using System;
+using OpenTK;
 
 namespace Subterran.OpenTK
 {
@@ -6,12 +7,12 @@ namespace Subterran.OpenTK
 	{
 		public AimEventArgs(int xDelta, int yDelta)
 		{
-			Delta = new ScreenDistance(xDelta, yDelta);
+			Delta = new Vector2(xDelta, yDelta);
 			XDelta = xDelta;
 			YDelta = yDelta;
 		}
 
-		public ScreenDistance Delta { get; private set; }
+		public Vector2 Delta { get; private set; }
 		public int XDelta { get; private set; }
 		public int YDelta { get; private set; }
 	}
