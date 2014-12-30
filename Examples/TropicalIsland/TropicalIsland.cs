@@ -32,7 +32,7 @@ namespace TropicalIsland
 				{
 					new FixedSizeVoxelMapComponent
 					{
-						Voxels = VoxelMapGenerator.GenerateRandom(5, 5)
+						Voxels = VoxelMapGenerator.GenerateRandom(25, 25)
 					}
 				}
 			};

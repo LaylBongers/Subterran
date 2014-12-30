@@ -35,6 +35,7 @@
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,6 +45,7 @@
   <ItemGroup>
     <Compile Include="FixedSizeVoxelMapComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Voxel.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Subterran.OpenTK\Subterran.OpenTK.csproj">

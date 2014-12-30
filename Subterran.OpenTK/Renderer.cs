@@ -16,6 +16,8 @@ namespace Subterran.OpenTK
 			_targetWindow = targetWindow;
 			_targetWindow.MakeCurrent();
 
+			GL.Enable(EnableCap.DepthTest);
+
 			// Set up back-culling
 			GL.Enable(EnableCap.CullFace);
 			GL.CullFace(CullFaceMode.Back);

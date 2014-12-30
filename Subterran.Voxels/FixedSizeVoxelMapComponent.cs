@@ -1,4 +1,5 @@
 ﻿using OpenTK;
+using OpenTK.Graphics.OpenGL;
 using Subterran.OpenTK;
 
 namespace Subterran.Voxels
@@ -12,10 +13,10 @@ namespace Subterran.Voxels
 
 		public FixedSizeVoxelMapComponent(int width, int height, int depth)
 		{
-			Voxels = StArray.CreateJagged<bool[][][]>(width, height, depth);
+			Voxels = StArray.CreateJagged<Voxel[][][]>(width, height, depth);
 		}
 
-		public bool[][][] Voxels { get; set; }
+		public Voxel[][][] Voxels { get; set; }
 
 		public override void Render(Renderer renderer, Matrix4 matrix)
 		{
@@ -25,10 +26,11 @@ namespace Subterran.Voxels
 				{
 					for (var z = 0; z < Voxels[x][y].Length; z++)
 					{
-						if (!Voxels[x][y][z])
+						if (!Voxels[x][y][z].IsSolid)
 							continue;
 
 						// TODO: Change this to a proper mesh once RenderMesh takes one
+						GL.Color3(Voxels[x][y][z].Color);
 
 						var voxelMatrix =
 							Matrix4.CreateTranslation(x, y, z)*

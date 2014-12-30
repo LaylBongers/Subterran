@@ -11,7 +11,7 @@ namespace Subterran
 	{
 		public Entity()
 		{
-			Children = new Collection<Entity>();
+			Children = new ObservableCollection<Entity>();
 			Components = new ObservableCollection<EntityComponent>();
 			Components.CollectionChanged += Components_CollectionChanged;
 		}
@@ -20,7 +20,7 @@ namespace Subterran
 
 		public Vector3 Rotation { get; set; }
 
-		public Collection<Entity> Children { get; private set; }
+		public ObservableCollection<Entity> Children { get; private set; }
 
 		public ObservableCollection<EntityComponent> Components { get; private set; }
 
