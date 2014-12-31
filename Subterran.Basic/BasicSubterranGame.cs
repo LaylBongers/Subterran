@@ -1,18 +1,19 @@
 ﻿using System;
+using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using OpenTK.Input;
 using Subterran.OpenTK;
-
-using Keyboard = OpenTK.Input.Keyboard;
+using Subterran.OpenTK.Diagnostics;
 
 namespace Subterran.Basic
 {
 	public sealed class BasicSubterranGame : Disposable
 	{
 		private readonly LoopManager _loopManager = new LoopManager();
-		private TimeSpan _slownessTimer;
+		private PerformanceCounter _gcTimeCounter;
+		private TimeSpan _gcTimeTimer;
 
 		public BasicSubterranGame(string name)
 		{
@@ -31,6 +32,9 @@ namespace Subterran.Basic
 			_loopManager = new LoopManager();
 			_loopManager.Loops.Add(new Loop(Update, 120));
 			_loopManager.Loops.Add(new Loop(Render));
+
+			// Set up a performance tracers to warn the developer about stuff
+			InitializePerformanceTracers();
 		}
 
 		public Window Window { get; set; }
@@ -40,6 +44,30 @@ namespace Subterran.Basic
 		public Entity World { get; set; }
 
 		public Renderer Renderer { get; set; }
+
+		public Collection<PerformanceTracer> PerformanceTracers { get; set; }
+
+		private void InitializePerformanceTracers()
+		{
+			_gcTimeCounter = new PerformanceCounter(
+				".NET CLR Memory", "% Time in GC",
+				Process.GetCurrentProcess().ProcessName);
+			float value = 0;
+
+			PerformanceTracers = new Collection<PerformanceTracer>
+			{
+				new PerformanceTracer(
+					() => _loopManager.Loops.Any(l => l.IsRunningSlow),
+					() => "The game is running slow!"),
+				new PerformanceTracer(
+					() =>
+					{
+						value = _gcTimeCounter.NextValue();
+						return value > 10;
+					},
+					() => "The game has spent a lot of time in garbage collection! (" + value + "%)")
+			};
+		}
 
 		protected override void Dispose(bool managed)
 		{
@@ -70,7 +98,7 @@ namespace Subterran.Basic
 			// Close the game on specific key presses
 			// TODO: Make sure OpenTK isn't used by this assembly.
 			var keyState = Keyboard.GetState();
-			if (// Alt-F4
+			if ( // Alt-F4
 				(keyState.IsKeyDown(Key.F4) && keyState.IsKeyDown(Key.AltLeft)) ||
 				// Escape
 				keyState.IsKeyDown(Key.Escape))
@@ -78,15 +106,11 @@ namespace Subterran.Basic
 				Stop();
 			}
 
-			// Make sure the developer knows if we're running slow
-			if (_loopManager.Loops.Any(l => l.IsRunningSlow) && _slownessTimer == TimeSpan.Zero)
+			// Run our developer helper checks
+			foreach (var tracer in PerformanceTracers)
 			{
-				Trace.TraceInformation("The game is running slow!");
-				_slownessTimer = TimeSpan.FromSeconds(5);
+				tracer.Update(elapsed);
 			}
-
-			// Reduce the timer if it's above TimeSpan.Zero
-			_slownessTimer = StMath.Max(_slownessTimer - elapsed, TimeSpan.Zero);
 
 			// Update the entire world
 			World.Update(elapsed);
