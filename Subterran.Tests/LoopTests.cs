@@ -35,17 +35,17 @@ namespace Subterran.Tests
 		}
 
 		[Fact]
-		public void ExecuteTicks_MoreTimeThanFourTicks_RunsOnlyFourTicks()
+		public void ExecuteTicks_MoreTimeThanFourTicks_RunsAtHigherTickLength()
 		{
 			// Arrange
-			var func = Substitute.For<Action>();
-			var loop = new Loop(_ => func(), 4);
+			var func = Substitute.For<Action<TimeSpan>>();
+			var loop = new Loop(func, 4);
 
 			// Act
 			loop.ExecuteTicks(TimeSpan.FromSeconds(2));
 
 			// Assert
-			func.Received(4).Invoke();
+			func.Received(4).Invoke(Arg.Is<TimeSpan>(t => t > TimeSpan.FromSeconds(0.25)));
 		}
 
 		[Fact]

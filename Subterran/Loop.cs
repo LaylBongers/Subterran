@@ -1,13 +1,10 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace Subterran
 {
 	public sealed class Loop
 	{
-		private readonly TimeSpan _accumulationLimit;
 		private readonly Action<TimeSpan> _callback;
-		private readonly TimeSpan _targetDelta;
 		private TimeSpan _accumulator;
 
 		public Loop(Action<TimeSpan> callback)
@@ -15,20 +12,24 @@ namespace Subterran
 			_callback = callback;
 		}
 
-		public bool IsRunningSlow { get; set; }
-
 		public Loop(Action<TimeSpan> callback, int rate)
 			: this(callback)
 		{
 			_callback = callback;
-			_targetDelta = TimeSpan.FromSeconds(1.0/rate);
-			_accumulationLimit = TimeSpan.FromSeconds(_targetDelta.TotalSeconds*4);
+			TargetDelta = TimeSpan.FromSeconds(1.0/rate);
+			MaxDelta = TimeSpan.FromSeconds(TargetDelta.TotalSeconds*3);
 		}
+
+		public TimeSpan MaxDelta { get; set; }
+		public TimeSpan TargetDelta { get; set; }
+
+		public bool IsRunningSlow { get; set; }
+		public bool IsSkippingTime { get; set; }
 
 		public void ExecuteTicks(TimeSpan elapsed)
 		{
 			// If we don't have a target delta we execute once
-			if (_targetDelta == TimeSpan.Zero)
+			if (TargetDelta == TimeSpan.Zero)
 			{
 				_callback(elapsed);
 				return;
@@ -37,25 +38,34 @@ namespace Subterran
 			// Add the time to our internal accumulator
 			_accumulator = _accumulator + elapsed;
 
-			// Limit our accumulator to prevent lag spikes from causing weird jumps
-			if (_accumulator > _accumulationLimit)
+			// Innocent until proven guilty
+			IsRunningSlow = false;
+			IsSkippingTime = false;
+			
+			// If we're above the target per tick, we need to adjust it
+			var tickDelta = TargetDelta;
+			if (_accumulator > TargetDelta.Multiply(4))
 			{
-				_accumulator = _accumulationLimit;
+				tickDelta = _accumulator.Divide(4);
 				IsRunningSlow = true;
-			}
-			else
-			{
-				IsRunningSlow = false;
+
+				// Prevent weird jumps caused by big lag spikes
+				if (tickDelta > MaxDelta)
+				{
+					tickDelta = MaxDelta;
+					_accumulator = MaxDelta.Multiply(4);
+					IsSkippingTime = true;
+				}
 			}
 
 			// Continue till our accumulator is under our target delta
-			while (_accumulator >= _targetDelta)
+			while (_accumulator >= tickDelta)
 			{
 				// Remove our target delta from it
-				_accumulator -= _targetDelta;
+				_accumulator -= tickDelta;
 
 				// Run our actual tick
-				_callback(_targetDelta);
+				_callback(tickDelta);
 			}
 		}
 	}

@@ -14,5 +14,15 @@ namespace Subterran
 		{
 			return amountPerSecond*(float) delta.TotalSeconds;
 		}
+
+		public static TimeSpan Multiply(this TimeSpan value, int times)
+		{
+			return new TimeSpan(value.Ticks*times);
+		}
+
+		public static TimeSpan Divide(this TimeSpan value, int times)
+		{
+			return new TimeSpan(value.Ticks * times);
+		}
 	}
 }

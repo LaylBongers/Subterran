@@ -5,7 +5,7 @@ using System.Drawing;
 using System.Linq;
 using OpenTK.Input;
 using Subterran.OpenTK;
-using Subterran.OpenTK.Diagnostics;
+using Subterran.Toolbox.Diagnostics;
 
 namespace Subterran.Toolbox
 {
@@ -13,7 +13,6 @@ namespace Subterran.Toolbox
 	{
 		private readonly LoopManager _loopManager = new LoopManager();
 		private PerformanceCounter _gcTimeCounter;
-		private TimeSpan _gcTimeTimer;
 
 		public BasicSubterranGame(string name)
 		{
@@ -59,6 +58,9 @@ namespace Subterran.Toolbox
 				new PerformanceTracer(
 					() => _loopManager.Loops.Any(l => l.IsRunningSlow),
 					() => "The game is running slow!"),
+				new PerformanceTracer(
+					() => _loopManager.Loops.Any(l => l.IsSkippingTime),
+					() => "The game is skipping frame time!"),
 				new PerformanceTracer(
 					() =>
 					{

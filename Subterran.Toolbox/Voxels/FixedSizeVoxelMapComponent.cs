@@ -59,10 +59,10 @@ namespace Subterran.Toolbox.Voxels
 						vertices.AddRange(voxelMesh
 							.Transform(Matrix4.CreateTranslation(x, y, z))
 							.Select(v => new ColoredVertex
-						{
-							Position = v,
-							Color = voxelColor
-						}));
+							{
+								Position = v,
+								Color = voxelColor
+							}));
 					}
 				}
 			}

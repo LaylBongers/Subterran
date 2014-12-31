@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Diagnostics;
 
-namespace Subterran.OpenTK.Diagnostics
+namespace Subterran.Toolbox.Diagnostics
 {
 	public sealed class PerformanceTracer
 	{
