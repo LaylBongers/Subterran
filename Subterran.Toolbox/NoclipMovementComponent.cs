@@ -10,8 +10,8 @@ namespace Subterran.Toolbox
 		public NoclipMovementComponent(InputManager input)
 		{
 			// Default values, once C# 6.0 rolls around we can do this inline
-			Speed = 1.0f;
-			FastSpeed = 2.0f;
+			Speed = 5.0f;
+			FastSpeed = 10.0f;
 
 			input.AimChange += InputOnAimChange;
 		}

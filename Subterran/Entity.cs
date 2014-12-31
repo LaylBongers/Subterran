@@ -11,6 +11,7 @@ namespace Subterran
 	{
 		public Entity()
 		{
+			Scale = new Vector3(1, 1, 1);
 			Children = new ObservableCollection<Entity>();
 			Components = new ObservableCollection<EntityComponent>();
 			Components.CollectionChanged += Components_CollectionChanged;
@@ -19,6 +20,8 @@ namespace Subterran
 		public Vector3 Position { get; set; }
 
 		public Vector3 Rotation { get; set; }
+
+		public Vector3 Scale { get; set; }
 
 		public ObservableCollection<Entity> Children { get; private set; }
 

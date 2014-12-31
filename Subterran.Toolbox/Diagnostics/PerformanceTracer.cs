@@ -5,9 +5,9 @@ namespace Subterran.Toolbox.Diagnostics
 {
 	public sealed class PerformanceTracer
 	{
+		private readonly Func<bool> _condition;
+		private readonly Func<string> _warningBuilder;
 		private TimeSpan _messageTimer;
-		private Func<bool> _condition;
-		private Func<string> _warningBuilder;
 
 		public PerformanceTracer(Func<bool> condition, Func<string> warningBuilder)
 		{

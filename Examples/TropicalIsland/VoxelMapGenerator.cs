@@ -1,6 +1,5 @@
 ﻿using System;
 using OpenTK;
-using OpenTK.Graphics;
 using Subterran;
 using Subterran.Toolbox.Voxels;
 

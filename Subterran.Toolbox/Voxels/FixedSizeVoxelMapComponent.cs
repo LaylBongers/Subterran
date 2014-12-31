@@ -77,7 +77,7 @@ namespace Subterran.Toolbox.Voxels
 			if (_vertices == null)
 				return;
 
-			renderer.RenderMesh(ref matrix, _vertices);
+			renderer.RenderMeshStreaming(ref matrix, _vertices);
 		}
 	}
 }

@@ -17,23 +17,29 @@ namespace TropicalIsland
 				Children =
 				{
 					CreateCameraEntity(game.Input),
-					CreateWorldMapEntity()
+					CreateWorldMapEntity(new Vector3(0, 0, 0), 0.5f, VoxelMapGenerator.GenerateFlat(25, 25)),
+					CreateWorldMapEntity(new Vector3(0, 0, -26), 1f, VoxelMapGenerator.GenerateFlat(25, 25)),
+
+					CreateWorldMapEntity(new Vector3(26, 0, 0), 0.5f, VoxelMapGenerator.GenerateRandom(25, 25)),
+					CreateWorldMapEntity(new Vector3(26, 0, -26), 1f, VoxelMapGenerator.GenerateRandom(25, 25)),
+					
+					CreateWorldMapEntity(new Vector3(-2, 0, 0), 0.5f, VoxelMapGenerator.GenerateFlat(1, 1)),
+					CreateWorldMapEntity(new Vector3(-2, 0, -2), 1f, VoxelMapGenerator.GenerateFlat(1, 1))
 				}
 			};
-			
+
 			return game;
 		}
 
-		private static Entity CreateWorldMapEntity()
+		private static Entity CreateWorldMapEntity(Vector3 position, float scale, Voxel[][][] voxels)
 		{
 			return new Entity
 			{
+				Position = position,
+				Scale = new Vector3(scale, scale, scale),
 				Components =
 				{
-					new FixedSizeVoxelMapComponent
-					{
-						Voxels = VoxelMapGenerator.GenerateRandom(25, 25)
-					}
+					new FixedSizeVoxelMapComponent {Voxels = voxels}
 				}
 			};
 		}
@@ -42,8 +48,8 @@ namespace TropicalIsland
 		{
 			return new Entity
 			{
-				Position = new Vector3(0, 2, 4),
-				Rotation = new Vector3(-0.05f * StMath.Tau, 0, 0),
+				Position = new Vector3(25, 20, 50),
+				Rotation = new Vector3(-0.05f*StMath.Tau, 0, 0),
 				Components =
 				{
 					new CameraComponent
