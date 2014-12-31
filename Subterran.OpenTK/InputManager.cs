@@ -1,51 +1,36 @@
 ﻿using System;
 using System.Drawing;
-using System.Windows.Forms;
-using OpenTK;
 using OpenTK.Input;
 
 namespace Subterran.OpenTK
 {
-	public sealed class InputManager : Disposable
+	public sealed class InputManager
 	{
-		private readonly GameWindow _window;
+		private readonly Window _window;
 		private Point _previousPosition;
 
 		public InputManager(Window window)
 		{
-			_window = window.OpenTkWindow;
-			_window.CursorVisible = false;
-
-			ClipCursor();
-		}
-
-		protected override void Dispose(bool managed)
-		{
-			if (managed)
-			{
-				Cursor.Clip = new Rectangle();
-			}
-
-			base.Dispose(managed);
+			_window = window;
+			_window.IsCursorVisible = false;
 		}
 
 		public event EventHandler<AimEventArgs> AimChange = (e, s) => { };
 
-		private void ClipCursor()
-		{
-			var borderSize = (_window.Bounds.Width - _window.ClientSize.Width)/2;
-			Cursor.Clip = new Rectangle(
-				_window.Bounds.X + borderSize,
-				(_window.Bounds.Y + _window.Bounds.Height) - (_window.ClientSize.Height + borderSize),
-				_window.ClientSize.Width,
-				_window.ClientSize.Height);
-		}
-
 		public void Update()
 		{
-			var state = Mouse.GetState();
+			// Update the cursor clipping for good measure
+			if (_window.Focused)
+			{
+				_window.UpdateCursorClip();
+			}
+			else
+			{
+				_window.ClearCursorClip();
+			}
 
 			// Get how much the mouse has changed
+			var state = Mouse.GetState();
 			var deltaPosition = new Point(
 				state.X - _previousPosition.X,
 				state.Y - _previousPosition.Y);

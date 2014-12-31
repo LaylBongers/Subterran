@@ -45,7 +45,6 @@ namespace Subterran.Basic
 		{
 			if (managed)
 			{
-				Input.Dispose();
 				Window.Dispose();
 			}
 
