@@ -108,22 +108,20 @@ namespace Subterran.OpenTK
 			}
 		}
 
-		public void RenderMesh(ref Matrix4 modelMatrix)
+		public void RenderMesh(ref Matrix4 modelMatrix, IEnumerable<ColoredVertex> vertices)
 		{
-			// TODO: Actually make this do stuff other than render a triangle for every mesh
+			// TODO: Make this use proper OpenGL 4.0
 
 			GL.MatrixMode(MatrixMode.Modelview);
 			GL.LoadMatrix(ref modelMatrix);
 
 			GL.Begin(PrimitiveType.Triangles);
 
-			GL.Vertex3(-0.5f, 0.5f, 0); // Left Top
-			GL.Vertex3(-0.5f, -0.5f, 0); // Left Bottom
-			GL.Vertex3(0.5f, -0.5f, 0); // Right Bottom
-
-			GL.Vertex3(-0.5f, 0.5f, 0); // Left Top
-			GL.Vertex3(0.5f, -0.5f, 0); // Right Bottom
-			GL.Vertex3(0.5f, 0.5f, 0); // Right Top
+			foreach (var vertex in vertices)
+			{
+				GL.Color3(vertex.Color);
+				GL.Vertex3(vertex.Position);
+			}
 
 			GL.End();
 		}

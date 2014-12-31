@@ -42,6 +42,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColoredVertex.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityComponent.cs" />
@@ -52,6 +53,7 @@
     <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="StMath.cs" />
     <Compile Include="Vector3i.cs" />
+    <Compile Include="VectorExtensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

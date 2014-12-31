@@ -46,7 +46,6 @@
   <ItemGroup>
     <Compile Include="AimEventArgs.cs" />
     <Compile Include="Components\CameraComponent.cs" />
-    <Compile Include="Components\TestRenderComponent.cs" />
     <Compile Include="InputManager.cs" />
     <Compile Include="RenderEntityComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
