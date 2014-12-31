@@ -2,13 +2,14 @@
 using System.Drawing;
 using System.Windows.Forms;
 using OpenTK;
+using OpenTK.Input;
 
 namespace Subterran.OpenTK
 {
 	public sealed class InputManager : Disposable
 	{
 		private readonly GameWindow _window;
-		private Point _currentPointer, _previousPointer;
+		private Point _previousPosition;
 
 		public InputManager(Window window)
 		{
@@ -42,19 +43,24 @@ namespace Subterran.OpenTK
 
 		public void Update()
 		{
-			_currentPointer = Cursor.Position;
+			var state = Mouse.GetState();
 
-			var deltaPointer = new Point(
-				_currentPointer.X - _previousPointer.X,
-				_currentPointer.Y - _previousPointer.Y);
+			// Get how much the mouse has changed
+			var deltaPosition = new Point(
+				state.X - _previousPosition.X,
+				state.Y - _previousPosition.Y);
 
-			Cursor.Position = new Point(
-				_window.Bounds.Left + (_window.Bounds.Width/2),
-				_window.Bounds.Top + (_window.Bounds.Height/2));
+			// Reset the mouse to the middle of the screen
+			Mouse.SetPosition(
+				_window.Bounds.Left + (_window.Bounds.Width / 2),
+				_window.Bounds.Top + (_window.Bounds.Height / 2));
 
-			_previousPointer = Cursor.Position;
+			// Store the position of the mouse currently so we can get the delta again next update
+			state = Mouse.GetState();
+			_previousPosition = new Point(state.X, state.Y);
 
-			AimChange(this, new AimEventArgs(deltaPointer.X, deltaPointer.Y));
+			// Actually trigger the change event
+			AimChange(this, new AimEventArgs(deltaPosition.X, deltaPosition.Y));
 		}
 	}
 }
