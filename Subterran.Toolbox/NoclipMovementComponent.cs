@@ -3,7 +3,7 @@ using OpenTK;
 using OpenTK.Input;
 using Subterran.OpenTK;
 
-namespace Subterran.Basic
+namespace Subterran.Toolbox
 {
 	public class NoclipMovementComponent : EntityComponent
 	{

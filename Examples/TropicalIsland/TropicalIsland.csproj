@@ -58,17 +58,13 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Subterran.Basic\Subterran.Basic.csproj">
+    <ProjectReference Include="..\..\Subterran.Toolbox\Subterran.Toolbox.csproj">
       <Project>{fd41c4ed-9387-48d1-bf6f-bb1347dfa10c}</Project>
-      <Name>Subterran.Basic</Name>
+      <Name>Subterran.Toolbox</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Subterran.OpenTK\Subterran.OpenTK.csproj">
       <Project>{1E0B810E-F186-4A59-BC48-11E1BB71B069}</Project>
       <Name>Subterran.OpenTK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Subterran.Voxels\Subterran.Voxels.csproj">
-      <Project>{e341e90d-0fac-47cb-b68f-314ffbd90b5e}</Project>
-      <Name>Subterran.Voxels</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Subterran\Subterran.csproj">
       <Project>{ca6493f3-a13c-4dff-b31d-e2d96148211f}</Project>

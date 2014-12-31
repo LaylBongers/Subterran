@@ -1,9 +1,9 @@
 ﻿using OpenTK;
 using Subterran;
-using Subterran.Basic;
 using Subterran.OpenTK;
 using Subterran.OpenTK.Components;
-using Subterran.Voxels;
+using Subterran.Toolbox;
+using Subterran.Toolbox.Voxels;
 
 namespace TropicalIsland
 {

@@ -19,10 +19,10 @@ build:
   verbosity: minimal
 
 after_test:
-  - ps: Get-ChildItem "Subterran.Basic\bin\$($env:configuration)" -include *.pdb,*.xml -recurse -force | Remove-Item -force
+  - ps: Get-ChildItem "Subterran.Toolbox\bin\$($env:configuration)" -include *.pdb,*.xml -recurse -force | Remove-Item -force
 
 artifacts:
-  - path: Subterran.Basic\bin\$(configuration)
+  - path: Subterran.Toolbox\bin\$(configuration)
     name: Subterran Libraries
     type: zip
 

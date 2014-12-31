@@ -7,7 +7,7 @@ using OpenTK.Input;
 using Subterran.OpenTK;
 using Subterran.OpenTK.Diagnostics;
 
-namespace Subterran.Basic
+namespace Subterran.Toolbox
 {
 	public sealed class BasicSubterranGame : Disposable
 	{

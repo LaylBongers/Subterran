@@ -2,7 +2,7 @@
 using OpenTK;
 using OpenTK.Graphics;
 using Subterran;
-using Subterran.Voxels;
+using Subterran.Toolbox.Voxels;
 
 namespace TropicalIsland
 {
