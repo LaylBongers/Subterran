@@ -51,17 +51,12 @@ namespace Subterran.Toolbox.Voxels
 						if (!Voxels[x][y][z].IsSolid)
 							continue;
 
-						var voxelColor = new Vector3(
-							(float) random.NextDouble(),
-							(float) random.NextDouble(),
-							(float) random.NextDouble());
-
 						vertices.AddRange(voxelMesh
 							.Transform(Matrix4.CreateTranslation(x, y, z))
 							.Select(v => new ColoredVertex
 							{
 								Position = v,
-								Color = voxelColor
+								Color = Voxels[x][y][z].Color
 							}));
 					}
 				}

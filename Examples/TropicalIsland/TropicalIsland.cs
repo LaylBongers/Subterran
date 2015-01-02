@@ -24,7 +24,9 @@ namespace TropicalIsland
 					CreateWorldMapEntity(new Vector3(26, 0, -26), 1f, VoxelMapGenerator.GenerateRandom(25, 25)),
 					
 					CreateWorldMapEntity(new Vector3(-2, 0, 0), 0.5f, VoxelMapGenerator.GenerateFlat(1, 1)),
-					CreateWorldMapEntity(new Vector3(-2, 0, -2), 1f, VoxelMapGenerator.GenerateFlat(1, 1))
+					CreateWorldMapEntity(new Vector3(-2, 0, -2), 1f, VoxelMapGenerator.GenerateFlat(1, 1)),
+					
+					CreateWorldMapEntity(new Vector3(13.5f, 0, 0), 0.5f, VoxelMapSerializer.Load("./test_map.voxelmap"))
 				}
 			};
 
@@ -56,7 +58,7 @@ namespace TropicalIsland
 					{
 						VerticalFoV = 0.2f*StMath.Tau,
 						ZNear = 0.1f,
-						ZFar = 100f
+						ZFar = 200f
 					},
 					new NoclipMovementComponent(input)
 				}

@@ -15,5 +15,18 @@ namespace Subterran
 		{
 			return val1 > val2 ? val1 : val2;
 		}
+
+		public static int Range(int value, int min, int max)
+		{
+			if (value < min) return min;
+			if (value > max) return max;
+
+			return value;
+		}
+
+		public static float NormalizeColor(int value)
+		{
+			return (float) value/byte.MaxValue;
+		}
 	}
 }
