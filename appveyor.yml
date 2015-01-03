@@ -20,6 +20,7 @@ build:
 
 after_test:
   - ps: Get-ChildItem "Subterran.Toolbox\bin\$($env:configuration)" -include *.pdb,*.xml -recurse -force | Remove-Item -force
+  - ps: Get-ChildItem "Examples\TropicalIsland\bin\$($env:configuration)" -include *.pdb,*.xml -recurse -force | Remove-Item -force
 
 artifacts:
   - path: Subterran.Toolbox\bin\$(configuration)
