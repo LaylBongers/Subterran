@@ -49,6 +49,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Voxels\FixedSizeVoxelMapComponent.cs" />
     <Compile Include="Voxels\Voxel.cs" />
+    <Compile Include="Voxels\VoxelMapMesher.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Subterran.OpenTK\Subterran.OpenTK.csproj">

@@ -27,6 +27,7 @@ namespace Subterran.Toolbox.Voxels
 			get { return _voxels; }
 			set
 			{
+				// Bug: The mesh doesn't get marked invalid on replacing a single value.
 				_voxels = value;
 				_meshIsOutdated = true;
 			}
@@ -34,51 +35,17 @@ namespace Subterran.Toolbox.Voxels
 
 		public override void Update(TimeSpan elapsed)
 		{
-			// We only need to update if the mesh is outdated
-			if (!_meshIsOutdated)
-				return;
-
-			var random = new Random();
-			var vertices = new List<ColoredVertex>();
-
-			for (var x = 0; x < Voxels.Length; x++)
-			{
-				for (var y = 0; y < Voxels[x].Length; y++)
-				{
-					for (var z = 0; z < Voxels[x][y].Length; z++)
-					{
-						if (!Voxels[x][y][z].IsSolid)
-							continue;
-
-						vertices.AddRange(Voxel.CreateMesh(
-							x <= 0 || !Voxels[x - 1][y][z].IsSolid,
-							x >= Voxels.Length - 1 || !Voxels[x + 1][y][z].IsSolid,
-
-							y <= 0 || !Voxels[x][y - 1][z].IsSolid,
-							y >= Voxels[x].Length - 1 || !Voxels[x][y + 1][z].IsSolid,
-							
-							z <= 0 || !Voxels[x][y][z - 1].IsSolid,
-							z >= Voxels[x][y].Length - 1 || !Voxels[x][y][z + 1].IsSolid)
-
-							.Transform(Matrix4.CreateTranslation(x, y, z))
-							.Select(v => new ColoredVertex
-							{
-								Position = v,
-								Color = Voxels[x][y][z].Color
-							}));
-					}
-				}
-			}
-
-			_vertices = vertices.ToArray();
-			_meshIsOutdated = false;
+			
 		}
 
 		public override void Render(Renderer renderer, Matrix4 matrix)
 		{
-			// We can't render if the mesh hasn't been created yet
-			if (_vertices == null)
-				return;
+			// If the mesh is outdated or we don't have vertices at all, we need to (re)generate it
+			if (_meshIsOutdated || _vertices == null)
+			{
+				_vertices = VoxelMapMesher.GenerateMesh(Voxels).ToArray();
+				_meshIsOutdated = false;
+			}
 
 			renderer.RenderMeshStreaming(ref matrix, _vertices);
 		}

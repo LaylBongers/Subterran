@@ -12,8 +12,9 @@ namespace Subterran.OpenTK
 {
 	public sealed class Renderer
 	{
+		private readonly int _matrixUniform;
+		private readonly int _shaderProgram;
 		private readonly Window _targetWindow;
-		private readonly int _shaderProgram, _matrixUniform;
 
 		public Renderer(Window targetWindow)
 		{
@@ -33,7 +34,7 @@ namespace Subterran.OpenTK
 			_shaderProgram = GL.CreateProgram();
 
 			AttachShader(_shaderProgram, File.ReadAllText("./color.vert.glsl"), ShaderType.VertexShader);
-			AttachShader(_shaderProgram,  File.ReadAllText("./color.frag.glsl"), ShaderType.FragmentShader);
+			AttachShader(_shaderProgram, File.ReadAllText("./color.frag.glsl"), ShaderType.FragmentShader);
 
 			GL.LinkProgram(_shaderProgram);
 
@@ -141,7 +142,7 @@ namespace Subterran.OpenTK
 			return data;
 		}
 
-		private static void CollapseEntityTreeTo(Entity entity, RenderData data, Matrix4 modelMatrix)
+		private static void CollapseEntityTreeTo(Entity entity, RenderData data, Matrix4 previousMatrix)
 		{
 			// Create a multiply matrix representing this entity
 			var entityMatrix =
@@ -152,7 +153,7 @@ namespace Subterran.OpenTK
 				Matrix4.CreateTranslation(entity.Position);
 
 			// Multiply the model matrix with the previously created entity matrix
-			modelMatrix = entityMatrix*modelMatrix;
+			previousMatrix = entityMatrix*previousMatrix;
 
 			// Add all the entities we're interested in to the list
 			data.Renderables.AddRange(
@@ -160,7 +161,7 @@ namespace Subterran.OpenTK
 					.GetComponents<RenderEntityComponent>()
 					.Select(c => new RenderableData
 					{
-						Matrix = modelMatrix,
+						Matrix = previousMatrix,
 						Component = c
 					})
 				);
@@ -169,7 +170,7 @@ namespace Subterran.OpenTK
 					.GetComponents<CameraComponent>()
 					.Select(c => new CameraData
 					{
-						Matrix = modelMatrix,
+						Matrix = previousMatrix,
 						Component = c
 					})
 				);
@@ -177,7 +178,7 @@ namespace Subterran.OpenTK
 			// Recursively do the same for every child entity
 			foreach (var child in entity.Children)
 			{
-				CollapseEntityTreeTo(child, data, modelMatrix);
+				CollapseEntityTreeTo(child, data, previousMatrix);
 			}
 		}
 
@@ -188,7 +189,7 @@ namespace Subterran.OpenTK
 			GL.BindBuffer(BufferTarget.ArrayBuffer, buffer);
 			GL.BufferData(
 				BufferTarget.ArrayBuffer,
-				new IntPtr(ColoredVertex.SizeInBytes * vertices.Length),
+				new IntPtr(ColoredVertex.SizeInBytes*vertices.Length),
 				vertices,
 				BufferUsageHint.StreamDraw);
 
