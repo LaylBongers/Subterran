@@ -40,7 +40,6 @@ namespace Subterran.Toolbox.Voxels
 
 			var random = new Random();
 			var vertices = new List<ColoredVertex>();
-			var voxelMesh = Voxel.CreateMesh();
 
 			for (var x = 0; x < Voxels.Length; x++)
 			{
@@ -51,7 +50,16 @@ namespace Subterran.Toolbox.Voxels
 						if (!Voxels[x][y][z].IsSolid)
 							continue;
 
-						vertices.AddRange(voxelMesh
+						vertices.AddRange(Voxel.CreateMesh(
+							x <= 0 || !Voxels[x - 1][y][z].IsSolid,
+							x >= Voxels.Length - 1 || !Voxels[x + 1][y][z].IsSolid,
+
+							y <= 0 || !Voxels[x][y - 1][z].IsSolid,
+							y >= Voxels[x].Length - 1 || !Voxels[x][y + 1][z].IsSolid,
+							
+							z <= 0 || !Voxels[x][y][z - 1].IsSolid,
+							z >= Voxels[x][y].Length - 1 || !Voxels[x][y][z + 1].IsSolid)
+
 							.Transform(Matrix4.CreateTranslation(x, y, z))
 							.Select(v => new ColoredVertex
 							{
