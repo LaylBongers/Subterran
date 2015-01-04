@@ -13,7 +13,7 @@ namespace Subterran.OpenTK
 	public sealed class Renderer
 	{
 		private readonly int _matrixUniform;
-		private readonly int _shaderProgram;
+		private readonly int _program;
 		private readonly Window _targetWindow;
 
 		public Renderer(Window targetWindow)
@@ -28,73 +28,19 @@ namespace Subterran.OpenTK
 			GL.CullFace(CullFaceMode.Back);
 			GL.FrontFace(FrontFaceDirection.Ccw);
 
-			// TODO: Clean things up below this line and split it into other files
-
 			// Create a shader we'll render meshes with
-			_shaderProgram = GL.CreateProgram();
+			_program = GL.CreateProgram();
 
-			AttachShader(_shaderProgram, File.ReadAllText("./color.vert.glsl"), ShaderType.VertexShader);
-			AttachShader(_shaderProgram, File.ReadAllText("./color.frag.glsl"), ShaderType.FragmentShader);
+			ShaderUtils.AttachShader(_program, File.ReadAllText("./color.vert.glsl"), ShaderType.VertexShader);
+			ShaderUtils.AttachShader(_program, File.ReadAllText("./color.frag.glsl"), ShaderType.FragmentShader);
+			GL.LinkProgram(_program);
 
-			GL.LinkProgram(_shaderProgram);
-
-			// Report any errors found
-			int linkStatus;
-			GL.GetProgram(_shaderProgram, GetProgramParameterName.LinkStatus, out linkStatus);
-			var log = GL.GetProgramInfoLog(_shaderProgram);
-			if (linkStatus != 1)
-			{
-				var message = string.Format(null, "Shader program {0} failed to link!", _shaderProgram);
-				Trace.TraceError(message);
-				throw new ProgramException(message, log);
-			}
-
-			// If there's anything in the log, it might be a warning
-			if (!string.IsNullOrEmpty(log))
-			{
-				Trace.TraceWarning("Shader program {0} compiled with warnings:", _shaderProgram);
-				Trace.Indent();
-				foreach (var logLine in log.Split('\n'))
-				{
-					Trace.TraceWarning(logLine);
-				}
-				Trace.Unindent();
-			}
+			ShaderUtils.DetectErrors(_program);
 
 			// Set up shader uniforms
-			_matrixUniform = GL.GetUniformLocation(_shaderProgram, "Matrix");
+			_matrixUniform = ShaderUtils.GetUniformLocation(_program, "Matrix");
 
-			if (_matrixUniform == -1)
-			{
-				var message = string.Format(null, "Shader program {0} does not contain required uniforms!", _shaderProgram);
-				Trace.TraceError(message);
-				throw new ProgramException(message);
-			}
-
-			Trace.TraceInformation("Created new shader program {0}!", _shaderProgram);
-		}
-
-		private static void AttachShader(int program, string source, ShaderType type)
-		{
-			var shader = GL.CreateShader(type);
-
-			GL.ShaderSource(shader, source);
-			GL.CompileShader(shader);
-
-			int compileStatus;
-			GL.GetShader(shader, ShaderParameter.CompileStatus, out compileStatus);
-			if (compileStatus != 1)
-			{
-				var message = string.Format(null, "Shader {0} failed to compile!", shader);
-				Trace.TraceWarning(message);
-				throw new ShaderException(
-					message,
-					GL.GetShaderInfoLog(shader),
-					source,
-					type);
-			}
-
-			GL.AttachShader(program, shader);
+			Trace.TraceInformation("Created new shader program {0}!", _program);
 		}
 
 		public void Clear(Color color)
@@ -158,7 +104,7 @@ namespace Subterran.OpenTK
 			// Add all the entities we're interested in to the list
 			data.Renderables.AddRange(
 				entity
-					.GetComponents<RenderEntityComponent>()
+					.GetComponents<IRenderable>()
 					.Select(c => new RenderableData
 					{
 						Matrix = previousMatrix,
@@ -194,7 +140,7 @@ namespace Subterran.OpenTK
 				BufferUsageHint.StreamDraw);
 
 			// Bind our shader program and give it the matrix uniform
-			GL.UseProgram(_shaderProgram);
+			GL.UseProgram(_program);
 			GL.UniformMatrix4(_matrixUniform, false, ref matrix);
 
 			// Tell OpenGL where to find the vertex attributes in the vertices
@@ -245,7 +191,7 @@ namespace Subterran.OpenTK
 
 		private class RenderableData
 		{
-			public RenderEntityComponent Component { get; set; }
+			public IRenderable Component { get; set; }
 			public Matrix4 Matrix { get; set; }
 		}
 	}

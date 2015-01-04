@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using OpenTK;
 using Subterran.OpenTK;
 
 namespace Subterran.Toolbox.Voxels
 {
-	public class FixedSizeVoxelMapComponent : RenderEntityComponent
+	public class FixedSizeVoxelMapComponent : EntityComponent, IRenderable
 	{
 		private bool _meshIsOutdated;
 		private ColoredVertex[] _vertices;
@@ -33,12 +31,7 @@ namespace Subterran.Toolbox.Voxels
 			}
 		}
 
-		public override void Update(TimeSpan elapsed)
-		{
-			
-		}
-
-		public override void Render(Renderer renderer, Matrix4 matrix)
+		public void Render(Renderer renderer, Matrix4 matrix)
 		{
 			// If the mesh is outdated or we don't have vertices at all, we need to (re)generate it
 			if (_meshIsOutdated || _vertices == null)

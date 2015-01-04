@@ -49,13 +49,11 @@ namespace Subterran
 		}
 
 		public T GetComponent<T>()
-			where T : EntityComponent
 		{
 			return GetComponents<T>().FirstOrDefault();
 		}
 
 		public IEnumerable<T> GetComponents<T>()
-			where T : EntityComponent
 		{
 			return Components.OfType<T>();
 		}

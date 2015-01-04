@@ -18,7 +18,7 @@ namespace TropicalIsland
 				{
 					CreateCameraEntity(game.Input),
 
-					// Demo random generated
+					// Random generated voxel maps
 					CreateWorldMapEntity(new Vector3(0, 0, 0), Vector3.Zero, 0.5f, VoxelMapGenerator.GenerateFlat(25, 25)),
 					CreateWorldMapEntity(new Vector3(0, 0, -26), Vector3.Zero, 1f, VoxelMapGenerator.GenerateFlat(25, 25)),
 					CreateWorldMapEntity(new Vector3(26, 0, 0), Vector3.Zero, 0.5f, VoxelMapGenerator.GenerateRandom(25, 25)),
@@ -35,7 +35,10 @@ namespace TropicalIsland
 						VoxelMapSerializer.Load("./test_map.voxelmap")),
 					CreateWorldMapEntity(
 						new Vector3(17.5f, 0, 9f), new Vector3(0, StMath.Tau*0.125f, 0), 0.5f,
-						VoxelMapSerializer.Load("./test_map.voxelmap"))
+						VoxelMapSerializer.Load("./test_map.voxelmap")),
+
+					// Example loaded in teapot
+					CreateModelEntity(ModelLoader.Load("./teapot.obj"))
 				}
 			};
 
@@ -71,6 +74,19 @@ namespace TropicalIsland
 						ZFar = 200f
 					},
 					new NoclipMovementComponent(input)
+				}
+			};
+		}
+
+		private static Entity CreateModelEntity(ColoredVertex[] vertices)
+		{
+			return new Entity
+			{
+				Position = new Vector3(10, 2, -10),
+				Scale = new Vector3(5, 5, 5),
+				Components =
+				{
+					new MeshRendererComponent {Vertices = vertices}
 				}
 			};
 		}
