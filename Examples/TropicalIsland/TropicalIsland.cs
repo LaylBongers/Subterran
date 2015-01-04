@@ -38,7 +38,8 @@ namespace TropicalIsland
 						VoxelMapSerializer.Load("./test_map.voxelmap")),
 
 					// Example loaded in teapot
-					CreateModelEntity(ModelLoader.Load("./teapot.obj"))
+					CreateModelEntity(new Vector3(7, 1, -10), 0.8f, ModelLoader.Load("./teapot.obj")),
+					CreateModelEntity(new Vector3(18, 1, -15), -0.4f, ModelLoader.Load("./teapot.obj"))
 				}
 			};
 
@@ -78,15 +79,16 @@ namespace TropicalIsland
 			};
 		}
 
-		private static Entity CreateModelEntity(ColoredVertex[] vertices)
+		private static Entity CreateModelEntity(Vector3 position, float speed, ColoredVertex[] vertices)
 		{
 			return new Entity
 			{
-				Position = new Vector3(10, 2, -10),
+				Position = position,
 				Scale = new Vector3(5, 5, 5),
 				Components =
 				{
-					new MeshRendererComponent {Vertices = vertices}
+					new MeshRendererComponent {Vertices = vertices},
+					new SpinnerComponent {Speed = speed}
 				}
 			};
 		}

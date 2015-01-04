@@ -49,6 +49,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ModelLoader.cs" />
+    <Compile Include="SpinnerComponent.cs" />
     <Compile Include="TropicalIsland.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

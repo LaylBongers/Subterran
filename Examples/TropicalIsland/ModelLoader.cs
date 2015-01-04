@@ -17,7 +17,6 @@ namespace TropicalIsland
 			// Set up lists to load data into
 			var positions = new List<Vector3>();
 			var indices = new List<int>();
-			var start = 0;
 
 			// Parse all the lines into data
 			foreach (var line in lines)
@@ -31,8 +30,8 @@ namespace TropicalIsland
 					{
 						var values = data.Skip(1).Select(d => float.Parse(d, CultureInfo.InvariantCulture)).ToArray();
 						positions.Add(new Vector3(values[0], values[1], values[2]));
-					}
 						break;
+					}
 
 					case "f": // Faces
 					{
@@ -41,12 +40,8 @@ namespace TropicalIsland
 								.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries).Take(1)
 								.Select(pos => int.Parse(pos, CultureInfo.InvariantCulture)));
 						indices.AddRange(values);
+						break;
 					}
-						break;
-
-					case "s":
-						start = int.Parse(data.Skip(1).First(), CultureInfo.InvariantCulture);
-						break;
 				}
 				// We're ignoring anything that's not any of those
 			}
@@ -57,7 +52,7 @@ namespace TropicalIsland
 			var positionsArray = positions.ToArray();
 			var vertices = indices.Select(i => new ColoredVertex
 			{
-				Position = positionsArray[i - start],
+				Position = positionsArray[i - 1],
 				Color = new Vector3(random.NextFloat(), random.NextFloat(), random.NextFloat())
 			});
 
