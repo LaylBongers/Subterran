@@ -60,6 +60,9 @@ dlldata.c
 *.svclog
 *.scc
 
+# Exceptions to allow Wavefront .obj files
+!*.st.obj
+
 # Chutzpah Test files
 _Chutzpah*
 
