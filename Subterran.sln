@@ -15,7 +15,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Tests", "Subterra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Toolbox", "Subterran.Toolbox\Subterran.Toolbox.csproj", "{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComponentGallery", "ComponentGallery\ComponentGallery.csproj", "{184DD2CB-D774-4201-8A49-C6A3747AF8BF}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComponentGallery", "Examples\ComponentGallery\ComponentGallery.csproj", "{184DD2CB-D774-4201-8A49-C6A3747AF8BF}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
