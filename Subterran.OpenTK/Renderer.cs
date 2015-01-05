@@ -31,8 +31,8 @@ namespace Subterran.OpenTK
 			// Create a shader we'll render meshes with
 			_program = GL.CreateProgram();
 
-			ShaderUtils.AttachShader(_program, File.ReadAllText("./color.vert.glsl"), ShaderType.VertexShader);
-			ShaderUtils.AttachShader(_program, File.ReadAllText("./color.frag.glsl"), ShaderType.FragmentShader);
+			ShaderUtils.AttachShader(_program, File.ReadAllText("./Shaders/color.vert.glsl"), ShaderType.VertexShader);
+			ShaderUtils.AttachShader(_program, File.ReadAllText("./Shaders/color.frag.glsl"), ShaderType.FragmentShader);
 			GL.LinkProgram(_program);
 
 			ShaderUtils.DetectErrors(_program);
