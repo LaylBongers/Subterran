@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{A0321BEB-1149-4096-A88B-6AD8AE1FF361}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{184DD2CB-D774-4201-8A49-C6A3747AF8BF}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>TropicalIsland</RootNamespace>
-    <AssemblyName>TropicalIsland</AssemblyName>
+    <RootNamespace>ComponentGallery</RootNamespace>
+    <AssemblyName>ComponentGallery</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -31,12 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
-  <PropertyGroup>
-    <StartupObject />
-  </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
+      <HintPath>..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -48,30 +45,40 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="TropicalIsland.cs" />
+    <Compile Include="ModelLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpinnerComponent.cs" />
+    <Compile Include="ComponentGallery.cs" />
+    <Compile Include="VoxelMapGenerator.cs" />
+    <Compile Include="VoxelMapSerializer.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Objects\teapot.st.obj">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Objects\test_map.voxelmap">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="packages.config" />
     <None Include="Shaders\color.frag.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="Shaders\color.vert.glsl">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Subterran.Toolbox\Subterran.Toolbox.csproj">
+    <ProjectReference Include="..\Subterran.OpenTK\Subterran.OpenTK.csproj">
+      <Project>{1e0b810e-f186-4a59-bc48-11e1bb71b069}</Project>
+      <Name>Subterran.OpenTK</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Subterran.Toolbox\Subterran.Toolbox.csproj">
       <Project>{fd41c4ed-9387-48d1-bf6f-bb1347dfa10c}</Project>
       <Name>Subterran.Toolbox</Name>
     </ProjectReference>
-    <ProjectReference Include="..\..\Subterran.OpenTK\Subterran.OpenTK.csproj">
-      <Project>{1E0B810E-F186-4A59-BC48-11E1BB71B069}</Project>
-      <Name>Subterran.OpenTK</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Subterran\Subterran.csproj">
+    <ProjectReference Include="..\Subterran\Subterran.csproj">
       <Project>{ca6493f3-a13c-4dff-b31d-e2d96148211f}</Project>
       <Name>Subterran</Name>
     </ProjectReference>

@@ -2,7 +2,7 @@
 using OpenTK;
 using Subterran;
 
-namespace TropicalIsland
+namespace ComponentGallery
 {
 	internal class SpinnerComponent : EntityComponent
 	{

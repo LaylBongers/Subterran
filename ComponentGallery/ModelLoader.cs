@@ -6,7 +6,7 @@ using System.Linq;
 using OpenTK;
 using Subterran;
 
-namespace TropicalIsland
+namespace ComponentGallery
 {
 	internal static class ModelLoader
 	{

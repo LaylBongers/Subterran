@@ -22,7 +22,7 @@ namespace Subterran.OpenTK
 				GameWindowFlags.FixedWindow)
 			{
 				Visible = true,
-				VSync = VSyncMode.Adaptive
+				VSync = VSyncMode.Off
 			};
 			_window.Closing += OnClosing;
 		}

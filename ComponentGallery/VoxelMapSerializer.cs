@@ -7,7 +7,7 @@ using OpenTK;
 using Subterran;
 using Subterran.Toolbox.Voxels;
 
-namespace TropicalIsland
+namespace ComponentGallery
 {
 	public static class VoxelMapSerializer
 	{
