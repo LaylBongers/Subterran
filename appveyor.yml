@@ -18,12 +18,6 @@ before_build:
 build:
   verbosity: minimal
 
-# Remove unneeded files from output directories
-after_test:
-  - ps: Get-ChildItem "Subterran.Toolbox\bin\$($env:configuration)" -include *.pdb,*.xml -recurse -force | Remove-Item -force
-  - ps: Get-ChildItem "Examples\TropicalIsland\bin\$($env:configuration)" -include *.pdb,*.xml -recurse -force | Remove-Item -force
-  - ps: Get-ChildItem "Examples\ComponentGallery\bin\$($env:configuration)" -include *.pdb,*.xml -recurse -force | Remove-Item -force
-
 artifacts:
   # Subterran.Toolbox contains all the Subterran libraries in the output
   - path: Subterran.Toolbox\bin\$(configuration)

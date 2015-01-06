@@ -4,9 +4,9 @@
 flat in vec3 fragColor;
 
 // Output color, automatically gets picked up by OpenGL
-out vec4 dv_FragColor;
+out vec4 st_FragColor;
 
 void main()
 {
-	dv_FragColor = vec4(fragColor.rgb, 1.0f);
+	st_FragColor = vec4(fragColor.rgb, 1.0f);
 }
