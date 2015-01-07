@@ -15,7 +15,6 @@
     <dependencies>
       <group>
         <dependency id="Subterran" />
-        <dependency id="Subterran.OpenTK" />
       </group>
     </dependencies>
   </metadata>

@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Subterran.Rendering")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Subterran.OpenTK")]
+[assembly: AssemblyDescription("A set of OpenTK-specific classes for use with the Subterran game engine.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Subterran.Rendering")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCompany("EdgeWorks Games")]
+[assembly: AssemblyProduct("Subterran.OpenTK")]
+[assembly: AssemblyCopyright("Copyright © EdgeWorks Games 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
