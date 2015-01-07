@@ -4,20 +4,11 @@ Subterran is an open source 3D game engine written in C#.
 
 ### Getting Started
 
-You can download the latest Subterran release from GitHub [as binary from releases](https://github.com/LaylConway/Subterran/releases), or as source by cloning the git repository:
+The simplest way to get Subterran is to install the [Subterran.Toolkit NuGet package](https://www.nuget.org/packages/Subterran.Toolbox/) into your project. Alternatively, you can download binaries from [AppVeyor](https://ci.appveyor.com/project/LaylConway/subterran/build/artifacts).
 
-```Shell
-git clone https://github.com/LaylConway/Subterran.git
-```
+Go to the [Getting Started](https://github.com/LaylConway/Subterran/wiki/Getting-Started) guide on the wiki to learn how to use Subterran.
 
-Latest development builds can be downloaded [from AppVeyor](https://ci.appveyor.com/project/LaylConway/subterran/build/artifacts).
+### Examples
 
-[No NuGet packages are available yet.](https://github.com/LaylConway/Subterran/issues/1)
-
-The best way to get started with Subterran is to download *Subterran Libraries* from AppVeyor and look at the [example projects](https://github.com/LaylConway/Subterran/tree/develop/Examples).
-Unfortunately there is no [Getting Started](https://github.com/LaylConway/Subterran/wiki/Getting-Started) page on how to create your first game with subterran yet.
-
-### OpenTK in Subterran
-
-This project uses OpenTK both as generic math library and for OpenGL rendering.
-OpenTK non-math related classes should only be used within the `Subterran.OpenTK` project to allow porting to different libraries.
+You can find example projects on how to use Subterran in the [Examples](https://github.com/LaylConway/Subterran/tree/develop/Examples) folder.
+They are also available in binary executable form on [AppVeyor](https://ci.appveyor.com/project/LaylConway/subterran/build/artifacts).
