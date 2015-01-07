@@ -1,18 +1,14 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
 using System.Drawing;
-using System.Linq;
 using OpenTK.Input;
 using Subterran.OpenTK;
-using Subterran.Toolbox.Diagnostics;
 
 namespace Subterran.Toolbox
 {
 	public sealed class BasicSubterranGame : Disposable
 	{
 		private readonly LoopManager _loopManager = new LoopManager();
-		private PerformanceCounter _gcTimeCounter;
 
 		public BasicSubterranGame(string name)
 		{
@@ -33,7 +29,12 @@ namespace Subterran.Toolbox
 			_loopManager.Loops.Add(new Loop(Render));
 
 			// Set up a performance tracers to warn the developer about stuff
-			InitializePerformanceTracers();
+			PerformanceTracers = new Collection<PerformanceTracer>
+			{
+				PerformanceTracer.CreateLoopSlownessTracer(_loopManager),
+				PerformanceTracer.CreateLoopSkippingTracer(_loopManager),
+				PerformanceTracer.CreateGcTimeTracer()
+			};
 		}
 
 		public Window Window { get; set; }
@@ -45,31 +46,6 @@ namespace Subterran.Toolbox
 		public Renderer Renderer { get; set; }
 
 		public Collection<PerformanceTracer> PerformanceTracers { get; set; }
-
-		private void InitializePerformanceTracers()
-		{
-			_gcTimeCounter = new PerformanceCounter(
-				".NET CLR Memory", "% Time in GC",
-				Process.GetCurrentProcess().ProcessName);
-			float value = 0;
-
-			PerformanceTracers = new Collection<PerformanceTracer>
-			{
-				new PerformanceTracer(
-					() => _loopManager.Loops.Any(l => l.IsRunningSlow),
-					() => "The game is running slow!"),
-				new PerformanceTracer(
-					() => _loopManager.Loops.Any(l => l.IsSkippingTime),
-					() => "The game is skipping frame time!"),
-				new PerformanceTracer(
-					() =>
-					{
-						value = _gcTimeCounter.NextValue();
-						return value > 10;
-					},
-					() => "The game has spent a lot of time in garbage collection! (" + value + "%)")
-			};
-		}
 
 		protected override void Dispose(bool managed)
 		{
