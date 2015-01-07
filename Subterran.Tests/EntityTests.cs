@@ -63,34 +63,34 @@ namespace Subterran.Tests
 		}
 
 		[Fact]
-		public void Update_OneComponent_UpdatesComponent()
+		public void Call_OneCallableComponent_CallableComponent()
 		{
 			// Arrange
-			var component = Substitute.For<EntityComponent>();
+			var component = Substitute.For<CallableComponent>();
 			var entity = new Entity {Components = {component}};
 
 			// Act
-			entity.Update(TimeSpan.FromSeconds(1));
+			entity.Call<ICallable>(e => e.Call(5));
 
 			// Assert
-			component.Received(1).Update(TimeSpan.FromSeconds(1));
+			component.Received(1).Call(5);
 		}
 
 		[Fact]
-		public void Update_OneChild_UpdatesChildren()
+		public void Call_OneCallableChild_CallableChildren()
 		{
 			// This assumes Update_OneComponent_UpdatesComponent passes
 
 			// Arrange
-			var component = Substitute.For<EntityComponent>();
+			var component = Substitute.For<CallableComponent>();
 			var childEntity = new Entity {Components = {component}};
 			var entity = new Entity {Children = {childEntity}};
 
 			// Act
-			entity.Update(TimeSpan.FromSeconds(1));
+			entity.Call<ICallable>(e => e.Call(5));
 
 			// Assert
-			component.Received(1).Update(TimeSpan.FromSeconds(1));
+			component.Received(1).Call(5);
 		}
 
 		public abstract class ComponentA : EntityComponent
@@ -99,6 +99,16 @@ namespace Subterran.Tests
 
 		public abstract class ComponentB : EntityComponent
 		{
+		}
+
+		public abstract class CallableComponent : EntityComponent, ICallable
+		{
+			public abstract void Call(int num);
+		}
+
+		public interface ICallable
+		{
+			void Call(int num);
 		}
 	}
 }

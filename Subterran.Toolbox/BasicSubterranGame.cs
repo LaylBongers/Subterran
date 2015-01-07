@@ -115,7 +115,7 @@ namespace Subterran.Toolbox
 			}
 
 			// Update the entire world
-			World.Update(elapsed);
+			World.Call<IUpdatable>(e => e.Update(elapsed));
 		}
 
 		private void Render(TimeSpan elapsed)

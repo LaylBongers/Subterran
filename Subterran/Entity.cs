@@ -58,16 +58,16 @@ namespace Subterran
 			return Components.OfType<T>();
 		}
 
-		public void Update(TimeSpan elapsed)
+		public void Call<T>(Action<T> func)
 		{
-			foreach (var component in Components)
+			foreach (var component in GetComponents<T>())
 			{
-				component.Update(elapsed);
+				func(component);
 			}
 
 			foreach (var child in Children)
 			{
-				child.Update(elapsed);
+				child.Call(func);
 			}
 		}
 	}

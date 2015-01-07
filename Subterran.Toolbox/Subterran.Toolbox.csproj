@@ -46,6 +46,7 @@
   <ItemGroup>
     <Compile Include="BasicSubterranGame.cs" />
     <Compile Include="Diagnostics\PerformanceTracer.cs" />
+    <Compile Include="IUpdatable.cs" />
     <Compile Include="NoclipMovementComponent.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Voxels\FixedSizeVoxelMapComponent.cs" />

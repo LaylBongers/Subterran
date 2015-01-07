@@ -15,10 +15,5 @@ namespace Subterran
 
 			Entity = entity;
 		}
-
-		public virtual void Update(TimeSpan elapsed)
-		{
-			// This is just a stub so derived classes aren't required to implement it.
-		}
 	}
 }

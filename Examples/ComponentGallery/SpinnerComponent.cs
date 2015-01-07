@@ -1,14 +1,15 @@
 ﻿using System;
 using OpenTK;
 using Subterran;
+using Subterran.Toolbox;
 
 namespace ComponentGallery
 {
-	internal class SpinnerComponent : EntityComponent
+	internal class SpinnerComponent : EntityComponent, IUpdatable
 	{
 		public float Speed { get; set; }
 
-		public override void Update(TimeSpan elapsed)
+		public void Update(TimeSpan elapsed)
 		{
 			Entity.Rotation += new Vector3(0, elapsed.PerSecond(Speed), 0);
 		}

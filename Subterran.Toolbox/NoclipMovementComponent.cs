@@ -5,7 +5,7 @@ using Subterran.OpenTK;
 
 namespace Subterran.Toolbox
 {
-	public class NoclipMovementComponent : EntityComponent
+	public class NoclipMovementComponent : EntityComponent, IUpdatable
 	{
 		public NoclipMovementComponent(InputManager input)
 		{
@@ -19,7 +19,7 @@ namespace Subterran.Toolbox
 		public float Speed { get; set; }
 		public float FastSpeed { get; set; }
 
-		public override void Update(TimeSpan elapsed)
+		public void Update(TimeSpan elapsed)
 		{
 			var rotationMatrix =
 				Matrix4.CreateRotationX(Entity.Rotation.X)*
