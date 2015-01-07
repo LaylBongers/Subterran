@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
-using System.IO;
 using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
@@ -12,6 +11,39 @@ namespace Subterran.OpenTK
 {
 	public sealed class Renderer
 	{
+		private const string VertexShader = @"#version 330
+
+// Transformation Matrices
+uniform mat4 Matrix;
+
+// Data coming into the vertex shader
+layout(location = 0) in vec3 vertexPosition;
+layout(location = 1) in vec3 vertexColor;
+
+// Data going to the fragment shader
+flat out vec3 fragColor;
+
+void main()
+{
+	// Pass the color over to the fragment shader
+	fragColor = vertexColor;
+
+	gl_Position = Matrix * vec4(vertexPosition, 1.0);
+}";
+
+		private const string FragmentShader = @"#version 330
+
+// Data coming from the vertex shader
+flat in vec3 fragColor;
+
+// Output color, automatically gets picked up by OpenGL
+out vec4 st_FragColor;
+
+void main()
+{
+	st_FragColor = vec4(fragColor.rgb, 1.0f);
+}";
+
 		private readonly int _matrixUniform;
 		private readonly int _program;
 		private readonly Window _targetWindow;
@@ -31,8 +63,8 @@ namespace Subterran.OpenTK
 			// Create a shader we'll render meshes with
 			_program = GL.CreateProgram();
 
-			ShaderUtils.AttachShader(_program, File.ReadAllText("./Shaders/color.vert.glsl"), ShaderType.VertexShader);
-			ShaderUtils.AttachShader(_program, File.ReadAllText("./Shaders/color.frag.glsl"), ShaderType.FragmentShader);
+			ShaderUtils.AttachShader(_program, VertexShader, ShaderType.VertexShader);
+			ShaderUtils.AttachShader(_program, FragmentShader, ShaderType.FragmentShader);
 			GL.LinkProgram(_program);
 
 			ShaderUtils.DetectErrors(_program);
