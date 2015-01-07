@@ -14,7 +14,7 @@
     <tags>engine games gamedev OpenGL</tags>
     <dependencies>
       <group>
-        <dependency id="Subterran" />
+        <dependency id="Subterran" version="$version$" />
       </group>
     </dependencies>
   </metadata>
