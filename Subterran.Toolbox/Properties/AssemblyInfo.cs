@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Subterran.Basic")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("Subterran.Toolbox")]
+[assembly: AssemblyDescription("A set of tools for building a game based on the Subterran game engine.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("Subterran.Basic")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCompany("EdgeWorks Games")]
+[assembly: AssemblyProduct("Subterran.Toolbox")]
+[assembly: AssemblyCopyright("Copyright © EdgeWorks Games 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
