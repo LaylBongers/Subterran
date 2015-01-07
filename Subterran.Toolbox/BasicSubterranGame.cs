@@ -24,9 +24,14 @@ namespace Subterran.Toolbox
 			World = new Entity();
 
 			// Set up our game loops
-			_loopManager = new LoopManager();
-			_loopManager.Loops.Add(new Loop(Update, 120));
-			_loopManager.Loops.Add(new Loop(Render));
+			_loopManager = new LoopManager
+			{
+				Loops =
+				{
+					new Loop(Update, 120),
+					new Loop(Render)
+				}
+			};
 
 			// Set up a performance tracers to warn the developer about stuff
 			PerformanceTracers = new Collection<PerformanceTracer>

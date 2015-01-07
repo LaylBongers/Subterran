@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <title>$title$</title>
+    <authors>$author$</authors>
+    <owners>$author$</owners>
+    <licenseUrl>https://github.com/LaylConway/Subterran/blob/develop/LICENSE.txt</licenseUrl>
+    <projectUrl>https://github.com/LaylConway/Subterran</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>Copyright 2015 EdgeWorks Games</copyright>
+    <tags>engine games gamedev OpenGL</tags>
+  </metadata>
+</package>

@@ -1,5 +1,4 @@
-﻿using System;
-using OpenTK;
+﻿using OpenTK;
 using Subterran.OpenTK;
 
 namespace Subterran.Toolbox.Voxels
