@@ -10,6 +10,7 @@ namespace Subterran
 	public sealed class Window : Disposable
 	{
 		private readonly GameWindow _window;
+		private bool _clipCursor;
 
 		public Window(Size size)
 		{
@@ -24,7 +25,10 @@ namespace Subterran
 				Visible = true,
 				VSync = VSyncMode.Off
 			};
-			_window.Closing += OnClosing;
+			_window.Closing += _window_Closing;
+			_window.Resize += _window_ResizeMoveFocus;
+			_window.Move += _window_ResizeMoveFocus;
+			_window.FocusedChanged += _window_ResizeMoveFocus;
 		}
 
 		public string Title
@@ -54,6 +58,23 @@ namespace Subterran
 		{
 			get { return _window.Bounds; }
 			set { _window.Bounds = value; }
+		}
+
+		public bool ClipCursor
+		{
+			set
+			{
+				_clipCursor = value;
+				if (_clipCursor && _window.Focused)
+				{
+					UpdateCursorClip();
+				}
+				else
+				{
+					ClearCursorClip();
+				}
+			}
+			get { return _clipCursor; }
 		}
 
 		public event EventHandler Closing = (s, e) => { };
@@ -87,11 +108,9 @@ namespace Subterran
 			}
 		}
 
-		public void UpdateCursorClip()
+		private void UpdateCursorClip()
 		{
-			// TODO: Make this a boolean property and update clip when needed
-
-			var borderSize = (_window.Bounds.Width - _window.ClientSize.Width) / 2;
+			var borderSize = (_window.Bounds.Width - _window.ClientSize.Width)/2;
 			Cursor.Clip = new Rectangle(
 				_window.Bounds.X + borderSize,
 				(_window.Bounds.Y + _window.Bounds.Height) - (_window.ClientSize.Height + borderSize),
@@ -99,13 +118,26 @@ namespace Subterran
 				_window.ClientSize.Height);
 		}
 
-		public void ClearCursorClip()
+		private void ClearCursorClip()
 		{
 			Cursor.Clip = Rectangle.Empty;
 		}
 
-		private void OnClosing(object sender, CancelEventArgs args)
+		private void _window_ResizeMoveFocus(object sender, EventArgs e)
 		{
+			if (_clipCursor && _window.Focused)
+			{
+				UpdateCursorClip();
+			}
+			else
+			{
+				ClearCursorClip();
+			}
+		}
+
+		private void _window_Closing(object sender, CancelEventArgs args)
+		{
+			ClearCursorClip();
 			Closing(this, EventArgs.Empty);
 		}
 	}

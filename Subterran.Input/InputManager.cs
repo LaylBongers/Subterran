@@ -13,22 +13,13 @@ namespace Subterran.Input
 		{
 			_window = window;
 			_window.IsCursorVisible = false;
+			_window.ClipCursor = true;
 		}
 
 		public event EventHandler<AimEventArgs> AimChange = (e, s) => { };
 
 		public void Update()
 		{
-			// Update the cursor clipping for good measure
-			if (_window.Focused)
-			{
-				_window.UpdateCursorClip();
-			}
-			else
-			{
-				_window.ClearCursorClip();
-			}
-
 			// Get how much the mouse has changed
 			var state = Mouse.GetState();
 			var deltaPosition = new Point(
