@@ -93,6 +93,35 @@ namespace Subterran.Tests
 			component.Received(1).Call(5);
 		}
 
+		[Fact]
+		public void Parent_HasParent_ReturnsParent()
+		{
+			// Arrange
+			var parent = new Entity();
+			var child = new Entity();
+
+			// Act
+			parent.Children.Add(child);
+
+			// Assert
+			Assert.Same(parent, child.Parent);
+		}
+
+		[Fact]
+		public void Parent_RemovedFromChildren_ReturnsNull()
+		{
+			// Arrange
+			var parent = new Entity();
+			var child = new Entity();
+
+			// Act
+			parent.Children.Add(child);
+			parent.Children.Remove(child);
+
+			// Assert
+			Assert.Null(child.Parent);
+		}
+
 		public abstract class ComponentA : EntityComponent
 		{
 		}

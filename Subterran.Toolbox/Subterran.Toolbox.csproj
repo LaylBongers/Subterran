@@ -45,6 +45,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicSubterranGame.cs" />
+    <Compile Include="LookAtComponent.cs" />
     <Compile Include="PerformanceTracer.cs" />
     <Compile Include="IUpdatable.cs" />
     <Compile Include="NoclipMovementComponent.cs" />

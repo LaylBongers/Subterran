@@ -12,7 +12,9 @@ namespace Subterran
 		public Entity()
 		{
 			Scale = new Vector3(1, 1, 1);
+
 			Children = new ObservableCollection<Entity>();
+			Children.CollectionChanged += Children_CollectionChanged;
 			Components = new ObservableCollection<EntityComponent>();
 			Components.CollectionChanged += Components_CollectionChanged;
 		}
@@ -23,9 +25,32 @@ namespace Subterran
 
 		public Vector3 Scale { get; set; }
 
+		public Entity Parent { get; private set; }
+
 		public ObservableCollection<Entity> Children { get; private set; }
 
 		public ObservableCollection<EntityComponent> Components { get; private set; }
+
+		private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		{
+			if (e.NewItems != null)
+			{
+				// Set this class as parent for the new added children
+				foreach (var item in e.NewItems.Cast<Entity>())
+				{
+					item.Parent = this;
+				}
+			}
+
+			if (e.OldItems != null)
+			{
+				// Unset this class as parent for the old removed children
+				foreach (var item in e.OldItems.Cast<Entity>())
+				{
+					item.Parent = null;
+				}
+			}
+		}
 
 		private void Components_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
 		{
@@ -58,6 +83,12 @@ namespace Subterran
 			return Components.OfType<T>();
 		}
 
+		/// <summary>
+		///     Calls the function func for each component matching T.
+		///     Propagates method call to children.
+		/// </summary>
+		/// <typeparam name="T">The type of the components to call on.</typeparam>
+		/// <param name="func">The function to call.</param>
 		public void Call<T>(Action<T> func)
 		{
 			foreach (var component in GetComponents<T>())
