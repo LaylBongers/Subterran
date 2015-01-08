@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("EdgeWorks Games")]
 [assembly: AssemblyProduct("Subterran.Toolbox")]
-[assembly: AssemblyCopyright("Copyright © EdgeWorks Games 2015")]
+[assembly: AssemblyCopyright("Copyright © EdgeWorks Games")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

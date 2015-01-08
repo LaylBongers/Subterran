@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/LaylConway/Subterran</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
-    <copyright>Copyright 2015 EdgeWorks Games</copyright>
+    <copyright>Copyright © EdgeWorks Games</copyright>
     <tags>engine games gamedev OpenGL</tags>
     <dependencies>
       <group>
