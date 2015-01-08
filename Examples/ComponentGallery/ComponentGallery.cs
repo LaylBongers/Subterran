@@ -1,4 +1,5 @@
 ﻿using System.Drawing;
+using System.Linq;
 using OpenTK;
 using Subterran;
 using Subterran.Input;
@@ -17,12 +18,25 @@ namespace ComponentGallery
 			var testMap = VoxelMapSerializer.Load("./Objects/test_map.voxelmap");
 			var teapot = ModelLoader.Load("./Objects/teapot.st.obj");
 
+			// Create a special teapot with a smaller teapot on it
+			var teapotWithChild = CreateTeapotEntity(new Vector3(18, 1, -15), -0.4f, teapot);
+			teapotWithChild.Children.Add(new Entity
+			{
+				Position = new Vector3(1, 0.8f, 0),
+				Scale = new Vector3(0.2f),
+				Components =
+				{
+					new MeshRendererComponent {Vertices = teapot},
+					new SpinnerComponent {Speed = 0.4f}
+				}
+			});
+
 			game.World = new Entity
 			{
 				Children =
 				{
 					CreateCameraEntity(game.Input),
-					CreateTopDownCameraEntity(),
+					CreateTopDownCameraEntity(teapotWithChild.Children.First()),
 
 					// Random generated voxel maps
 					CreateWorldMapEntity(new Vector3(0, 0, 0), Vector3.Zero, 0.5f, VoxelMapGenerator.GenerateFlat(25, 25)),
@@ -38,8 +52,8 @@ namespace ComponentGallery
 					CreateWorldMapEntity(new Vector3(17.5f, 0, 9f), new Vector3(0, StMath.Tau*0.125f, 0), 0.5f, testMap),
 
 					// Example loaded in teapot
-					CreateModelEntity(new Vector3(7, 1, -10), 0.8f, teapot),
-					CreateModelEntity(new Vector3(18, 1, -15), -0.4f, teapot, true)
+					CreateTeapotEntity(new Vector3(7, 1, -10), 0.8f, teapot),
+					teapotWithChild
 				}
 			};
 
@@ -64,7 +78,7 @@ namespace ComponentGallery
 		{
 			return new Entity
 			{
-				Position = new Vector3(25, 20, 50),
+				Position = new Vector3(25, 20, 40),
 				Rotation = new Vector3(-0.05f*StMath.Tau, 0, 0),
 				Components =
 				{
@@ -74,11 +88,11 @@ namespace ComponentGallery
 			};
 		}
 
-		private static Entity CreateTopDownCameraEntity()
+		private static Entity CreateTopDownCameraEntity(Entity target)
 		{
 			return new Entity
 			{
-				Position = new Vector3(0, 20, 0),
+				Position = new Vector3(12, 8, -12),
 				Rotation = new Vector3(-0.25f*StMath.Tau, 0, 0),
 				Components =
 				{
@@ -86,12 +100,13 @@ namespace ComponentGallery
 					{
 						Size = new Size(200, 150),
 						Color = Color.Firebrick
-					}
+					},
+					new LookAtComponent(target)
 				}
 			};
 		}
 
-		private static Entity CreateModelEntity(Vector3 position, float speed, ColoredVertex[] vertices, bool addChild = false)
+		private static Entity CreateTeapotEntity(Vector3 position, float speed, ColoredVertex[] vertices)
 		{
 			var entity = new Entity
 			{
@@ -103,20 +118,6 @@ namespace ComponentGallery
 					new SpinnerComponent {Speed = speed}
 				}
 			};
-
-			if (addChild)
-			{
-				entity.Children.Add(new Entity
-				{
-					Position = new Vector3(1, 0.8f, 0),
-					Scale = new Vector3(0.2f),
-					Components =
-					{
-						new MeshRendererComponent {Vertices = vertices},
-						new SpinnerComponent {Speed = -speed}
-					}
-				});
-			}
 
 			return entity;
 		}

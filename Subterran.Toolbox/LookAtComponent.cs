@@ -3,7 +3,7 @@ using OpenTK;
 
 namespace Subterran.Toolbox
 {
-	internal class LookAtComponent : EntityComponent, IUpdatable
+	public class LookAtComponent : EntityComponent, IUpdatable
 	{
 		private readonly Entity _target;
 
@@ -14,7 +14,7 @@ namespace Subterran.Toolbox
 
 		public void Update(TimeSpan elapsed)
 		{
-			var diff = _target.Position - Entity.Position;
+			var diff = _target.WorldPosition - Entity.WorldPosition;
 			diff.NormalizeFast();
 
 			var yaw = (float) Math.Atan2(diff.X, diff.Z);

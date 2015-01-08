@@ -33,6 +33,41 @@ namespace Subterran
 
 		public ObservableCollection<EntityComponent> Components { get; private set; }
 
+		public Vector3 WorldPosition
+		{
+			get
+			{
+				return Parent != null
+					? Vector3.Transform(Position, Parent.WorldMatrix)
+					: Position;
+			}
+		}
+
+		public Matrix4 Matrix
+		{
+			get
+			{
+				// Create a multiply matrix representing this entity
+				return
+					Matrix4.CreateScale(Scale) *
+					Matrix4.CreateRotationX(Rotation.X) *
+					Matrix4.CreateRotationY(Rotation.Y) *
+					Matrix4.CreateRotationZ(Rotation.Z) *
+					Matrix4.CreateTranslation(Position);
+			}
+		}
+
+		public Matrix4 WorldMatrix
+		{
+			get
+			{
+				// Multiply the entity matrix with the parent's world matrix
+				return Parent != null
+					? Parent.WorldMatrix*Matrix
+					: Matrix;
+			}
+		}
+
 		private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
 		{
 			StCollection.ExecuteForAdded<Entity>(args, i => i.Parent = this);
