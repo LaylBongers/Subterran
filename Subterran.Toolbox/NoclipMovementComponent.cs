@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenTK;
 using OpenTK.Input;
-using Subterran.OpenTK;
+using Subterran.Input;
 
 namespace Subterran.Toolbox
 {

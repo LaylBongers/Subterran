@@ -15,8 +15,6 @@
     <dependencies>
       <group>
         <dependency id="Subterran" version="$version$" />
-        <dependency id="Subterran.Input" version="$version$" />
-        <dependency id="Subterran.Rendering" version="$version$" />
       </group>
     </dependencies>
   </metadata>

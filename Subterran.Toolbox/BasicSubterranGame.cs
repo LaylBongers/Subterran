@@ -2,7 +2,8 @@
 using System.Collections.ObjectModel;
 using System.Drawing;
 using OpenTK.Input;
-using Subterran.OpenTK;
+using Subterran.Input;
+using Subterran.Rendering;
 
 namespace Subterran.Toolbox
 {

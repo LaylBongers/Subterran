@@ -5,9 +5,9 @@ using System.Drawing;
 using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using Subterran.OpenTK.Components;
+using Subterran.Rendering.Components;
 
-namespace Subterran.OpenTK
+namespace Subterran.Rendering
 {
 	public sealed class Renderer
 	{

@@ -2,7 +2,7 @@
 using System.Runtime.Serialization;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Subterran.OpenTK
+namespace Subterran.Rendering
 {
 	[Serializable]
 	public class ProgramException : Exception, ISerializable

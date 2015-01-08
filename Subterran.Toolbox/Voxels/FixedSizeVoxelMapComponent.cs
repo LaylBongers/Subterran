@@ -1,5 +1,5 @@
 ﻿using OpenTK;
-using Subterran.OpenTK;
+using Subterran.Rendering;
 
 namespace Subterran.Toolbox.Voxels
 {

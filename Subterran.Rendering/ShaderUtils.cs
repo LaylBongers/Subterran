@@ -1,7 +1,7 @@
 ﻿using System.Diagnostics;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Subterran.OpenTK
+namespace Subterran.Rendering
 {
 	public static class ShaderUtils
 	{

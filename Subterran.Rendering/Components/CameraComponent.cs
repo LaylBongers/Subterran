@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Subterran.OpenTK.Components
+namespace Subterran.Rendering.Components
 {
 	public sealed class CameraComponent : EntityComponent
 	{

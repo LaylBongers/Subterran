@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace Subterran.OpenTK.Components
+namespace Subterran.Rendering.Components
 {
 	public class MeshRendererComponent : EntityComponent, IRenderable
 	{

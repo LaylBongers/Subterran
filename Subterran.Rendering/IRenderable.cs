@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace Subterran.OpenTK
+namespace Subterran.Rendering
 {
 	public interface IRenderable
 	{

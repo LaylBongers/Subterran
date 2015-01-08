@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("Subterran.OpenTK")]
-[assembly: AssemblyDescription("This library is in the process of being migrated to two separate libraries.")]
+[assembly: AssemblyTitle("Subterran.Input")]
+[assembly: AssemblyDescription("Input utilities for Subterran.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("EdgeWorks Games")]
-[assembly: AssemblyProduct("Subterran.OpenTK")]
-[assembly: AssemblyCopyright("Copyright © EdgeWorks Games 2014")]
+[assembly: AssemblyProduct("Subterran.Input")]
+[assembly: AssemblyCopyright("Copyright © EdgeWorks Games 2015")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("0f28af1c-ee9a-4099-9f87-ad40051227d2")]
+[assembly: Guid("a670efe6-8d62-4531-928c-067463d8525c")]
 
 // Version information for an assembly consists of the following four values:
 //

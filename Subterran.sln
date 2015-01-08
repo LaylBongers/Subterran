@@ -9,13 +9,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Examples", "Examples", "{07
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TropicalIsland", "Examples\TropicalIsland\TropicalIsland.csproj", "{A0321BEB-1149-4096-A88B-6AD8AE1FF361}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.OpenTK", "Subterran.OpenTK\Subterran.OpenTK.csproj", "{1E0B810E-F186-4A59-BC48-11E1BB71B069}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Tests", "Subterran.Tests\Subterran.Tests.csproj", "{B8D8CA19-31B6-43BE-8016-0E8508F78105}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Toolbox", "Subterran.Toolbox\Subterran.Toolbox.csproj", "{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComponentGallery", "Examples\ComponentGallery\ComponentGallery.csproj", "{184DD2CB-D774-4201-8A49-C6A3747AF8BF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Rendering", "Subterran.Rendering\Subterran.Rendering.csproj", "{54554F92-D476-4643-BE25-A0DC6352ADAB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Input", "Subterran.Input\Subterran.Input.csproj", "{2D8D561A-FFAA-4588-8B61-F4B236C07C83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -31,10 +33,6 @@ Global
 		{A0321BEB-1149-4096-A88B-6AD8AE1FF361}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A0321BEB-1149-4096-A88B-6AD8AE1FF361}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A0321BEB-1149-4096-A88B-6AD8AE1FF361}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1E0B810E-F186-4A59-BC48-11E1BB71B069}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1E0B810E-F186-4A59-BC48-11E1BB71B069}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1E0B810E-F186-4A59-BC48-11E1BB71B069}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1E0B810E-F186-4A59-BC48-11E1BB71B069}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B8D8CA19-31B6-43BE-8016-0E8508F78105}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B8D8CA19-31B6-43BE-8016-0E8508F78105}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B8D8CA19-31B6-43BE-8016-0E8508F78105}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -47,6 +45,14 @@ Global
 		{184DD2CB-D774-4201-8A49-C6A3747AF8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{184DD2CB-D774-4201-8A49-C6A3747AF8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{184DD2CB-D774-4201-8A49-C6A3747AF8BF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54554F92-D476-4643-BE25-A0DC6352ADAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54554F92-D476-4643-BE25-A0DC6352ADAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54554F92-D476-4643-BE25-A0DC6352ADAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54554F92-D476-4643-BE25-A0DC6352ADAB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2D8D561A-FFAA-4588-8B61-F4B236C07C83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2D8D561A-FFAA-4588-8B61-F4B236C07C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2D8D561A-FFAA-4588-8B61-F4B236C07C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2D8D561A-FFAA-4588-8B61-F4B236C07C83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
