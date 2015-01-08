@@ -11,10 +11,12 @@ namespace Subterran
 	{
 		public Entity()
 		{
+			// Scale by default needs to be 1 because 0 will give invisible entities
 			Scale = new Vector3(1, 1, 1);
 
 			Children = new ObservableCollection<Entity>();
 			Children.CollectionChanged += Children_CollectionChanged;
+
 			Components = new ObservableCollection<EntityComponent>();
 			Components.CollectionChanged += Components_CollectionChanged;
 		}
@@ -31,46 +33,16 @@ namespace Subterran
 
 		public ObservableCollection<EntityComponent> Components { get; private set; }
 
-		private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
 		{
-			if (e.NewItems != null)
-			{
-				// Set this class as parent for the new added children
-				foreach (var item in e.NewItems.Cast<Entity>())
-				{
-					item.Parent = this;
-				}
-			}
-
-			if (e.OldItems != null)
-			{
-				// Unset this class as parent for the old removed children
-				foreach (var item in e.OldItems.Cast<Entity>())
-				{
-					item.Parent = null;
-				}
-			}
+			StCollection.ExecuteForAdded<Entity>(args, i => i.Parent = this);
+			StCollection.ExecuteForRemoved<Entity>(args, i => i.Parent = null);
 		}
 
-		private void Components_CollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+		private void Components_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
 		{
-			if (e.NewItems != null)
-			{
-				// Set this class as entity for the new added components
-				foreach (var item in e.NewItems.Cast<EntityComponent>())
-				{
-					item.UpdateEntityBinding(this);
-				}
-			}
-
-			if (e.OldItems != null)
-			{
-				// Unset this class as entity for the old removed components
-				foreach (var item in e.OldItems.Cast<EntityComponent>())
-				{
-					item.UpdateEntityBinding(null);
-				}
-			}
+			StCollection.ExecuteForAdded<EntityComponent>(args, i => i.UpdateEntityBinding(this));
+			StCollection.ExecuteForRemoved<EntityComponent>(args, i => i.UpdateEntityBinding(this));
 		}
 
 		public T GetComponent<T>()

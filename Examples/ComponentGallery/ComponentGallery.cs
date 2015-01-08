@@ -39,7 +39,7 @@ namespace ComponentGallery
 
 					// Example loaded in teapot
 					CreateModelEntity(new Vector3(7, 1, -10), 0.8f, teapot),
-					CreateModelEntity(new Vector3(18, 1, -15), -0.4f, teapot)
+					CreateModelEntity(new Vector3(18, 1, -15), -0.4f, teapot, true)
 				}
 			};
 
@@ -91,18 +91,34 @@ namespace ComponentGallery
 			};
 		}
 
-		private static Entity CreateModelEntity(Vector3 position, float speed, ColoredVertex[] vertices)
+		private static Entity CreateModelEntity(Vector3 position, float speed, ColoredVertex[] vertices, bool addChild = false)
 		{
-			return new Entity
+			var entity = new Entity
 			{
 				Position = position,
-				Scale = new Vector3(5, 5, 5),
+				Scale = new Vector3(5),
 				Components =
 				{
 					new MeshRendererComponent {Vertices = vertices},
 					new SpinnerComponent {Speed = speed}
 				}
 			};
+
+			if (addChild)
+			{
+				entity.Children.Add(new Entity
+				{
+					Position = new Vector3(1, 0.8f, 0),
+					Scale = new Vector3(0.2f),
+					Components =
+					{
+						new MeshRendererComponent {Vertices = vertices},
+						new SpinnerComponent {Speed = -speed}
+					}
+				});
+			}
+
+			return entity;
 		}
 	}
 }
