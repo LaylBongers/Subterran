@@ -31,12 +31,7 @@ namespace TropicalIsland
 				Rotation = new Vector3(-0.05f*StMath.Tau, 0, 0),
 				Components =
 				{
-					new CameraComponent
-					{
-						VerticalFoV = 0.2f*StMath.Tau,
-						ZNear = 0.1f,
-						ZFar = 200f
-					},
+					new CameraComponent(),
 					new NoclipMovementComponent(input)
 				}
 			};

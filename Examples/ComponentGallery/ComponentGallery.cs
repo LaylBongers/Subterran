@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System.Drawing;
+using OpenTK;
 using Subterran;
 using Subterran.OpenTK;
 using Subterran.OpenTK.Components;
@@ -21,6 +22,7 @@ namespace ComponentGallery
 				Children =
 				{
 					CreateCameraEntity(game.Input),
+					CreateTopDownCameraEntity(),
 
 					// Random generated voxel maps
 					CreateWorldMapEntity(new Vector3(0, 0, 0), Vector3.Zero, 0.5f, VoxelMapGenerator.GenerateFlat(25, 25)),
@@ -66,13 +68,25 @@ namespace ComponentGallery
 				Rotation = new Vector3(-0.05f*StMath.Tau, 0, 0),
 				Components =
 				{
+					new CameraComponent(),
+					new NoclipMovementComponent(input)
+				}
+			};
+		}
+
+		private static Entity CreateTopDownCameraEntity()
+		{
+			return new Entity
+			{
+				Position = new Vector3(0, 20, 0),
+				Rotation = new Vector3(-0.25f*StMath.Tau, 0, 0),
+				Components =
+				{
 					new CameraComponent
 					{
-						VerticalFoV = 0.2f*StMath.Tau,
-						ZNear = 0.1f,
-						ZFar = 200f
-					},
-					new NoclipMovementComponent(input)
+						Size = new Size(200, 150),
+						Color = Color.Firebrick
+					}
 				}
 			};
 		}

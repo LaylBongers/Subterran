@@ -75,12 +75,6 @@ void main()
 			Trace.TraceInformation("Created new shader program {0}!", _program);
 		}
 
-		public void Clear(Color color)
-		{
-			GL.ClearColor(color);
-			GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-		}
-
 		public void RenderWorld(Entity world)
 		{
 			_targetWindow.MakeCurrent();
@@ -92,12 +86,20 @@ void main()
 			foreach (var camera in data.Cameras)
 			{
 				// If the size is a Zero, we need to default to full screen
+				var position = camera.Component.Position;
 				var size = camera.Component.Size == Size.Empty
 					? _targetWindow.Size
 					: camera.Component.Size;
 
 				// Set the viewport where we will render to on the screen
-				GL.Viewport(camera.Component.Position, size);
+				GL.Viewport(position, size);
+
+				// Clear the viewport so there's no old data left
+				GL.Enable(EnableCap.ScissorTest);
+				GL.Scissor(position.X, position.Y, size.Width, size.Height);
+				GL.ClearColor(camera.Component.Color);
+				GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+				GL.Disable(EnableCap.ScissorTest);
 
 				// Set up the matrices we will need to actually render
 				var projection = Matrix4.CreatePerspectiveFieldOfView(

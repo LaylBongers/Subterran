@@ -6,7 +6,7 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Subterran")]
-[assembly: AssemblyDescription("An open source 3D game engine library written in C#.")]
+[assembly: AssemblyDescription("The core Subterran library. Does not include rendering or input classes.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("EdgeWorks Games")]
 [assembly: AssemblyProduct("Subterran")]

@@ -101,8 +101,6 @@ namespace Subterran.Toolbox
 
 		private void Render(TimeSpan elapsed)
 		{
-			Renderer.Clear(Color.CornflowerBlue);
-
 			Renderer.RenderWorld(World);
 
 			Window.SwapBuffers();
