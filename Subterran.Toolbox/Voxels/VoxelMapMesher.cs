@@ -6,31 +6,31 @@ namespace Subterran.Toolbox.Voxels
 {
 	public static class VoxelMapMesher
 	{
-		public static List<ColoredVertex> GenerateMesh(Voxel[][][] voxels)
+		public static List<ColoredVertex> GenerateMesh(Voxel[,,] voxels)
 		{
 			var vertices = new List<ColoredVertex>();
 
-			for (var x = 0; x < voxels.Length; x++)
+			for (var x = 0; x < voxels.GetLength(0); x++)
 			{
-				for (var y = 0; y < voxels[x].Length; y++)
+				for (var y = 0; y < voxels.GetLength(1); y++)
 				{
-					for (var z = 0; z < voxels[x][y].Length; z++)
+					for (var z = 0; z < voxels.GetLength(2); z++)
 					{
-						if (!voxels[x][y][z].IsSolid)
+						if (!voxels[x, y, z].IsSolid)
 							continue;
 
 						vertices.AddRange(GenerateVoxelMesh(
-							x <= 0 || !voxels[x - 1][y][z].IsSolid,
-							x >= voxels.Length - 1 || !voxels[x + 1][y][z].IsSolid,
-							y <= 0 || !voxels[x][y - 1][z].IsSolid,
-							y >= voxels[x].Length - 1 || !voxels[x][y + 1][z].IsSolid,
-							z <= 0 || !voxels[x][y][z - 1].IsSolid,
-							z >= voxels[x][y].Length - 1 || !voxels[x][y][z + 1].IsSolid)
+							x <= 0 || !voxels[x - 1, y, z].IsSolid,
+							x >= voxels.GetLength(0) - 1 || !voxels[x + 1, y, z].IsSolid,
+							y <= 0 || !voxels[x, y - 1, z].IsSolid,
+							y >= voxels.GetLength(1) - 1 || !voxels[x, y + 1, z].IsSolid,
+							z <= 0 || !voxels[x, y, z - 1].IsSolid,
+							z >= voxels.GetLength(2) - 1 || !voxels[x, y, z + 1].IsSolid)
 							.Transform(Matrix4.CreateTranslation(x, y, z))
 							.Select(v => new ColoredVertex
 							{
 								Position = v,
-								Color = voxels[x][y][z].Color
+								Color = voxels[x, y, z].Color
 							}));
 					}
 				}

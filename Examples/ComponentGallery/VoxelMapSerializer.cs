@@ -11,7 +11,7 @@ namespace ComponentGallery
 {
 	public static class VoxelMapSerializer
 	{
-		public static Voxel[][][] Load(string path)
+		public static Voxel[,,] Load(string path)
 		{
 			var random = new Random();
 			var file = File.OpenRead(path);
@@ -24,22 +24,22 @@ namespace ComponentGallery
 				.Split(new[] {',', ' '}, StringSplitOptions.RemoveEmptyEntries)
 				.Select(int.Parse)
 				.ToArray();
-			var voxels = StArray.CreateJagged<Voxel[][][]>(sizes[0], sizes[1], sizes[2]);
+			var voxels = new Voxel[sizes[0], sizes[1], sizes[2]];
 
 			// Each block in the file is a different Y slice
-			for (var y = 0; y < voxels[0].Length; y++)
+			for (var y = 0; y < voxels.GetLength(1); y++)
 			{
 				// Skip the divider line
 				reader.ReadLine();
 
 				// Each line is a different Z
-				for (var z = 0; z < voxels[0][0].Length; z++)
+				for (var z = 0; z < voxels.GetLength(2); z++)
 				{
 					var line = reader.ReadLine();
 					Debug.Assert(line != null);
 
 					// Each character is a different X
-					for (var x = 0; x < voxels.Length; x++)
+					for (var x = 0; x < voxels.GetLength(0); x++)
 					{
 						Color color;
 
@@ -58,8 +58,8 @@ namespace ComponentGallery
 
 						if (color != Color.Empty)
 						{
-							voxels[x][y][z].IsSolid = true;
-							voxels[x][y][z].Color = new Vector3(
+							voxels[x, y, z].IsSolid = true;
+							voxels[x, y, z].Color = new Vector3(
 								StMath.NormalizeColor(
 									StMath.Range(color.R + random.Next(-10, 10),
 										Byte.MinValue, Byte.MaxValue)),
@@ -72,7 +72,7 @@ namespace ComponentGallery
 						}
 						else
 						{
-							voxels[x][y][z].IsSolid = false;
+							voxels[x, y, z].IsSolid = false;
 						}
 					}
 				}

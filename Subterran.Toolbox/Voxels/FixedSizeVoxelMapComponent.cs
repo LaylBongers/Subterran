@@ -7,7 +7,7 @@ namespace Subterran.Toolbox.Voxels
 	{
 		private bool _meshIsOutdated;
 		private ColoredVertex[] _vertices;
-		private Voxel[][][] _voxels;
+		private Voxel[,,] _voxels;
 
 		public FixedSizeVoxelMapComponent()
 			: this(0, 0, 0)
@@ -16,10 +16,10 @@ namespace Subterran.Toolbox.Voxels
 
 		public FixedSizeVoxelMapComponent(int width, int height, int depth)
 		{
-			Voxels = StArray.CreateJagged<Voxel[][][]>(width, height, depth);
+			Voxels = new Voxel[width, height, depth];
 		}
 
-		public Voxel[][][] Voxels
+		public Voxel[,,] Voxels
 		{
 			get { return _voxels; }
 			set
@@ -28,6 +28,15 @@ namespace Subterran.Toolbox.Voxels
 				_voxels = value;
 				_meshIsOutdated = true;
 			}
+		}
+
+		/// <summary>
+		/// Marks the current background mesh of this voxel map as outdated.
+		/// Use this if you want to re-generate the mesh after changing the voxel data.
+		/// </summary>
+		public void MarkMeshOutdated()
+		{
+			_meshIsOutdated = true;
 		}
 
 		public void Render(Renderer renderer, Matrix4 matrix)
