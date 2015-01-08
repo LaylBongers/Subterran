@@ -75,6 +75,9 @@ namespace Subterran.Toolbox
 
 		private void Update(TimeSpan elapsed)
 		{
+			// Check initialization on all entity components
+			World.Call<EntityComponent>(c => c.CheckInitialize());
+
 			// Update our window and process any given input
 			Window.ProcessEvents();
 			Input.Update();
