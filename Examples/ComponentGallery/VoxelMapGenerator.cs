@@ -8,8 +8,9 @@ namespace ComponentGallery
 	{
 		public static Voxel[,,] GenerateFlat(int size, int height)
 		{
-			var voxels = new Voxel[size, height, size];
+			ValidateSizeHeight(size, height);
 
+			var voxels = new Voxel[size, height, size];
 			var random = new Random();
 
 			// Generate the voxel data
@@ -30,17 +31,17 @@ namespace ComponentGallery
 
 		public static Voxel[,,] GenerateRandom(int size, int height)
 		{
-			var voxels = new Voxel[size, height, size];
+			ValidateSizeHeight(size, height);
 
+			var voxels = new Voxel[size, height, size];
 			var random = new Random();
-			var maxHeight = voxels.GetLength(0);
 
 			// Generate the voxel data
 			for (var x = 0; x < voxels.GetLength(0); x++)
 			{
 				for (var z = 0; z < voxels.GetLength(2); z++)
 				{
-					var columnHeight = random.Next(maxHeight);
+					var columnHeight = random.Next(voxels.GetLength(1));
 					for (var y = 0; y < columnHeight; y++)
 					{
 						voxels[x, y, z].IsSolid = true;
@@ -53,6 +54,14 @@ namespace ComponentGallery
 			}
 
 			return voxels;
+		}
+
+		private static void ValidateSizeHeight(int size, int height)
+		{
+			if (size <= 0)
+				throw new ArgumentOutOfRangeException("size", "Size must be 1 or bigger.");
+			if (height <= 0)
+				throw new ArgumentOutOfRangeException("height", "Height must be 1 or bigger.");
 		}
 	}
 }
