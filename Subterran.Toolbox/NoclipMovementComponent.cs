@@ -7,13 +7,17 @@ namespace Subterran.Toolbox
 {
 	public class NoclipMovementComponent : EntityComponent, IUpdatable
 	{
-		public NoclipMovementComponent(InputManager input)
+		private readonly Window _window;
+		private Vector2 _previousPosition;
+
+		public NoclipMovementComponent(Window window, InputManager input)
 		{
 			// Default values, once C# 6.0 rolls around we can do this inline
 			Speed = 5.0f;
 			FastSpeed = 10.0f;
 
-			input.AimChange += InputOnAimChange;
+			_window = window;
+			input.ShowCursor = false;
 		}
 
 		public float Speed { get; set; }
@@ -21,6 +25,8 @@ namespace Subterran.Toolbox
 
 		public void Update(TimeSpan elapsed)
 		{
+			UpdateRotation();
+
 			var rotationMatrix =
 				Matrix4.CreateRotationX(Entity.Rotation.X)*
 				Matrix4.CreateRotationY(Entity.Rotation.Y);
@@ -49,11 +55,27 @@ namespace Subterran.Toolbox
 						: Speed));
 		}
 
-		private void InputOnAimChange(object sender, AimEventArgs e)
+		private void UpdateRotation()
 		{
-			var rotation = Entity.Rotation.Xy + (-e.Delta.Yx*0.0015f);
+			// Get how much the mouse has changed
+			var state = Mouse.GetState();
+			var deltaPosition = new Vector2(
+				state.X - _previousPosition.X,
+				state.Y - _previousPosition.Y);
+
+			// Reset the mouse to the middle of the screen
+			Mouse.SetPosition(
+				_window.Bounds.Left + (_window.Bounds.Width/2),
+				_window.Bounds.Top + (_window.Bounds.Height/2));
+
+			// Store the position of the mouse currently so we can get the delta again next update
+			state = Mouse.GetState();
+			_previousPosition = new Vector2(state.X, state.Y);
+
+			// Update the rotation of the entity based on the difference in mouse position
+			var rotation = Entity.Rotation.Xy + (-deltaPosition.Yx*0.0015f);
 			Entity.Rotation = new Vector3(
-				MathHelper.Clamp(rotation.X, -MathHelper.PiOver2, MathHelper.PiOver2),
+				MathHelper.Clamp(rotation.X, -StMath.Tau*0.25f, StMath.Tau*0.25f),
 				rotation.Y, 0);
 		}
 	}

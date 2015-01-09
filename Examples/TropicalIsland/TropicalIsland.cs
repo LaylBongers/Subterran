@@ -16,14 +16,14 @@ namespace TropicalIsland
 			{
 				Children =
 				{
-					CreateCameraEntity(game.Input)
+					CreateCameraEntity(game.Window, game.Input)
 				}
 			};
 
 			return game;
 		}
 
-		private static Entity CreateCameraEntity(InputManager input)
+		private static Entity CreateCameraEntity(Window window, InputManager input)
 		{
 			return new Entity
 			{
@@ -32,7 +32,7 @@ namespace TropicalIsland
 				Components =
 				{
 					new CameraComponent(),
-					new NoclipMovementComponent(input)
+					new NoclipMovementComponent(window, input)
 				}
 			};
 		}

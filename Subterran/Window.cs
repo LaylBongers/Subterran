@@ -43,7 +43,7 @@ namespace Subterran
 			set { _window.Size = value; }
 		}
 
-		public bool IsCursorVisible
+		public bool ShowCursor
 		{
 			get { return _window.CursorVisible; }
 			set { _window.CursorVisible = value; }
