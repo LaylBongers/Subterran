@@ -63,21 +63,21 @@ namespace Subterran.Tests
 		}
 
 		[Fact]
-		public void Call_OneCallableComponent_CallableComponent()
+		public void ForEach_OneCallableComponent_CallableComponent()
 		{
 			// Arrange
 			var component = Substitute.For<CallableComponent>();
 			var entity = new Entity {Components = {component}};
 
 			// Act
-			entity.Call<ICallable>(e => e.Call(5));
+			entity.ForEach<ICallable>(e => e.Call(5));
 
 			// Assert
 			component.Received(1).Call(5);
 		}
 
 		[Fact]
-		public void Call_OneCallableChild_CallableChildren()
+		public void ForEach_OneCallableChild_CallableChildren()
 		{
 			// This assumes Update_OneComponent_UpdatesComponent passes
 
@@ -87,7 +87,7 @@ namespace Subterran.Tests
 			var entity = new Entity {Children = {childEntity}};
 
 			// Act
-			entity.Call<ICallable>(e => e.Call(5));
+			entity.ForEach<ICallable>(e => e.Call(5));
 
 			// Assert
 			component.Received(1).Call(5);

@@ -96,7 +96,7 @@ namespace Subterran
 		/// </summary>
 		/// <typeparam name="T">The type of the components to call on.</typeparam>
 		/// <param name="func">The function to call.</param>
-		public void Call<T>(Action<T> func)
+		public void ForEach<T>(Action<T> func)
 		{
 			foreach (var component in GetComponents<T>())
 			{
@@ -105,7 +105,7 @@ namespace Subterran
 
 			foreach (var child in Children)
 			{
-				child.Call(func);
+				child.ForEach(func);
 			}
 		}
 	}
