@@ -26,33 +26,7 @@ namespace Subterran.Toolbox
 		public void Update(TimeSpan elapsed)
 		{
 			UpdateRotation();
-
-			var rotationMatrix =
-				Matrix4.CreateRotationX(Entity.Rotation.X)*
-				Matrix4.CreateRotationY(Entity.Rotation.Y);
-
-			var backwards = Vector3.Transform(Vector3.UnitZ, rotationMatrix);
-			var right = Vector3.Transform(Vector3.UnitX, rotationMatrix);
-
-			// TODO: Move this into the Subterran.OpenTK library
-			var keyboard = Keyboard.GetState();
-			var targetDirection = new Vector3();
-
-			if (keyboard.IsKeyDown(Key.S))
-				targetDirection += backwards;
-			if (keyboard.IsKeyDown(Key.W))
-				targetDirection -= backwards;
-			if (keyboard.IsKeyDown(Key.D))
-				targetDirection += right;
-			if (keyboard.IsKeyDown(Key.A))
-				targetDirection -= right;
-
-			targetDirection.NormalizeFast();
-			Entity.Position += elapsed.PerSecond(
-				targetDirection*(
-					keyboard.IsKeyDown(Key.ShiftLeft)
-						? FastSpeed
-						: Speed));
+			UpdatePosition(elapsed);
 		}
 
 		private void UpdateRotation()
@@ -77,6 +51,36 @@ namespace Subterran.Toolbox
 			Entity.Rotation = new Vector3(
 				MathHelper.Clamp(rotation.X, -StMath.Tau*0.25f, StMath.Tau*0.25f),
 				rotation.Y, 0);
+		}
+
+		private void UpdatePosition(TimeSpan elapsed)
+		{
+			var rotationMatrix =
+				Matrix4.CreateRotationX(Entity.Rotation.X)*
+				Matrix4.CreateRotationY(Entity.Rotation.Y);
+
+			var backwards = Vector3.Transform(Vector3.UnitZ, rotationMatrix);
+			var right = Vector3.Transform(Vector3.UnitX, rotationMatrix);
+
+			var keyboard = Keyboard.GetState();
+			var targetDirection = new Vector3();
+
+			if (keyboard.IsKeyDown(Key.S))
+				targetDirection += backwards;
+			if (keyboard.IsKeyDown(Key.W))
+				targetDirection -= backwards;
+			if (keyboard.IsKeyDown(Key.D))
+				targetDirection += right;
+			if (keyboard.IsKeyDown(Key.A))
+				targetDirection -= right;
+
+			var speedMultiplier = keyboard.IsKeyDown(Key.ShiftLeft)
+				? FastSpeed
+				: Speed;
+
+			targetDirection.NormalizeFast();
+			Entity.Position += elapsed.PerSecond(
+				targetDirection*speedMultiplier);
 		}
 	}
 }
