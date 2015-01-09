@@ -20,15 +20,14 @@ namespace Subterran
 
 		public void CheckInitialize()
 		{
-			if (!_initialized)
-			{
-				_initialized = true;
-				Initialize();
-			}
-		}
+			if (_initialized)
+				return;
 
-		protected virtual void Initialize()
-		{
+			_initialized = true;
+
+			var updatableThis = this as IInitializable;
+			if (updatableThis != null)
+				updatableThis.Initialize();
 		}
 	}
 }

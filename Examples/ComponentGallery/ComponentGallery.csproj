@@ -62,7 +62,7 @@
     <None Include="Objects\teapot.st.obj">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="Objects\test_map.voxelmap">
+    <None Include="Objects\testmap.voxelmap">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="packages.config" />

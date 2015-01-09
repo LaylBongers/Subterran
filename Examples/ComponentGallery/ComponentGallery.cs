@@ -15,7 +15,7 @@ namespace ComponentGallery
 		{
 			var game = new BasicSubterranGame("Tropical Island");
 
-			var testMap = VoxelMapSerializer.Load("./Objects/test_map.voxelmap");
+			var testMap = VoxelMapSerializer.Load("./Objects/testmap.voxelmap");
 			var teapot = ModelLoader.Load("./Objects/teapot.st.obj");
 
 			// Create a special teapot with a smaller teapot on it

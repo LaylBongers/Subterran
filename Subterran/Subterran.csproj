@@ -49,6 +49,7 @@
     <Compile Include="Disposable.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityComponent.cs" />
+    <Compile Include="IUpdatable.cs" />
     <Compile Include="LoopManager.cs" />
     <Compile Include="Loop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

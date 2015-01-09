@@ -56,6 +56,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DisposableTests.cs" />
+    <Compile Include="EntityComponentTests.cs" />
     <Compile Include="EntityTests.cs" />
     <Compile Include="LoopManagerTests.cs" />
     <Compile Include="LoopTests.cs" />
