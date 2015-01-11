@@ -35,6 +35,15 @@
     <StartupObject />
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpNoise">
+      <HintPath>..\..\packages\SharpNoise.0.10.0.0\lib\net45\SharpNoise.dll</HintPath>
+    </Reference>
+    <Reference Include="SharpNoise.Utilities">
+      <HintPath>..\..\packages\SharpNoise.0.10.0.0\lib\net45\SharpNoise.Utilities.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,14 +53,20 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MapGenerator.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="VoxelWorld.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\..\Subterran.Rendering\Subterran.Rendering.csproj">
+      <Project>{54554f92-d476-4643-be25-a0dc6352adab}</Project>
+      <Name>Subterran.Rendering</Name>
+    </ProjectReference>
     <ProjectReference Include="..\..\Subterran.Toolbox\Subterran.Toolbox.csproj">
       <Project>{fd41c4ed-9387-48d1-bf6f-bb1347dfa10c}</Project>
       <Name>Subterran.Toolbox</Name>
