@@ -23,7 +23,7 @@ namespace Subterran
 				GameWindowFlags.FixedWindow)
 			{
 				Visible = true,
-				VSync = VSyncMode.Off
+				VSync = VSyncMode.Adaptive
 			};
 			_window.Closing += _window_Closing;
 			_window.Resize += _window_ResizeMoveFocus;

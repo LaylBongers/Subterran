@@ -2,7 +2,6 @@
 using System.Linq;
 using OpenTK;
 using Subterran;
-using Subterran.Input;
 using Subterran.Rendering.Components;
 using Subterran.Toolbox;
 using Subterran.Toolbox.Voxels;
@@ -69,7 +68,8 @@ namespace ComponentGallery
 				Scale = new Vector3(scale, scale, scale),
 				Components =
 				{
-					new FixedSizeVoxelMapComponent {Voxels = voxels}
+					new MeshRendererComponent(),
+					new VoxelMapComponent {Voxels = voxels}
 				}
 			};
 		}

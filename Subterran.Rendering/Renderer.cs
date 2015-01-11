@@ -173,6 +173,15 @@ void main()
 				vertices,
 				BufferUsageHint.StreamDraw);
 
+			RenderBuffer(ref matrix, buffer, vertices.Length);
+
+			GL.DeleteBuffer(buffer);
+		}
+
+		public void RenderBuffer(ref Matrix4 matrix, int buffer, int length)
+		{
+			GL.BindBuffer(BufferTarget.ArrayBuffer, buffer);
+
 			// Bind our shader program and give it the matrix uniform
 			GL.UseProgram(_program);
 			GL.UniformMatrix4(_matrixUniform, false, ref matrix);
@@ -197,12 +206,11 @@ void main()
 				Vector3.SizeInBytes); // start offset
 
 			// Actually draw!
-			GL.DrawArrays(PrimitiveType.Triangles, 0, vertices.Length);
+			GL.DrawArrays(PrimitiveType.Triangles, 0, length);
 
 			// Clean everything up
 			GL.DisableVertexAttribArray(0);
 			GL.DisableVertexAttribArray(1);
-			GL.DeleteBuffer(buffer);
 		}
 
 		private class CameraData
