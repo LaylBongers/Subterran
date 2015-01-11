@@ -18,7 +18,7 @@ namespace Subterran.Toolbox
 			Window.Closing += (s, e) => _loopManager.Stop();
 
 			// Set up our engine's modules
-			Input = new InputManager(Window);
+			Input = new InputManager();
 			Renderer = new Renderer(Window);
 
 			// Set up the game world
@@ -83,7 +83,6 @@ namespace Subterran.Toolbox
 			Input.Update();
 
 			// Close the game on specific key presses
-			// TODO: Make sure OpenTK isn't used by this assembly.
 			var keyState = Keyboard.GetState();
 			if ( // Alt-F4
 				(keyState.IsKeyDown(Key.F4) && keyState.IsKeyDown(Key.AltLeft)) ||

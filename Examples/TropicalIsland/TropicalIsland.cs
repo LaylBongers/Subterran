@@ -1,6 +1,5 @@
 ﻿using OpenTK;
 using Subterran;
-using Subterran.Input;
 using Subterran.Rendering.Components;
 using Subterran.Toolbox;
 
@@ -16,14 +15,14 @@ namespace TropicalIsland
 			{
 				Children =
 				{
-					CreateCameraEntity(game.Window, game.Input)
+					CreateCameraEntity(game.Window)
 				}
 			};
 
 			return game;
 		}
 
-		private static Entity CreateCameraEntity(Window window, InputManager input)
+		private static Entity CreateCameraEntity(Window window)
 		{
 			return new Entity
 			{
@@ -32,7 +31,7 @@ namespace TropicalIsland
 				Components =
 				{
 					new CameraComponent(),
-					new NoclipMovementComponent(window, input)
+					new NoclipMovementComponent(window)
 				}
 			};
 		}

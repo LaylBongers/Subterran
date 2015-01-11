@@ -1,27 +1,31 @@
 ﻿using System;
 using OpenTK;
 using OpenTK.Input;
-using Subterran.Input;
 
 namespace Subterran.Toolbox
 {
-	public class NoclipMovementComponent : EntityComponent, IUpdatable
+	public class NoclipMovementComponent : EntityComponent, IInitializable, IUpdatable
 	{
 		private readonly Window _window;
 		private Vector2 _previousPosition;
 
-		public NoclipMovementComponent(Window window, InputManager input)
+		public NoclipMovementComponent(Window window)
 		{
 			// Default values, once C# 6.0 rolls around we can do this inline
 			Speed = 5.0f;
 			FastSpeed = 10.0f;
 
 			_window = window;
-			input.ShowCursor = false;
 		}
 
 		public float Speed { get; set; }
 		public float FastSpeed { get; set; }
+
+		public void Initialize()
+		{
+			_window.ShowCursor = false;
+			_window.ClipCursor = true;
+		}
 
 		public void Update(TimeSpan elapsed)
 		{

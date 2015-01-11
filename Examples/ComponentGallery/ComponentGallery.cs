@@ -35,7 +35,7 @@ namespace ComponentGallery
 			{
 				Children =
 				{
-					CreateCameraEntity(game.Window, game.Input),
+					CreateCameraEntity(game.Window),
 					CreateTopDownCameraEntity(teapotWithChild.Children.First()),
 
 					// Random generated voxel maps
@@ -74,7 +74,7 @@ namespace ComponentGallery
 			};
 		}
 
-		private static Entity CreateCameraEntity(Window window, InputManager input)
+		private static Entity CreateCameraEntity(Window window)
 		{
 			return new Entity
 			{
@@ -83,7 +83,7 @@ namespace ComponentGallery
 				Components =
 				{
 					new CameraComponent(),
-					new NoclipMovementComponent(window, input)
+					new NoclipMovementComponent(window)
 				}
 			};
 		}
