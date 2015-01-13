@@ -7,12 +7,20 @@ namespace Subterran.Rendering.Components
 	public class MeshRendererComponent : EntityComponent, IRenderable
 	{
 		private int _buffer = -1;
+		private bool _bufferOutdated;
+		private ColoredVertex[] _vertices;
 
-		public ColoredVertex[] Vertices { get; set; }
 		public bool Streaming { get; set; }
 
-		// TODO: Move streaming meshes to a separate component for clarity.
-		public bool BufferOutdated { get; set; }
+		public ColoredVertex[] Vertices
+		{
+			get { return _vertices; }
+			set
+			{
+				_vertices = value;
+				_bufferOutdated = true;
+			}
+		}
 
 		public void Render(Renderer renderer, Matrix4 matrix)
 		{
@@ -28,7 +36,7 @@ namespace Subterran.Rendering.Components
 			else
 			{
 				// We're not streaming, so check if we have a valid buffer
-				if (_buffer == -1 || BufferOutdated)
+				if (_buffer == -1 || _bufferOutdated)
 				{
 					// We don't, so create one
 					_buffer = GL.GenBuffer();
@@ -39,12 +47,17 @@ namespace Subterran.Rendering.Components
 						Vertices,
 						BufferUsageHint.StaticDraw);
 
-					BufferOutdated = false;
+					_bufferOutdated = false;
 				}
 
 				// Now that we have a buffer, render it
 				renderer.RenderBuffer(ref matrix, _buffer, Vertices.Length);
 			}
+		}
+
+		public void MarkMeshOutdated()
+		{
+			_bufferOutdated = true;
 		}
 	}
 }

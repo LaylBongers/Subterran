@@ -17,10 +17,10 @@ namespace VoxelWorld
 				Children =
 				{
 					CreateCameraEntity(game.Window),
-					CreateVoxelWorldEntity(new Vector3(0, 0, 0)),
-					CreateVoxelWorldEntity(new Vector3(-250, 0, 0)),
-					CreateVoxelWorldEntity(new Vector3(0, 0, -250)),
-					CreateVoxelWorldEntity(new Vector3(-250, 0, -250)),
+					CreateVoxelWorldEntity(new Vector3(1, 0, 1)),
+					CreateVoxelWorldEntity(new Vector3(-251, 0, 1)),
+					CreateVoxelWorldEntity(new Vector3(1, 0, -251)),
+					CreateVoxelWorldEntity(new Vector3(-251, 0, -251)),
 				}
 			};
 

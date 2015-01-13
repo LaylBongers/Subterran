@@ -34,3 +34,7 @@ artifacts:
   - path: Examples\ComponentGallery\bin\$(configuration)
     name: Component Gallery Example
     type: zip
+
+  - path: Examples\VoxelWorld\bin\$(configuration)
+    name: Voxel World Example
+    type: zip
