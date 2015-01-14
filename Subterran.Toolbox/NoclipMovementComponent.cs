@@ -29,6 +29,10 @@ namespace Subterran.Toolbox
 
 		public void Update(TimeSpan elapsed)
 		{
+			// We can't handle anything related to input if the window isn't focused
+			if (!_window.IsFocused)
+				return;
+
 			UpdateRotation();
 			UpdatePosition(elapsed);
 		}

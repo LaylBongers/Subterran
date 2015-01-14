@@ -10,22 +10,26 @@ namespace Subterran.Toolbox.Voxels
 		{
 			var vertices = new List<ColoredVertex>();
 
-			for (var x = 0; x < voxels.GetLength(0); x++)
+			var width = voxels.GetLength(0);
+			var height = voxels.GetLength(1);
+			var depth = voxels.GetLength(2);
+
+			for (var x = 0; x < width; x++)
 			{
-				for (var y = 0; y < voxels.GetLength(1); y++)
+				for (var y = 0; y < height; y++)
 				{
-					for (var z = 0; z < voxels.GetLength(2); z++)
+					for (var z = 0; z < depth; z++)
 					{
 						if (!voxels[x, y, z].IsSolid)
 							continue;
 
 						vertices.AddRange(GenerateVoxelMesh(
 							x <= 0 || !voxels[x - 1, y, z].IsSolid,
-							x >= voxels.GetLength(0) - 1 || !voxels[x + 1, y, z].IsSolid,
+							x >= width - 1 || !voxels[x + 1, y, z].IsSolid,
 							y <= 0 || !voxels[x, y - 1, z].IsSolid,
-							y >= voxels.GetLength(1) - 1 || !voxels[x, y + 1, z].IsSolid,
+							y >= height - 1 || !voxels[x, y + 1, z].IsSolid,
 							z <= 0 || !voxels[x, y, z - 1].IsSolid,
-							z >= voxels.GetLength(2) - 1 || !voxels[x, y, z + 1].IsSolid)
+							z >= depth  - 1 || !voxels[x, y, z + 1].IsSolid)
 							.Transform(Matrix4.CreateTranslation(x, y, z))
 							.Select(v => new ColoredVertex
 							{

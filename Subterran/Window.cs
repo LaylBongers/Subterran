@@ -49,7 +49,7 @@ namespace Subterran
 			set { _window.CursorVisible = value; }
 		}
 
-		public bool Focused
+		public bool IsFocused
 		{
 			get { return _window.Focused; }
 		}

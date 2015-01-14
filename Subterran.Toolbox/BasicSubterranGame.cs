@@ -11,10 +11,10 @@ namespace Subterran.Toolbox
 	{
 		private readonly LoopManager _loopManager = new LoopManager();
 
-		public BasicSubterranGame(string name)
+		public BasicSubterranGame()
 		{
 			// Set up our window
-			Window = new Window(new Size(1280, 720)) {Title = name};
+			Window = new Window(new Size(1280, 720)) {Title = "Subterran"};
 			Window.Closing += (s, e) => _loopManager.Stop();
 
 			// Set up our engine's modules
@@ -37,21 +37,21 @@ namespace Subterran.Toolbox
 			// Set up a performance tracers to warn the developer about stuff
 			PerformanceTracers = new Collection<PerformanceTracer>
 			{
-				PerformanceTracer.CreateLoopSlownessTracer(_loopManager),
-				PerformanceTracer.CreateLoopSkippingTracer(_loopManager),
-				PerformanceTracer.CreateGcTimeTracer()
+				BasicPerformanceTracers.CreateLoopSlownessTracer(_loopManager),
+				BasicPerformanceTracers.CreateLoopSkippingTracer(_loopManager),
+				BasicPerformanceTracers.CreateGcTimeTracer()
 			};
 		}
 
-		public Window Window { get; set; }
+		public Window Window { get; private set; }
 
-		public InputManager Input { get; set; }
+		public InputManager Input { get; private set; }
+
+		public Renderer Renderer { get; private set; }
 
 		public Entity World { get; set; }
 
-		public Renderer Renderer { get; set; }
-
-		public Collection<PerformanceTracer> PerformanceTracers { get; set; }
+		public Collection<PerformanceTracer> PerformanceTracers { get; private set; }
 
 		protected override void Dispose(bool managed)
 		{

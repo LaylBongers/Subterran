@@ -9,7 +9,7 @@ namespace TropicalIsland
 	{
 		public static BasicSubterranGame Create()
 		{
-			var game = new BasicSubterranGame("Tropical Island");
+			var game = new BasicSubterranGame {Window = {Title = "Tropical Island"}};
 
 			game.World = new Entity
 			{

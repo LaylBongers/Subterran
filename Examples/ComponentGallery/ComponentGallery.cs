@@ -12,7 +12,7 @@ namespace ComponentGallery
 	{
 		public static BasicSubterranGame Create()
 		{
-			var game = new BasicSubterranGame("Tropical Island");
+			var game = new BasicSubterranGame {Window = {Title = "Component Gallery"}};
 
 			var testMap = VoxelMapSerializer.Load("./Objects/testmap.voxelmap");
 			var teapot = ModelLoader.Load("./Objects/teapot.st.obj");

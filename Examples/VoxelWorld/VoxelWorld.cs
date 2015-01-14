@@ -10,7 +10,7 @@ namespace VoxelWorld
 	{
 		public static BasicSubterranGame Create()
 		{
-			var game = new BasicSubterranGame("Voxel World");
+			var game = new BasicSubterranGame {Window = {Title = "Voxel World"}};
 
 			game.World = new Entity
 			{
