@@ -39,7 +39,7 @@ namespace Subterran.Tests
 		{
 			// Arrange
 			var func = Substitute.For<Action<TimeSpan>>();
-			var loop = new Loop(func, 4);
+			var loop = new Loop(func, 4) {MaximumTicksPerExecution = 4};
 
 			// Act
 			loop.ExecuteTicks(TimeSpan.FromSeconds(2));
@@ -53,7 +53,7 @@ namespace Subterran.Tests
 		{
 			// Arrange
 			var func = Substitute.For<Action>();
-			var loop = new Loop(_ => func(), 4);
+			var loop = new Loop(_ => func(), 4) {MaximumTicksPerExecution = 4};
 
 			// Act
 			loop.ExecuteTicks(TimeSpan.FromSeconds(2));

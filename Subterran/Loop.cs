@@ -10,6 +10,7 @@ namespace Subterran
 		public Loop(Action<TimeSpan> callback)
 		{
 			_callback = callback;
+			MaximumTicksPerExecution = 8;
 		}
 
 		public Loop(Action<TimeSpan> callback, int rate)
@@ -22,6 +23,11 @@ namespace Subterran
 
 		public TimeSpan MaxDelta { get; set; }
 		public TimeSpan TargetDelta { get; set; }
+
+		/// <summary>
+		/// Gets or sets the maximum amount of ticks allowed per execution of ExecuteTicks.
+		/// </summary>
+		public int MaximumTicksPerExecution { get; set; }
 
 		public bool IsRunningSlow { get; set; }
 		public bool IsSkippingTime { get; set; }
@@ -44,16 +50,16 @@ namespace Subterran
 			
 			// If we're above the target per tick, we need to adjust it
 			var tickDelta = TargetDelta;
-			if (_accumulator > TargetDelta.Multiply(4))
+			if (_accumulator > TargetDelta.Multiply(MaximumTicksPerExecution))
 			{
-				tickDelta = _accumulator.Divide(4);
+				tickDelta = _accumulator.Divide(MaximumTicksPerExecution);
 				IsRunningSlow = true;
 
 				// Prevent weird jumps caused by big lag spikes
 				if (tickDelta > MaxDelta)
 				{
 					tickDelta = MaxDelta;
-					_accumulator = MaxDelta.Multiply(4);
+					_accumulator = MaxDelta.Multiply(MaximumTicksPerExecution);
 					IsSkippingTime = true;
 				}
 			}
