@@ -31,7 +31,7 @@ namespace TropicalIsland
 				Components =
 				{
 					new CameraComponent(),
-					new NoclipMovementComponent(window)
+					//new NoclipMovementComponent(window)
 				}
 			};
 		}

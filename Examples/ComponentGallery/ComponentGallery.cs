@@ -45,6 +45,9 @@ namespace ComponentGallery
 					CreateWorldMapEntity(new Vector3(-2, 0, 0), Vector3.Zero, 0.5f, VoxelMapGenerator.GenerateFlat(1, 1)),
 					CreateWorldMapEntity(new Vector3(-2, 0, -2), Vector3.Zero, 1f, VoxelMapGenerator.GenerateFlat(1, 1)),
 
+					// Perlin random generated voxel map
+					CreateWorldMapEntity(new Vector3(52, 0, -26), Vector3.Zero, 0.5f, VoxelMapGenerator.GeneratePerlin(52, 25, 77)),
+
 					// Test loaded in voxel maps
 					CreateWorldMapEntity(new Vector3(13.5f, 0, 0), Vector3.Zero, 0.5f, testMap),
 					CreateWorldMapEntity(new Vector3(19.5f, 5, 0), new Vector3(StMath.Tau*0.25f, 0, 0), 0.5f, testMap),
