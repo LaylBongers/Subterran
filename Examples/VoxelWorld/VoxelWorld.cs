@@ -42,7 +42,7 @@ namespace VoxelWorld
 
 		private static Entity CreateVoxelWorldEntity(Vector3 position)
 		{
-			var voxels = MapGenerator.Generate(400, 25, 400);
+			var voxels = MapGenerator.Generate(400, 400);
 
 			return new Entity
 			{
