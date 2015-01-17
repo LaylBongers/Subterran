@@ -6,14 +6,14 @@ namespace Subterran
 	{
 		public const float Tau = (float) (Math.PI*2);
 
-		public static TimeSpan Min(TimeSpan val1, TimeSpan val2)
+		public static TimeSpan Min(TimeSpan left, TimeSpan right)
 		{
-			return val1 < val2 ? val1 : val2;
+			return left < right ? left : right;
 		}
 
-		public static TimeSpan Max(TimeSpan val1, TimeSpan val2)
+		public static TimeSpan Max(TimeSpan left, TimeSpan right)
 		{
-			return val1 > val2 ? val1 : val2;
+			return left > right ? left : right;
 		}
 
 		public static int Range(int value, int min, int max)

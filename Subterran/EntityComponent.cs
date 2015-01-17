@@ -4,7 +4,7 @@ namespace Subterran
 {
 	public abstract class EntityComponent
 	{
-		private bool _initialized;
+		public bool Initialized { get; private set; }
 
 		protected Entity Entity { get; private set; }
 
@@ -20,10 +20,10 @@ namespace Subterran
 
 		public void CheckInitialize()
 		{
-			if (_initialized)
+			if (Initialized)
 				return;
 
-			_initialized = true;
+			Initialized = true;
 
 			var updatableThis = this as IInitializable;
 			if (updatableThis != null)

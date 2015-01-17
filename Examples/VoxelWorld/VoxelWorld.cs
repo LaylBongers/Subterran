@@ -32,7 +32,6 @@ namespace VoxelWorld
 			return new Entity
 			{
 				Position = new Vector3(0, 50, 0),
-				Rotation = new Vector3(0, -StMath.Tau*0.375f, 0),
 				Components =
 				{
 					new CameraComponent(),

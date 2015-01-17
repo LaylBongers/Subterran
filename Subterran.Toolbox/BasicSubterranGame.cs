@@ -75,8 +75,7 @@ namespace Subterran.Toolbox
 
 		private void Update(TimeSpan elapsed)
 		{
-			// Check initialization on all entity components
-			World.ForEach<EntityComponent>(c => c.CheckInitialize());
+			EnsureInitialized();
 
 			// Update our window and process any given input
 			Window.ProcessEvents();
@@ -104,9 +103,18 @@ namespace Subterran.Toolbox
 
 		private void Render(TimeSpan elapsed)
 		{
+			EnsureInitialized();
+
+			World.ForEach<IRenderablePreparer>(e => e.PrepareRender());
 			Renderer.RenderWorld(World);
 
 			Window.SwapBuffers();
+		}
+
+		private void EnsureInitialized()
+		{
+			// Check initialization on all entity components
+			World.ForEach<EntityComponent>(c => c.CheckInitialize());
 		}
 	}
 }

@@ -1,9 +1,10 @@
 ﻿using System;
+using Subterran.Rendering;
 using Subterran.Rendering.Components;
 
 namespace Subterran.Toolbox.Voxels
 {
-	public class VoxelMapComponent : EntityComponent, IInitializable, IUpdatable
+	public class VoxelMapComponent : EntityComponent, IInitializable, IRenderablePreparer
 	{
 		private bool _meshIsOutdated;
 		private Voxel[,,] _voxels;
@@ -28,9 +29,9 @@ namespace Subterran.Toolbox.Voxels
 				throw new InvalidOperationException("This component requires a MeshRendererComponent!");
 		}
 
-		public void Update(TimeSpan elapsed)
+		public void PrepareRender()
 		{
-			// If the mesh is outdated or we don't have vertices at all, we need to (re)generate it
+			// If the mesh is outdated, we need to (re)generate it
 			if (_meshIsOutdated)
 			{
 				_meshRenderer.Vertices = VoxelMapMesher.GenerateMesh(Voxels).ToArray();
