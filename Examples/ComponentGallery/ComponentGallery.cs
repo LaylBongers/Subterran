@@ -62,7 +62,7 @@ namespace ComponentGallery
 			return game;
 		}
 
-		private static Entity CreateWorldMapEntity(Vector3 position, Vector3 rotation, float scale, Voxel[,,] voxels)
+		private static Entity CreateWorldMapEntity(Vector3 position, Vector3 rotation, float scale, ColoredVoxel[,,] voxels)
 		{
 			return new Entity
 			{
@@ -72,7 +72,11 @@ namespace ComponentGallery
 				Components =
 				{
 					new MeshRendererComponent(),
-					new VoxelMapComponent {Voxels = voxels}
+					new VoxelMapComponent<ColoredVoxel>
+					{
+						Voxels = voxels,
+						MeshGenerator = ColoredVoxel.MeshGenerator
+					}
 				}
 			};
 		}

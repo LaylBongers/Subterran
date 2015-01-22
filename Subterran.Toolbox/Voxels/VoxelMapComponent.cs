@@ -4,13 +4,16 @@ using Subterran.Rendering.Components;
 
 namespace Subterran.Toolbox.Voxels
 {
-	public class VoxelMapComponent : EntityComponent, IInitializable, IRenderablePreparer
+	public class VoxelMapComponent<TVoxelType> : EntityComponent, IInitializable, IRenderablePreparer
+		where TVoxelType : struct
 	{
 		private bool _meshIsOutdated;
-		private Voxel[,,] _voxels;
 		private MeshRendererComponent _meshRenderer;
+		private TVoxelType[,,] _voxels;
 
-		public Voxel[,,] Voxels
+		public Func<TVoxelType[,,], ColoredVertex[]> MeshGenerator { get; set; }
+
+		public TVoxelType[,,] Voxels
 		{
 			get { return _voxels; }
 			set
@@ -25,16 +28,19 @@ namespace Subterran.Toolbox.Voxels
 			_meshIsOutdated = true;
 			_meshRenderer = Entity.GetComponent<MeshRendererComponent>();
 
-			if(_meshRenderer == null)
+			if (_meshRenderer == null)
 				throw new InvalidOperationException("This component requires a MeshRendererComponent!");
 		}
 
 		public void PrepareRender()
 		{
+			if (MeshGenerator == null)
+				throw new InvalidOperationException("This component requires MeshGenerator to be set!");
+
 			// If the mesh is outdated, we need to (re)generate it
 			if (_meshIsOutdated)
 			{
-				_meshRenderer.Vertices = VoxelMapMesher.GenerateMesh(Voxels).ToArray();
+				_meshRenderer.Vertices = MeshGenerator(Voxels);
 				_meshIsOutdated = false;
 			}
 		}

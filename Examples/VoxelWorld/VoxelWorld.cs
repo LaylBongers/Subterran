@@ -51,7 +51,11 @@ namespace VoxelWorld
 				Components =
 				{
 					new MeshRendererComponent(),
-					new VoxelMapComponent {Voxels = voxels}
+					new VoxelMapComponent<ColoredVoxel>
+					{
+						Voxels = voxels,
+						MeshGenerator = ColoredVoxel.MeshGenerator
+					}
 				}
 			};
 		}

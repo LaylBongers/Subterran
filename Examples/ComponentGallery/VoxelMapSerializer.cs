@@ -11,7 +11,7 @@ namespace ComponentGallery
 {
 	public static class VoxelMapSerializer
 	{
-		public static Voxel[,,] Load(string path)
+		public static ColoredVoxel[,,] Load(string path)
 		{
 			var random = new Random();
 			var file = File.OpenRead(path);
@@ -24,7 +24,7 @@ namespace ComponentGallery
 				.Split(new[] {',', ' '}, StringSplitOptions.RemoveEmptyEntries)
 				.Select(int.Parse)
 				.ToArray();
-			var voxels = new Voxel[sizes[0], sizes[1], sizes[2]];
+			var voxels = new ColoredVoxel[sizes[0], sizes[1], sizes[2]];
 
 			// Each block in the file is a different Y slice
 			for (var y = 0; y < voxels.GetLength(1); y++)

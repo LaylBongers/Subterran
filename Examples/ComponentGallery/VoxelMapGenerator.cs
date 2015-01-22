@@ -8,11 +8,11 @@ namespace ComponentGallery
 {
 	public static class VoxelMapGenerator
 	{
-		public static Voxel[,,] GenerateFlat(int size, int height)
+		public static ColoredVoxel[,,] GenerateFlat(int size, int height)
 		{
 			ValidateSizeHeight(size, height);
 
-			var voxels = new Voxel[size, height, size];
+			var voxels = new ColoredVoxel[size, height, size];
 			var random = new Random();
 
 			// Generate the voxel data
@@ -31,11 +31,11 @@ namespace ComponentGallery
 			return voxels;
 		}
 
-		public static Voxel[,,] GenerateRandom(int size, int height)
+		public static ColoredVoxel[,,] GenerateRandom(int size, int height)
 		{
 			ValidateSizeHeight(size, height);
 
-			var voxels = new Voxel[size, height, size];
+			var voxels = new ColoredVoxel[size, height, size];
 			var random = new Random();
 
 			// Generate the voxel data
@@ -58,11 +58,11 @@ namespace ComponentGallery
 			return voxels;
 		}
 
-		public static Voxel[, ,] GeneratePerlin(int width, int height, int depth)
+		public static ColoredVoxel[, ,] GeneratePerlin(int width, int height, int depth)
 		{
 			var random = new Random();
 			var noise = new Perlin { Frequency = 0.01, Seed = random.Next() };
-			var map = new Voxel[width, height, depth];
+			var map = new ColoredVoxel[width, height, depth];
 
 			for (var x = 0; x < width; x++)
 			{
@@ -71,7 +71,7 @@ namespace ComponentGallery
 					var pillarHeight = StMath.Range((int)((noise.GetValue(x, 0.5, z) + 1) * height * 0.5), 1, height);
 					for (var y = 0; y < pillarHeight; y++)
 					{
-						map[x, y, z] = new Voxel
+						map[x, y, z] = new ColoredVoxel
 						{
 							IsSolid = true,
 							Color = random.NextColor()

@@ -9,14 +9,14 @@ namespace VoxelWorld
 {
 	internal static class MapGenerator
 	{
-		public static Voxel[,,] Generate(int width, int depth)
+		public static ColoredVoxel[,,] Generate(int width, int depth)
 		{
 			const int height = 50;
 			const int offset = 10;
 
 			var random = new Random();
 			var noise = new Perlin {Frequency = 0.005, Seed = random.Next()};
-			var map = new Voxel[width, height, depth];
+			var map = new ColoredVoxel[width, height, depth];
 
 			var grass = Color.Green;
 			var dirt = Color.SaddleBrown;
@@ -43,7 +43,7 @@ namespace VoxelWorld
 						else
 							color = stone;
 
-						map[x, y, z] = new Voxel
+						map[x, y, z] = new ColoredVoxel
 						{
 							IsSolid = true,
 							Color = RandomizeColor(random, 10, color)

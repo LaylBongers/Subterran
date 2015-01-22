@@ -4,9 +4,12 @@ using OpenTK;
 
 namespace Subterran.Toolbox.Voxels
 {
-	public static class VoxelMapMesher
+	public struct ColoredVoxel
 	{
-		public static List<ColoredVertex> GenerateMesh(Voxel[,,] voxels)
+		public bool IsSolid { get; set; }
+		public Vector3 Color { get; set; }
+
+		public static ColoredVertex[] MeshGenerator(ColoredVoxel[,,] voxels)
 		{
 			var vertices = new List<ColoredVertex>();
 
@@ -29,7 +32,7 @@ namespace Subterran.Toolbox.Voxels
 							y <= 0 || !voxels[x, y - 1, z].IsSolid,
 							y >= height - 1 || !voxels[x, y + 1, z].IsSolid,
 							z <= 0 || !voxels[x, y, z - 1].IsSolid,
-							z >= depth  - 1 || !voxels[x, y, z + 1].IsSolid)
+							z >= depth - 1 || !voxels[x, y, z + 1].IsSolid)
 							.Transform(Matrix4.CreateTranslation(x, y, z))
 							.Select(v => new ColoredVertex
 							{
@@ -40,10 +43,11 @@ namespace Subterran.Toolbox.Voxels
 				}
 			}
 
-			return vertices;
+			return vertices.ToArray();
 		}
 
-		public static Vector3[] GenerateVoxelMesh(bool left, bool right, bool bottom, bool top, bool back, bool front)
+		private static IEnumerable<Vector3> GenerateVoxelMesh(bool left, bool right, bool bottom, bool top, bool back,
+			bool front)
 		{
 			var square = new[]
 			{
@@ -105,7 +109,7 @@ namespace Subterran.Toolbox.Voxels
 				vertices.AddRange(square.Transform(backVoxelMatrix));
 			}
 
-			return vertices.ToArray();
+			return vertices;
 		}
 	}
 }
