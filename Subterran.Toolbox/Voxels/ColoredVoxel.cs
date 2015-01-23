@@ -46,8 +46,10 @@ namespace Subterran.Toolbox.Voxels
 			return vertices.ToArray();
 		}
 
-		private static IEnumerable<Vector3> GenerateVoxelMesh(bool left, bool right, bool bottom, bool top, bool back,
-			bool front)
+		private static IEnumerable<Vector3> GenerateVoxelMesh(
+			bool left, bool right,
+			bool bottom, bool top,
+			bool back, bool front)
 		{
 			var square = new[]
 			{

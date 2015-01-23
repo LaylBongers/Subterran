@@ -17,10 +17,10 @@ namespace VoxelWorld
 				Children =
 				{
 					CreateCameraEntity(game.Window),
-					CreateVoxelWorldEntity(new Vector3(0.5f, 0, 0.5f)),
-					CreateVoxelWorldEntity(new Vector3(-200.5f, 0, 0.5f)),
-					CreateVoxelWorldEntity(new Vector3(0.5f, 0, -200.5f)),
-					CreateVoxelWorldEntity(new Vector3(-200.5f, 0, -200.5f)),
+					CreateVoxelWorldEntity(new Vector3(0, 0, 0)),
+					CreateVoxelWorldEntity(new Vector3(-200, 0, 0)),
+					CreateVoxelWorldEntity(new Vector3(0, 0, -200)),
+					CreateVoxelWorldEntity(new Vector3(-200, 0, -200)),
 				}
 			};
 
@@ -42,12 +42,12 @@ namespace VoxelWorld
 
 		private static Entity CreateVoxelWorldEntity(Vector3 position)
 		{
-			var voxels = MapGenerator.Generate(400, 400);
+			var voxels = MapGenerator.Generate(400, 400, position.Xz*2);
 
 			return new Entity
 			{
 				Position = position,
-				Scale = new Vector3(0.5f, 0.5f, 0.5f),
+				Scale = new Vector3(0.5f),
 				Components =
 				{
 					new MeshRendererComponent(),
