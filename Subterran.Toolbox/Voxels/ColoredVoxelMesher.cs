@@ -11,11 +11,14 @@ namespace Subterran.Toolbox.Voxels
 
 		public static ColoredVertex[] MeshGenerator(ColoredVoxel[,,] voxels)
 		{
-			var vertices = new List<ColoredVertex>();
-
 			var width = voxels.GetLength(0);
 			var height = voxels.GetLength(1);
 			var depth = voxels.GetLength(2);
+
+			// Allocate a worst case array to store vertices in.
+			// This is done with an array instead of a list because of GC slowdowns in AddRange()
+			var verticesArray = new ColoredVertex[width*height*depth*12*3];
+			var arrayPosition = 0;
 
 			for (var x = 0; x < width; x++)
 			{
@@ -26,27 +29,46 @@ namespace Subterran.Toolbox.Voxels
 						if (!voxels[x, y, z].IsSolid)
 							continue;
 
-						vertices.AddRange(LookupVoxelMesh(
+						// Get the vectors for this voxel's mesh
+						var lookupVectors = LookupVoxelMesh(
 							x <= 0 || !voxels[x - 1, y, z].IsSolid,
 							x >= width - 1 || !voxels[x + 1, y, z].IsSolid,
 							y <= 0 || !voxels[x, y - 1, z].IsSolid,
 							y >= height - 1 || !voxels[x, y + 1, z].IsSolid,
 							z <= 0 || !voxels[x, y, z - 1].IsSolid,
-							z >= depth - 1 || !voxels[x, y, z + 1].IsSolid)
-							.Transform(Matrix4.CreateTranslation(x, y, z))
-							.Select(v => new ColoredVertex
+							z >= depth - 1 || !voxels[x, y, z + 1].IsSolid);
+
+						// Clone it so we can transform it safely
+						var vectors = (Vector3[]) lookupVectors.Clone();
+
+						// Transform them one by one and copy them over into the array
+						var translation = Matrix4.CreateTranslation(x, y, z);
+						for (var i = 0; i < vectors.Length; i++)
+						{
+							Vector3 outVector;
+							Vector3.Transform(ref vectors[i], ref translation, out outVector);
+
+							verticesArray[arrayPosition++] = new ColoredVertex
 							{
-								Position = v,
+								Position = outVector,
 								Color = voxels[x, y, z].Color
-							}));
+							};
+						}
 					}
 				}
 			}
 
-			return vertices.ToArray();
+			// Finally, trim anything we don't need from the array
+			var finalArray = new ColoredVertex[arrayPosition];
+			for (var i = 0; i < arrayPosition; i++)
+			{
+				finalArray[i] = verticesArray[i];
+			}
+
+			return finalArray;
 		}
 
-		private static IEnumerable<Vector3> LookupVoxelMesh(
+		private static Vector3[] LookupVoxelMesh(
 			bool left, bool right,
 			bool bottom, bool top,
 			bool back, bool front)

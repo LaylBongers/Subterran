@@ -62,6 +62,7 @@
     <Compile Include="ComponentGallery.cs" />
     <Compile Include="VoxelMapGenerator.cs" />
     <Compile Include="VoxelMapSerializer.cs" />
+    <Compile Include="VoxelWavesGeneratorComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

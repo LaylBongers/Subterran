@@ -48,6 +48,9 @@ namespace ComponentGallery
 					// Perlin random generated voxel map
 					CreateWorldMapEntity(new Vector3(52, 0, -26), Vector3.Zero, 0.5f, VoxelMapGenerator.GeneratePerlin(52, 25, 77)),
 
+					// Pretty moving water map
+					CreateWaterMap(new Vector3(39, 0, 0)),
+
 					// Test loaded in voxel maps
 					CreateWorldMapEntity(new Vector3(13.5f, 0, 0), Vector3.Zero, 0.5f, testMap),
 					CreateWorldMapEntity(new Vector3(19.5f, 5, 0), new Vector3(StMath.Tau*0.25f, 0, 0), 0.5f, testMap),
@@ -127,6 +130,30 @@ namespace ComponentGallery
 			};
 
 			return entity;
+		}
+
+		private static Entity CreateWaterMap(Vector3 position)
+		{
+			return new Entity
+			{
+				Position = position,
+				Scale = new Vector3(0.25f),
+				Components =
+				{
+					new MeshRendererComponent
+					{
+						Streaming = true
+					},
+					new VoxelWavesGeneratorComponent
+					{
+						Size = 40
+					},
+					new VoxelMapComponent<ColoredVoxel>
+					{
+						MeshGenerator = ColoredVoxelMesher.MeshGenerator
+					}
+				}
+			};
 		}
 	}
 }
