@@ -75,7 +75,7 @@ namespace ComponentGallery
 					new VoxelMapComponent<ColoredVoxel>
 					{
 						Voxels = voxels,
-						MeshGenerator = ColoredVoxel.MeshGenerator
+						MeshGenerator = ColoredVoxelMesher.MeshGenerator
 					}
 				}
 			};
