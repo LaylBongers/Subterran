@@ -35,12 +35,7 @@ namespace Subterran.Toolbox
 			};
 
 			// Set up a performance tracers to warn the developer about stuff
-			PerformanceTracers = new Collection<PerformanceTracer>
-			{
-				BasicPerformanceTracers.CreateLoopSlownessTracer(_loopManager),
-				BasicPerformanceTracers.CreateLoopSkippingTracer(_loopManager),
-				BasicPerformanceTracers.CreateGcTimeTracer()
-			};
+			PerformanceTracers = CreatePerformanceTracers();
 		}
 
 		public Window Window { get; private set; }
@@ -52,6 +47,16 @@ namespace Subterran.Toolbox
 		public Entity World { get; set; }
 
 		public Collection<PerformanceTracer> PerformanceTracers { get; private set; }
+
+		private Collection<PerformanceTracer> CreatePerformanceTracers()
+		{
+			return new Collection<PerformanceTracer>
+			{
+				BasicPerformanceTracers.CreateLoopSlownessTracer(_loopManager),
+				BasicPerformanceTracers.CreateLoopSkippingTracer(_loopManager),
+				BasicPerformanceTracers.CreateGcTimeTracer()
+			};
+		}
 
 		protected override void Dispose(bool managed)
 		{
@@ -82,11 +87,7 @@ namespace Subterran.Toolbox
 			Input.Update();
 
 			// Close the game on specific key presses
-			var keyState = Keyboard.GetState();
-			if ( // Alt-F4
-				(keyState.IsKeyDown(Key.F4) && keyState.IsKeyDown(Key.AltLeft)) ||
-				// Escape
-				keyState.IsKeyDown(Key.Escape))
+			if (IsCloseShortcutDown())
 			{
 				Stop();
 			}
@@ -99,6 +100,16 @@ namespace Subterran.Toolbox
 
 			// Update the entire world
 			World.ForEach<IUpdatable>(e => e.Update(elapsed));
+		}
+
+		private static bool IsCloseShortcutDown()
+		{
+			var keyState = Keyboard.GetState();
+
+			return // Alt-F4
+				(keyState.IsKeyDown(Key.F4) && keyState.IsKeyDown(Key.AltLeft)) ||
+				// Escape
+				keyState.IsKeyDown(Key.Escape);
 		}
 
 		private void Render(TimeSpan elapsed)

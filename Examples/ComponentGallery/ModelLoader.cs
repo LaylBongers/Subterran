@@ -21,29 +21,7 @@ namespace ComponentGallery
 			// Parse all the lines into data
 			foreach (var line in lines)
 			{
-				var data = line.Split(' ');
-				var type = data.First();
-
-				switch (type)
-				{
-					case "v": // Vertex position
-					{
-						var values = data.Skip(1).Select(d => float.Parse(d, CultureInfo.InvariantCulture)).ToArray();
-						positions.Add(new Vector3(values[0], values[1], values[2]));
-						break;
-					}
-
-					case "f": // Faces
-					{
-						var values = data.Skip(1)
-							.SelectMany(v => v
-								.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries).Take(1)
-								.Select(pos => int.Parse(pos, CultureInfo.InvariantCulture)));
-						indices.AddRange(values);
-						break;
-					}
-				}
-				// We're ignoring anything that's not any of those
+				LoadLine(line, positions, indices);
 			}
 
 			// Now that we've got a set of positions and indices we need to flatten it into vertices.
@@ -57,6 +35,44 @@ namespace ComponentGallery
 			});
 
 			return vertices.ToArray();
+		}
+
+		private static void LoadLine(string line, List<Vector3> positions, List<int> indices)
+		{
+			var data = line.Split(' ');
+			var type = data.First();
+
+			switch (type)
+			{
+				case "v": // Vertex position
+					LoadPosition(data, positions);
+					break;
+
+				case "f": // Faces
+					LoadFace(data, indices);
+					break;
+			}
+			// We're ignoring anything that's not any of those
+		}
+
+		private static void LoadPosition(IEnumerable<string> data, List<Vector3> positions)
+		{
+			var values = data
+				.Skip(1)
+				.Select(d => float.Parse(d, CultureInfo.InvariantCulture))
+				.ToArray();
+			positions.Add(new Vector3(values[0], values[1], values[2]));
+		}
+
+		private static void LoadFace(IEnumerable<string> data, List<int> indices)
+		{
+			var values = data
+				.Skip(1)
+				.SelectMany(v => v
+					.Split(new[] {'/'}, StringSplitOptions.RemoveEmptyEntries)
+					.Take(1)
+					.Select(pos => int.Parse(pos, CultureInfo.InvariantCulture)));
+			indices.AddRange(values);
 		}
 	}
 }

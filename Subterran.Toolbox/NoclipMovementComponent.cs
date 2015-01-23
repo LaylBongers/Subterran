@@ -63,32 +63,37 @@ namespace Subterran.Toolbox
 
 		private void UpdatePosition(TimeSpan elapsed)
 		{
-			var rotationMatrix =
-				Matrix4.CreateRotationX(Entity.Rotation.X)*
-				Matrix4.CreateRotationY(Entity.Rotation.Y);
+			var state = Keyboard.GetState();
+			var targetDirection = GetDirectionVector(state);
 
-			var backwards = Vector3.Transform(Vector3.UnitZ, rotationMatrix);
-			var right = Vector3.Transform(Vector3.UnitX, rotationMatrix);
-
-			var keyboard = Keyboard.GetState();
-			var targetDirection = new Vector3();
-
-			if (keyboard.IsKeyDown(Key.S))
-				targetDirection += backwards;
-			if (keyboard.IsKeyDown(Key.W))
-				targetDirection -= backwards;
-			if (keyboard.IsKeyDown(Key.D))
-				targetDirection += right;
-			if (keyboard.IsKeyDown(Key.A))
-				targetDirection -= right;
-
-			var speedMultiplier = keyboard.IsKeyDown(Key.ShiftLeft)
+			var speedMultiplier = state.IsKeyDown(Key.ShiftLeft)
 				? FastSpeed
 				: Speed;
 
 			targetDirection.NormalizeFast();
 			Entity.Position += elapsed.PerSecond(
 				targetDirection*speedMultiplier);
+		}
+
+		private Vector3 GetDirectionVector(KeyboardState state)
+		{
+			var rotationMatrix = Entity.Matrix;
+
+			var backwards = Vector3.TransformVector(Vector3.UnitZ, rotationMatrix);
+			var right = Vector3.TransformVector(Vector3.UnitX, rotationMatrix);
+
+			var targetDirection = new Vector3();
+
+			if (state.IsKeyDown(Key.S))
+				targetDirection += backwards;
+			if (state.IsKeyDown(Key.W))
+				targetDirection -= backwards;
+			if (state.IsKeyDown(Key.D))
+				targetDirection += right;
+			if (state.IsKeyDown(Key.A))
+				targetDirection -= right;
+
+			return targetDirection;
 		}
 	}
 }
