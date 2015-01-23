@@ -9,15 +9,17 @@ namespace Subterran.Toolbox.Voxels
 	{
 		private static Vector3[][] _lookupTable;
 
-		public static ColoredVertex[] MeshGenerator(ColoredVoxel[,,] voxels)
+		public static ColoredVertex[] MeshGenerator(ColoredVoxel[,,] voxels, bool useScaling = false)
 		{
 			var width = voxels.GetLength(0);
 			var height = voxels.GetLength(1);
 			var depth = voxels.GetLength(2);
 
+			var worstCaseLength = width*height*depth*12*3;
+
 			// Allocate a worst case array to store vertices in.
 			// This is done with an array instead of a list because of GC slowdowns in AddRange()
-			var verticesArray = new ColoredVertex[width*height*depth*12*3];
+			IList<ColoredVertex> verticesArray = new ColoredVertex[worstCaseLength];
 			var arrayPosition = 0;
 
 			for (var x = 0; x < width; x++)
@@ -30,16 +32,13 @@ namespace Subterran.Toolbox.Voxels
 							continue;
 
 						// Get the vectors for this voxel's mesh
-						var lookupVectors = LookupVoxelMesh(
+						var vectors = LookupVoxelMesh(
 							x <= 0 || !voxels[x - 1, y, z].IsSolid,
 							x >= width - 1 || !voxels[x + 1, y, z].IsSolid,
 							y <= 0 || !voxels[x, y - 1, z].IsSolid,
 							y >= height - 1 || !voxels[x, y + 1, z].IsSolid,
 							z <= 0 || !voxels[x, y, z - 1].IsSolid,
 							z >= depth - 1 || !voxels[x, y, z + 1].IsSolid);
-
-						// Clone it so we can transform it safely
-						var vectors = (Vector3[]) lookupVectors.Clone();
 
 						// Transform them one by one and copy them over into the array
 						var translation = Matrix4.CreateTranslation(x, y, z);

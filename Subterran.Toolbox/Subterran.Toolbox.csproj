@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoDeque.cs" />
     <Compile Include="BasicSubterranGame.cs" />
     <Compile Include="IUpdatable.cs" />
     <Compile Include="LookAtComponent.cs" />
