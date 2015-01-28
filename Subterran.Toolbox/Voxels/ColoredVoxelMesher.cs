@@ -9,18 +9,16 @@ namespace Subterran.Toolbox.Voxels
 	{
 		private static Vector3[][] _lookupTable;
 
-		public static ColoredVertex[] MeshGenerator(ColoredVoxel[,,] voxels, bool useScaling = false)
+		public static ColoredVertex[] MeshGenerator(ColoredVoxel[,,] voxels)
 		{
 			var width = voxels.GetLength(0);
 			var height = voxels.GetLength(1);
 			var depth = voxels.GetLength(2);
 
-			var worstCaseLength = width*height*depth*12*3;
-
-			// Allocate a worst case array to store vertices in.
-			// This is done with an array instead of a list because of GC slowdowns in AddRange()
-			IList<ColoredVertex> verticesArray = new ColoredVertex[worstCaseLength];
-			var arrayPosition = 0;
+			// Create a list to keep the vertices in until we know how many.
+			// Give it a decently high capacity to avoid big GC slowdowns.
+			var verticesEstimate = (width*height*depth)*1.5f;
+			var verticesList = new List<ColoredVertex>((int) verticesEstimate);
 
 			for (var x = 0; x < width; x++)
 			{
@@ -47,21 +45,22 @@ namespace Subterran.Toolbox.Voxels
 							Vector3 outVector;
 							Vector3.Transform(ref vectors[i], ref translation, out outVector);
 
-							verticesArray[arrayPosition++] = new ColoredVertex
+							verticesList.Add(new ColoredVertex
 							{
 								Position = outVector,
 								Color = voxels[x, y, z].Color
-							};
+							});
 						}
 					}
 				}
 			}
 
 			// Finally, trim anything we don't need from the array
-			var finalArray = new ColoredVertex[arrayPosition];
-			for (var i = 0; i < arrayPosition; i++)
+			var verticesCount = verticesList.Count;
+			var finalArray = new ColoredVertex[verticesCount];
+			for (var i = 0; i < verticesCount; i++)
 			{
-				finalArray[i] = verticesArray[i];
+				finalArray[i] = verticesList[i];
 			}
 
 			return finalArray;
