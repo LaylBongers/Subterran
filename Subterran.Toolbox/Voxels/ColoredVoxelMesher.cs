@@ -9,14 +9,22 @@ namespace Subterran.Toolbox.Voxels
 	{
 		private static Vector3[][] _lookupTable;
 
+		/// <summary>
+		///     Generates a mesh from a 3D array of voxels.
+		/// </summary>
+		/// <remarks>Extremely performance critical, likely to cause GC problems.</remarks>
+		/// <param name="voxels">A 3D array of voxels to be converted.</param>
+		/// <returns>The array of vertices making up the mesh.</returns>
 		public static ColoredVertex[] MeshGenerator(ColoredVoxel[,,] voxels)
 		{
 			var width = voxels.GetLength(0);
 			var height = voxels.GetLength(1);
 			var depth = voxels.GetLength(2);
 
-			// Create a list to keep the vertices in until we know how many.
-			// Give it a decently high capacity to avoid big GC slowdowns.
+			// Create a list to keep the vertices in until we know how many
+			// Give it a decently high capacity to avoid big GC slowdowns
+			// TODO: Perform analysis to make a decent guess at the amount of vertices.
+			// TODO: Allow caller to override guess amount.
 			var verticesEstimate = (width*height*depth)*1.5f;
 			var verticesList = new List<ColoredVertex>((int) verticesEstimate);
 
@@ -38,16 +46,13 @@ namespace Subterran.Toolbox.Voxels
 							z <= 0 || !voxels[x, y, z - 1].IsSolid,
 							z >= depth - 1 || !voxels[x, y, z + 1].IsSolid);
 
-						// Transform them one by one and copy them over into the array
-						var translation = Matrix4.CreateTranslation(x, y, z);
+						// Offset them one by one and copy them over into the list
+						var offset = new Vector3(x, y, z);
 						for (var i = 0; i < vectors.Length; i++)
 						{
-							Vector3 outVector;
-							Vector3.Transform(ref vectors[i], ref translation, out outVector);
-
 							verticesList.Add(new ColoredVertex
 							{
-								Position = outVector,
+								Position = vectors[i] + offset,
 								Color = voxels[x, y, z].Color
 							});
 						}
