@@ -54,7 +54,8 @@ namespace Subterran.Toolbox
 			{
 				BasicPerformanceTracers.CreateLoopSlownessTracer(_loopManager),
 				BasicPerformanceTracers.CreateLoopSkippingTracer(_loopManager),
-				BasicPerformanceTracers.CreateGcTimeTracer()
+				// This is commented out because ironically it's causing GC issues, uncomment if needed
+				//BasicPerformanceTracers.CreateGcTimeTracer()
 			};
 		}
 

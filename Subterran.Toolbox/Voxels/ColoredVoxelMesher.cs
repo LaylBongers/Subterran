@@ -8,6 +8,14 @@ namespace Subterran.Toolbox.Voxels
 	public static class ColoredVoxelMesher
 	{
 		private static Vector3[][] _lookupTable;
+		private static readonly List<ColoredVertex> WorkingList = new List<ColoredVertex>();
+
+		/// <summary>
+		///     If set to true, will optimize for concurrent calling.
+		///     If set to false, will optimize for non-concurrent calling.
+		///     Do not use the MeshGenerator concurrent with AllowConcurrency set to false.
+		/// </summary>
+		public static bool AllowConcurrency { get; set; }
 
 		/// <summary>
 		///     Generates a mesh from a 3D array of voxels.
@@ -21,12 +29,9 @@ namespace Subterran.Toolbox.Voxels
 			var height = voxels.GetLength(1);
 			var depth = voxels.GetLength(2);
 
-			// Create a list to keep the vertices in until we know how many
-			// Give it a decently high capacity to avoid big GC slowdowns
-			// TODO: Perform analysis to make a decent guess at the amount of vertices.
-			// TODO: Allow caller to override guess amount.
+			// Get a list to keep the vertices in until we know how many
 			var verticesEstimate = (width*height*depth)*1.5f;
-			var verticesList = new List<ColoredVertex>((int) verticesEstimate);
+			var verticesList = GetVerticesListForSettings((int) verticesEstimate);
 
 			for (var x = 0; x < width; x++)
 			{
@@ -69,6 +74,20 @@ namespace Subterran.Toolbox.Voxels
 			}
 
 			return finalArray;
+		}
+
+		private static List<ColoredVertex> GetVerticesListForSettings(int verticesEstimate)
+		{
+			if (AllowConcurrency)
+			{
+				// We're set for concurrency so we can't re-use the working list
+				// Give it a decently high capacity to avoid big GC slowdowns from growing the list
+				return new List<ColoredVertex>(verticesEstimate);
+			}
+
+			// We can re-use the working list so just clear it withour resetting capacity
+			WorkingList.Clear();
+			return WorkingList;
 		}
 
 		private static Vector3[] LookupVoxelMesh(
