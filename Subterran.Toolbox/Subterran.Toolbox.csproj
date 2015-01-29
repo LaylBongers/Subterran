@@ -45,11 +45,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicSubterranGame.cs" />
-    <Compile Include="FpsCounterComponent.cs" />
+    <Compile Include="Components\FpsCounterComponent.cs" />
     <Compile Include="IUpdatable.cs" />
-    <Compile Include="LookAtComponent.cs" />
+    <Compile Include="Components\LookAtComponent.cs" />
     <Compile Include="PerformanceTracer.cs" />
-    <Compile Include="NoclipMovementComponent.cs" />
+    <Compile Include="Components\NoclipMovementComponent.cs" />
     <Compile Include="BasicPerformanceTracers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Voxels\ColoredVoxelMesher.cs" />

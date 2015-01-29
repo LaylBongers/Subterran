@@ -4,6 +4,7 @@ using OpenTK;
 using Subterran;
 using Subterran.Rendering.Components;
 using Subterran.Toolbox;
+using Subterran.Toolbox.Components;
 using Subterran.Toolbox.Voxels;
 
 namespace ComponentGallery

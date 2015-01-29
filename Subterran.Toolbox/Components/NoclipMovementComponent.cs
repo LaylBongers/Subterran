@@ -2,7 +2,7 @@
 using OpenTK;
 using OpenTK.Input;
 
-namespace Subterran.Toolbox
+namespace Subterran.Toolbox.Components
 {
 	public class NoclipMovementComponent : EntityComponent, IInitializable, IUpdatable
 	{
