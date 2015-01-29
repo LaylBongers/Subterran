@@ -36,5 +36,18 @@ namespace Subterran.Tests
 			Assert.Equal(big, result1);
 			Assert.Equal(big, result2);
 		}
+
+		[Fact]
+		public void NormalizeColor_IntegerWithinRange_ReturnsNormalized()
+		{
+			// Arrange
+			const int value = 0xFF/2;
+			
+			// Act
+			var result = StMath.NormalizeColor(value);
+
+			// Assert
+			Assert.Equal(0.50, result, 2);
+		}
 	}
 }

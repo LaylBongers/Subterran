@@ -12,7 +12,7 @@ namespace ComponentGallery
 	{
 		public static BasicSubterranGame Create()
 		{
-			var game = new BasicSubterranGame {Window = {Title = "Component Gallery"}};
+			var game = new BasicSubterranGame();
 
 			var testMap = VoxelMapSerializer.Load("./Objects/testmap.voxelmap");
 			var teapot = ModelLoader.Load("./Objects/teapot.st.obj");
@@ -34,6 +34,7 @@ namespace ComponentGallery
 			{
 				Children =
 				{
+					CreateScriptsEntity(game),
 					CreateCameraEntity(game.Window),
 					CreateTopDownCameraEntity(teapotWithChild.Children.First()),
 
@@ -63,6 +64,22 @@ namespace ComponentGallery
 			};
 
 			return game;
+		}
+
+		private static Entity CreateScriptsEntity(BasicSubterranGame game)
+		{
+			// Misc useful scripts that just need to be added to the scene
+
+			return new Entity
+			{
+				Components = 
+				{
+					new FpsCounterComponent(game.Window)
+					{
+						Title = "Component Gallery"
+					}
+				}
+			};
 		}
 
 		private static Entity CreateWorldMapEntity(Vector3 position, Vector3 rotation, float scale, ColoredVoxel[,,] voxels)

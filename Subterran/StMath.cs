@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Drawing;
+using OpenTK;
 
 namespace Subterran
 {
@@ -27,6 +29,14 @@ namespace Subterran
 		public static float NormalizeColor(int value)
 		{
 			return (float) value/byte.MaxValue;
+		}
+
+		public static Vector3 NormalizeColor(Color color)
+		{
+			return new Vector3(
+				NormalizeColor(color.R),
+				NormalizeColor(color.G),
+				NormalizeColor(color.B));
 		}
 	}
 }

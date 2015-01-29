@@ -10,12 +10,13 @@ namespace VoxelWorld
 	{
 		public static BasicSubterranGame Create()
 		{
-			var game = new BasicSubterranGame {Window = {Title = "Voxel World"}};
+			var game = new BasicSubterranGame();
 
 			game.World = new Entity
 			{
 				Children =
 				{
+					CreateScriptsEntity(game),
 					CreateCameraEntity(game.Window),
 					CreateVoxelWorldEntity(new Vector3(0, 0, 0)),
 					CreateVoxelWorldEntity(new Vector3(-200, 0, 0)),
@@ -25,6 +26,22 @@ namespace VoxelWorld
 			};
 
 			return game;
+		}
+
+		private static Entity CreateScriptsEntity(BasicSubterranGame game)
+		{
+			// Misc useful scripts that just need to be added to the scene
+
+			return new Entity
+			{
+				Components = 
+				{
+					new FpsCounterComponent(game.Window)
+					{
+						Title = "Voxel World"
+					}
+				}
+			};
 		}
 
 		private static Entity CreateCameraEntity(Window window)
