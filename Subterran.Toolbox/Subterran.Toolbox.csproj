@@ -44,6 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BasicEntities.cs" />
     <Compile Include="BasicSubterranGame.cs" />
     <Compile Include="Components\FpsCounterComponent.cs" />
     <Compile Include="IUpdatable.cs" />
