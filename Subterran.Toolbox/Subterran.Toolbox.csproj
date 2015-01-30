@@ -54,6 +54,7 @@
     <Compile Include="Components\NoclipMovementComponent.cs" />
     <Compile Include="BasicPerformanceTracers.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SimplePhysics\PhysicsWorldComponent.cs" />
     <Compile Include="SimplePhysics\RigidbodyComponent.cs" />
     <Compile Include="Voxels\ColoredVoxelMesher.cs" />
     <Compile Include="Voxels\VoxelMapComponent.cs" />

@@ -17,6 +17,10 @@ namespace Platformer
 
 			game.World = new Entity
 			{
+				Components =
+				{
+					new PhysicsWorldComponent()
+				},
 				Children =
 				{
 					CreateScriptsEntity(game.Window),
@@ -80,7 +84,8 @@ namespace Platformer
 					new CameraFollowComponent()
 					{
 						Target = followTarget,
-						Distance = 8
+						Distance = 10,
+						HeightOffset = 4
 					}
 				}
 			};
