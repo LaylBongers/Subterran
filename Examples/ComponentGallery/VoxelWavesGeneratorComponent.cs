@@ -56,7 +56,7 @@ namespace ComponentGallery
 			{
 				for (var z = 0; z < Size; z++)
 				{
-					var pillarColor = RandomizeColor(random, 10, Color.RoyalBlue);
+					var pillarColor = StMath.RandomizeColor(random, 10, Color.RoyalBlue);
 					for (var y = 0; y < Height + 1; y++)
 					{
 						voxels[x, y, z].Color = pillarColor;
@@ -83,20 +83,6 @@ namespace ComponentGallery
 					}
 				}
 			}
-		}
-
-		private static Vector3 RandomizeColor(Random random, int randomness, Color color)
-		{
-			return new Vector3(
-				StMath.NormalizeColor(
-					StMath.Range(color.R + random.Next(-randomness, randomness),
-						Byte.MinValue, Byte.MaxValue)),
-				StMath.NormalizeColor(
-					StMath.Range(color.G + random.Next(-randomness, randomness),
-						Byte.MinValue, Byte.MaxValue)),
-				StMath.NormalizeColor(
-					StMath.Range(color.B + random.Next(-randomness, randomness),
-						Byte.MinValue, Byte.MaxValue)));
 		}
 	}
 }

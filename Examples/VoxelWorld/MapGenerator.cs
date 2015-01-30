@@ -55,7 +55,7 @@ namespace VoxelWorld
 				map[x, y, z] = new ColoredVoxel
 				{
 					IsSolid = true,
-					Color = RandomizeColor(10, GetColorFor(y, height, dirtHeight))
+					Color = StMath.RandomizeColor(Random, 10, GetColorFor(y, height, dirtHeight))
 				};
 			}
 		}
@@ -68,20 +68,6 @@ namespace VoxelWorld
 				return Dirt;
 			
 			return Stone;
-		}
-
-		private static Vector3 RandomizeColor(int randomness, Color color)
-		{
-			return new Vector3(
-				StMath.NormalizeColor(
-					StMath.Range(color.R + Random.Next(-randomness, randomness),
-						Byte.MinValue, Byte.MaxValue)),
-				StMath.NormalizeColor(
-					StMath.Range(color.G + Random.Next(-randomness, randomness),
-						Byte.MinValue, Byte.MaxValue)),
-				StMath.NormalizeColor(
-					StMath.Range(color.B + Random.Next(-randomness, randomness),
-						Byte.MinValue, Byte.MaxValue)));
 		}
 	}
 }

@@ -38,5 +38,16 @@ namespace Subterran
 				NormalizeColor(color.G),
 				NormalizeColor(color.B));
 		}
+
+		public static Vector3 RandomizeColor(Random random, int randomness, Color color)
+		{
+			return NormalizeColor(Color.FromArgb(
+				Range(color.R + random.Next(-randomness, randomness),
+					Byte.MinValue, Byte.MaxValue),
+				Range(color.G + random.Next(-randomness, randomness),
+					Byte.MinValue, Byte.MaxValue),
+				Range(color.B + random.Next(-randomness, randomness),
+					Byte.MinValue, Byte.MaxValue)));
+		}
 	}
 }
