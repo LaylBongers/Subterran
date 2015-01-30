@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{081D8798-36FF-4783-8103-6D6D9C382E15}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Subterran.Toolbox</RootNamespace>
-    <AssemblyName>Subterran.Toolbox</AssemblyName>
+    <RootNamespace>Platformer</RootNamespace>
+    <AssemblyName>Platformer</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,21 +23,23 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject />
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
+      <HintPath>..\..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -44,36 +47,32 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicEntities.cs" />
-    <Compile Include="BasicSubterranGame.cs" />
-    <Compile Include="Components\FpsCounterComponent.cs" />
-    <Compile Include="IUpdatable.cs" />
-    <Compile Include="Components\LookAtComponent.cs" />
-    <Compile Include="PerformanceTracer.cs" />
-    <Compile Include="Components\NoclipMovementComponent.cs" />
-    <Compile Include="BasicPerformanceTracers.cs" />
+    <Compile Include="Platformer.cs" />
+    <Compile Include="PlayerMoveComponent.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="SimplePhysics\RigidbodyComponent.cs" />
-    <Compile Include="Voxels\ColoredVoxelMesher.cs" />
-    <Compile Include="Voxels\VoxelMapComponent.cs" />
-    <Compile Include="Voxels\ColoredVoxel.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Subterran.Input\Subterran.Input.csproj">
+    <None Include="App.config" />
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Subterran.Input\Subterran.Input.csproj">
       <Project>{2d8d561a-ffaa-4588-8b61-f4b236c07c83}</Project>
       <Name>Subterran.Input</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Subterran.Rendering\Subterran.Rendering.csproj">
+    <ProjectReference Include="..\..\Subterran.Rendering\Subterran.Rendering.csproj">
       <Project>{54554f92-d476-4643-be25-a0dc6352adab}</Project>
       <Name>Subterran.Rendering</Name>
     </ProjectReference>
-    <ProjectReference Include="..\Subterran\Subterran.csproj">
+    <ProjectReference Include="..\..\Subterran.Toolbox\Subterran.Toolbox.csproj">
+      <Project>{fd41c4ed-9387-48d1-bf6f-bb1347dfa10c}</Project>
+      <Name>Subterran.Toolbox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Subterran\Subterran.csproj">
       <Project>{ca6493f3-a13c-4dff-b31d-e2d96148211f}</Project>
       <Name>Subterran</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -81,13 +81,26 @@ namespace Subterran
 		}
 
 		public T GetComponent<T>()
+			where T : class
 		{
 			return GetComponents<T>().FirstOrDefault();
 		}
 
 		public IEnumerable<T> GetComponents<T>()
+			where T : class
 		{
 			return Components.OfType<T>();
+		}
+
+		public T RequireComponent<T>()
+			where T : class
+		{
+			var value = GetComponent<T>();
+
+			if (value == null)
+				throw new InvalidOperationException("This component requires a " + typeof(T).Name);
+			
+			return value;
 		}
 
 		/// <summary>
@@ -97,6 +110,7 @@ namespace Subterran
 		/// <typeparam name="T">The type of the components to call on.</typeparam>
 		/// <param name="func">The function to call.</param>
 		public void ForEach<T>(Action<T> func)
+			where T : class
 		{
 			foreach (var component in GetComponents<T>())
 			{

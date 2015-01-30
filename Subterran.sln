@@ -21,6 +21,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Input", "Subterra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoxelWorld", "Examples\VoxelWorld\VoxelWorld.csproj", "{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platformer", "Examples\Platformer\Platformer.csproj", "{081D8798-36FF-4783-8103-6D6D9C382E15}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -59,6 +61,10 @@ Global
 		{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391}.Release|Any CPU.Build.0 = Release|Any CPU
+		{081D8798-36FF-4783-8103-6D6D9C382E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{081D8798-36FF-4783-8103-6D6D9C382E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{081D8798-36FF-4783-8103-6D6D9C382E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{081D8798-36FF-4783-8103-6D6D9C382E15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -67,5 +73,6 @@ Global
 		{A0321BEB-1149-4096-A88B-6AD8AE1FF361} = {073F066E-831E-452F-82AD-E71FBF72C326}
 		{184DD2CB-D774-4201-8A49-C6A3747AF8BF} = {073F066E-831E-452F-82AD-E71FBF72C326}
 		{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391} = {073F066E-831E-452F-82AD-E71FBF72C326}
+		{081D8798-36FF-4783-8103-6D6D9C382E15} = {073F066E-831E-452F-82AD-E71FBF72C326}
 	EndGlobalSection
 EndGlobal

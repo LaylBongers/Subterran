@@ -122,6 +122,51 @@ namespace Subterran.Tests
 			Assert.Null(child.Parent);
 		}
 
+		[Fact]
+		public void RequireComponent_MatchingComponent_ReturnsComponent()
+		{
+			// Arrange
+			var component = Substitute.For<ComponentA>();
+			var entity = new Entity { Components = { component } };
+
+			// Act
+			var result = entity.RequireComponent<ComponentA>();
+
+			// Assert
+			Assert.Same(component, result);
+		}
+
+		[Fact]
+		public void RequireComponent_NoComponents_ThrowsException()
+		{
+			// Arrange
+			var entity = new Entity();
+
+			// Act & Assert
+			Assert.Throws<InvalidOperationException>(() => entity.RequireComponent<ComponentA>());
+		}
+
+		[Fact]
+		public void RequireComponent_NoComponents_ThrowsExceptionWithComponentName()
+		{
+			// Arrange
+			var entity = new Entity();
+
+			// Act
+			var ex = new InvalidOperationException("No exception happened :C");
+			try
+			{
+				entity.RequireComponent<ComponentA>();
+			}
+			catch (InvalidOperationException e)
+			{
+				ex = e;
+			}
+
+			// Assert
+			Assert.Contains("ComponentA", ex.Message);
+		}
+
 		public abstract class ComponentA : EntityComponent
 		{
 		}

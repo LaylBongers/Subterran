@@ -26,10 +26,7 @@ namespace Subterran.Toolbox.Voxels
 		public void Initialize()
 		{
 			_meshIsOutdated = true;
-			_meshRenderer = Entity.GetComponent<MeshRendererComponent>();
-
-			if (_meshRenderer == null)
-				throw new InvalidOperationException("This component requires a MeshRendererComponent!");
+			_meshRenderer = Entity.RequireComponent<MeshRendererComponent>();
 		}
 
 		public void PrepareRender()

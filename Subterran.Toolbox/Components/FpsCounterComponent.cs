@@ -36,7 +36,9 @@ namespace Subterran.Toolbox.Components
 			if (thisSecond == _lastSecond)
 				return;
 
-			_window.Title = string.Format("{0} - UFPS: {1}, RFPS: {2}", Title, _updateAmount, _renderAmount);
+			_window.Title = string.Format("{0}UFPS: {1}, RFPS: {2}",
+				Title != null ? Title + " - " : "",
+				_updateAmount, _renderAmount);
 			_updateAmount = 0;
 			_renderAmount = 0;
 			_lastSecond = thisSecond;
