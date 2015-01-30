@@ -10,12 +10,6 @@ namespace Platformer
 	{
 		private RigidbodyComponent _rigidbody;
 
-		public PlayerMoveComponent()
-		{
-			// Default values
-			Speed = 5;
-		}
-
 		public float Speed { get; set; }
 
 		public void Initialize()

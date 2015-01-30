@@ -1,6 +1,4 @@
-﻿using System.Drawing;
-using Subterran.Rendering.Components;
-using Subterran.Toolbox.Voxels;
+﻿using Subterran.Rendering.Components;
 
 namespace Subterran.Toolbox
 {
@@ -13,22 +11,7 @@ namespace Subterran.Toolbox
 				Components =
 				{
 					new MeshRendererComponent(),
-					new VoxelMapComponent<ColoredVoxel>
-					{
-						MeshGenerator = ColoredVoxelMesher.MeshGenerator,
-						Voxels = new[,,]
-						{
-							{
-								{
-									new ColoredVoxel
-									{
-										IsSolid = true,
-										Color = StMath.NormalizeColor(Color.DarkRed)
-									}
-								}
-							}
-						}
-					}
+					BasicComponents.CreateTestBlockComponent()
 				}
 			};
 		}

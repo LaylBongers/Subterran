@@ -12,7 +12,6 @@ namespace Platformer
 		{
 			var game = new BasicSubterranGame();
 
-			var scripts = CreateScriptsEntity(game.Window);
 			var player = CreatePlayerEntity();
 			var camera = CreateCameraEntity(player);
 
@@ -20,7 +19,8 @@ namespace Platformer
 			{
 				Children =
 				{
-					scripts,
+					CreateScriptsEntity(game.Window),
+					CreateTestReferenceEntity(),
 					player,
 					camera
 				}
@@ -40,14 +40,32 @@ namespace Platformer
 			};
 		}
 
+		private static Entity CreateTestReferenceEntity()
+		{
+			return new Entity
+			{
+				Components =
+				{
+					new MeshRendererComponent(),
+					BasicComponents.CreateTestBlockComponent()
+				}
+			};
+		}
+
 		private static Entity CreatePlayerEntity()
 		{
 			return new Entity
 			{
 				Components =
 				{
+					new MeshRendererComponent(),
+					BasicComponents.CreateTestBlockComponent(),
+
 					new RigidbodyComponent(),
-					new PlayerMoveComponent()
+					new PlayerMoveComponent
+					{
+						Speed = 5
+					}
 				}
 			};
 		}
@@ -58,7 +76,12 @@ namespace Platformer
 			{
 				Components =
 				{
-					new CameraComponent()
+					new CameraComponent(),
+					new CameraFollowComponent()
+					{
+						Target = followTarget,
+						Distance = 8
+					}
 				}
 			};
 		}
