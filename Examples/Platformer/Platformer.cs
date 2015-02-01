@@ -1,4 +1,5 @@
-﻿using Subterran;
+﻿using OpenTK;
+using Subterran;
 using Subterran.Rendering.Components;
 using Subterran.Toolbox;
 using Subterran.Toolbox.Components;
@@ -24,7 +25,9 @@ namespace Platformer
 				Children =
 				{
 					CreateScriptsEntity(game.Window),
-					CreateTestReferenceEntity(),
+					CreateTestReferenceEntity(new Vector3(0, 0, 0)),
+					CreateTestReferenceEntity(new Vector3(2, -3, 0)),
+					CreateTestReferenceEntity(new Vector3(5, 0, 0)),
 					player,
 					camera
 				}
@@ -44,14 +47,24 @@ namespace Platformer
 			};
 		}
 
-		private static Entity CreateTestReferenceEntity()
+		private static Entity CreateTestReferenceEntity(Vector3 position)
 		{
 			return new Entity
 			{
+				Position = position,
 				Components =
 				{
 					new MeshRendererComponent(),
-					BasicComponents.CreateTestBlockComponent()
+					BasicComponents.CreateTestBlockComponent(),
+
+					new FixedbodyComponent
+					{
+						Collider = new CubeCollider
+						{
+							Origin = new Vector3(0, 0, 0),
+							Size = new Vector3(1, 1, 1)
+						}
+					}
 				}
 			};
 		}
@@ -60,15 +73,28 @@ namespace Platformer
 		{
 			return new Entity
 			{
+				Position = new Vector3(0.5f, 5, 0.5f),
 				Components =
 				{
-					new MeshRendererComponent(),
+					new MeshRendererComponent
+					{
+						Offset = new Vector3(-0.5f, 0, -0.5f)
+					},
 					BasicComponents.CreateTestBlockComponent(),
 
-					new RigidbodyComponent(),
+					new RigidbodyComponent
+					{
+						Gravity = new Vector3(0, -15, 0),
+						Collider = new CubeCollider
+						{
+							Origin = new Vector3(-0.5f, 0, -0.5f),
+							Size = new Vector3(1, 1, 1)
+						}
+					},
 					new PlayerMoveComponent
 					{
-						Speed = 5
+						Speed = 5,
+						JumpHeight = 10
 					}
 				}
 			};
@@ -81,11 +107,11 @@ namespace Platformer
 				Components =
 				{
 					new CameraComponent(),
-					new CameraFollowComponent()
+					new CameraFollowComponent
 					{
 						Target = followTarget,
 						Distance = 10,
-						HeightOffset = 4
+						HeightOffset = 2
 					}
 				}
 			};

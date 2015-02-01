@@ -11,6 +11,8 @@ namespace Subterran.Rendering.Components
 		private bool _streaming;
 		private ColoredVertex[] _vertices;
 
+		public Vector3 Offset { get; set; }
+
 		/// <summary>
 		///     If true, renders the mesh by streaming the vertices every
 		///     frame rather than maintaining a cached buffer.
@@ -41,6 +43,12 @@ namespace Subterran.Rendering.Components
 			if (Vertices == null)
 				return;
 
+			// If we're streaming or not, if we have an offset we need to add that to the matrix
+			if (Offset != Vector3.Zero)
+			{
+				matrix = Matrix4.CreateTranslation(Offset) * matrix;
+			}
+			
 			if (Streaming)
 			{
 				// We're rendering it streaming so just send it over
