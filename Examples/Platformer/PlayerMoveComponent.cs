@@ -1,5 +1,4 @@
 ﻿using System;
-using OpenTK;
 using OpenTK.Input;
 using Subterran;
 using Subterran.Toolbox;
@@ -10,6 +9,7 @@ namespace Platformer
 	internal class PlayerMoveComponent : EntityComponent, IInitializable, IUpdatable
 	{
 		private RigidbodyComponent _rigidbody;
+		private SensorComponent _jumpSensor;
 
 		public float Speed { get; set; }
 		public float JumpHeight { get; set; }
@@ -17,6 +17,7 @@ namespace Platformer
 		public void Initialize()
 		{
 			_rigidbody = Entity.RequireComponent<RigidbodyComponent>();
+			_jumpSensor = Entity.RequireComponent<SensorComponent>(s => s.Name == "JumpSensor");
 		}
 
 		public void Update(TimeSpan elapsed)
@@ -36,7 +37,7 @@ namespace Platformer
 			}
 
 			// Jumping
-			if (state[Key.W])
+			if (state[Key.W] && _jumpSensor.CheckTriggered())
 			{
 				velocity.Y = JumpHeight;
 			}

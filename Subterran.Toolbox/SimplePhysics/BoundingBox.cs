@@ -2,7 +2,7 @@
 
 namespace Subterran.Toolbox.SimplePhysics
 {
-	internal struct BoundingBox
+	public struct BoundingBox
 	{
 		public Vector3 Start { get; set; }
 		public Vector3 End { get; set; }

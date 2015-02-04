@@ -127,7 +127,7 @@ namespace Subterran.Tests
 		{
 			// Arrange
 			var component = Substitute.For<ComponentA>();
-			var entity = new Entity { Components = { component } };
+			var entity = new Entity {Components = {component}};
 
 			// Act
 			var result = entity.RequireComponent<ComponentA>();
@@ -167,8 +167,36 @@ namespace Subterran.Tests
 			Assert.Contains("ComponentA", ex.Message);
 		}
 
+		[Fact]
+		public void RequireComponent_MatchingComponentWithMatchingPredicate_ReturnsComponent()
+		{
+			// Arrange
+			var component = Substitute.For<ComponentA>();
+			component.Data = "Matching";
+			var entity = new Entity {Components = {component}};
+
+			// Act
+			var result = entity.RequireComponent<ComponentA>(c => c.Data == "Matching");
+
+			// Assert
+			Assert.Same(component, result);
+		}
+
+		[Fact]
+		public void RequireComponent_MatchingComponentWithWrongPredicate_ThrowsException()
+		{
+			// Arrange
+			var component = Substitute.For<ComponentA>();
+			component.Data = "Wrong";
+			var entity = new Entity {Components = {component}};
+
+			// Act & Assert
+			Assert.Throws<InvalidOperationException>(() => entity.RequireComponent<ComponentA>(c => c.Data == "Matching"));
+		}
+
 		public abstract class ComponentA : EntityComponent
 		{
+			public string Data { get; set; }
 		}
 
 		public abstract class ComponentB : EntityComponent

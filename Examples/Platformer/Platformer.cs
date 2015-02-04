@@ -61,7 +61,6 @@ namespace Platformer
 				{
 					new MeshRendererComponent(),
 					BasicComponents.CreateTestBlockComponent(),
-
 					new FixedbodyComponent
 					{
 						Collider = new CubeCollider
@@ -86,14 +85,22 @@ namespace Platformer
 						Offset = new Vector3(-0.5f, 0, -0.5f)
 					},
 					BasicComponents.CreateTestBlockComponent(Color.ForestGreen),
-
 					new RigidbodyComponent
 					{
 						Gravity = new Vector3(0, -15, 0),
-						Collider = new CubeCollider
+						Collider = new CubeCollider()
 						{
 							Origin = new Vector3(-0.5f, 0, -0.5f),
 							Size = new Vector3(1, 1, 1)
+						}
+					},
+					new SensorComponent
+					{
+						Name = "JumpSensor",
+						Collider = new CubeCollider()
+						{
+							Origin = new Vector3(-0.5f, -0.01f, -0.5f),
+							Size = new Vector3(1, 0.01f, 1)
 						}
 					},
 					new PlayerMoveComponent

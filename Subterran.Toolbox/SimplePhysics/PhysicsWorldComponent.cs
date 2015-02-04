@@ -59,7 +59,8 @@ namespace Subterran.Toolbox.SimplePhysics
 			}
 		}
 
-		private void MoveOnAxis(TimeSpan elapsed, Tuple<Entity, RigidbodyComponent> rigidBody, IEnumerable<BoundingBox> fixedBoxes,
+		private void MoveOnAxis(TimeSpan elapsed, Tuple<Entity,
+			RigidbodyComponent> rigidBody, IEnumerable<BoundingBox> fixedBoxes,
 			Func<Vector3, float> axisGetter, Func<Vector3, float, Vector3> axisAdder)
 		{
 			// Get a bounding box for the new location
@@ -73,7 +74,7 @@ namespace Subterran.Toolbox.SimplePhysics
 			foreach (var fixedBox in fixedBoxes)
 			{
 				// If we don't collide we're immediately done here
-				if (!Collides(rigidBox, fixedBox))
+				if (!PhysicsHelper.CheckCollision(rigidBox, fixedBox))
 					continue;
 
 				// We do collide, so update our velocity for the collision
@@ -91,13 +92,6 @@ namespace Subterran.Toolbox.SimplePhysics
 			// Update position with the checked velocity
 			rigidBody.Item1.Position = axisAdder(rigidBody.Item1.Position, tickAxisVelocity);
 			rigidBody.Item2.Velocity = velocity;
-		}
-
-		private bool Collides(BoundingBox rigidBox, BoundingBox fixedBox)
-		{
-			return rigidBox.Start.Y < fixedBox.End.Y && rigidBox.End.Y > fixedBox.Start.Y &&
-			       rigidBox.Start.X < fixedBox.End.X && rigidBox.End.X > fixedBox.Start.X &&
-			       rigidBox.Start.Z < fixedBox.End.Z && rigidBox.End.Z > fixedBox.Start.Z;
 		}
 
 		private float ResolveAxisCollision(float tickVelocity, BoundingBox rigidBox, BoundingBox fixedBox,

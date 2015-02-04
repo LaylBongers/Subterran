@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
+using System.Linq.Expressions;
 using OpenTK;
 
 namespace Subterran
@@ -22,15 +23,10 @@ namespace Subterran
 		}
 
 		public Vector3 Position { get; set; }
-
 		public Vector3 Rotation { get; set; }
-
 		public Vector3 Scale { get; set; }
-
 		public Entity Parent { get; private set; }
-
 		public ObservableCollection<Entity> Children { get; private set; }
-
 		public ObservableCollection<EntityComponent> Components { get; private set; }
 
 		public Vector3 WorldPosition
@@ -49,10 +45,10 @@ namespace Subterran
 			{
 				// Create a multiply matrix representing this entity
 				return
-					Matrix4.CreateScale(Scale) *
-					Matrix4.CreateRotationX(Rotation.X) *
-					Matrix4.CreateRotationY(Rotation.Y) *
-					Matrix4.CreateRotationZ(Rotation.Z) *
+					Matrix4.CreateScale(Scale)*
+					Matrix4.CreateRotationX(Rotation.X)*
+					Matrix4.CreateRotationY(Rotation.Y)*
+					Matrix4.CreateRotationZ(Rotation.Z)*
 					Matrix4.CreateTranslation(Position);
 			}
 		}
@@ -98,8 +94,21 @@ namespace Subterran
 			var value = GetComponent<T>();
 
 			if (value == null)
-				throw new InvalidOperationException("This component requires a " + typeof(T).Name);
-			
+				throw new InvalidOperationException("This component requires a " + typeof (T).Name);
+
+			return value;
+		}
+
+		public T RequireComponent<T>(Func<T, bool> predicate)
+			where T : class
+		{
+			var value = GetComponents<T>().FirstOrDefault(predicate);
+
+			if (value == null)
+				throw new InvalidOperationException(
+					"This component requires a " + typeof (T).Name +
+					" matching given requirements.");
+
 			return value;
 		}
 
