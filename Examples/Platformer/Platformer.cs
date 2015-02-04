@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System.Drawing;
+using OpenTK;
 using Subterran;
 using Subterran.Rendering.Components;
 using Subterran.Toolbox;
@@ -27,6 +28,10 @@ namespace Platformer
 					CreateScriptsEntity(game.Window),
 					CreateTestReferenceEntity(new Vector3(0, 0, 0)),
 					CreateTestReferenceEntity(new Vector3(2, -3, 0)),
+					CreateTestReferenceEntity(new Vector3(3, -3, 0)),
+					CreateTestReferenceEntity(new Vector3(4, -3, 0)),
+					CreateTestReferenceEntity(new Vector3(5, -3, 0)),
+					CreateTestReferenceEntity(new Vector3(6, -3, 0)),
 					CreateTestReferenceEntity(new Vector3(5, 0, 0)),
 					player,
 					camera
@@ -80,7 +85,7 @@ namespace Platformer
 					{
 						Offset = new Vector3(-0.5f, 0, -0.5f)
 					},
-					BasicComponents.CreateTestBlockComponent(),
+					BasicComponents.CreateTestBlockComponent(Color.ForestGreen),
 
 					new RigidbodyComponent
 					{

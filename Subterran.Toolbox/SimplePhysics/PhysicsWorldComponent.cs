@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using OpenTK;
 
 namespace Subterran.Toolbox.SimplePhysics
@@ -21,7 +20,7 @@ namespace Subterran.Toolbox.SimplePhysics
 		{
 			// Optimization Note: Allocating tuples might cause GC issues, perhaps replace with structs?
 			var rigidBodies = new List<Tuple<Entity, RigidbodyComponent>>();
-			var fixedBodies = new List<BoundingBox>();
+			var fixedBoxes = new List<BoundingBox>();
 
 			// Get all rigid/fixed bodies that are a direct child of the entity we're attached to
 			foreach (var entity in Entity.Children)
@@ -35,12 +34,12 @@ namespace Subterran.Toolbox.SimplePhysics
 				var fixedBody = entity.GetComponent<FixedbodyComponent>();
 				if (fixedBody != null)
 				{
-					fixedBodies.Add(BoundingBox.FromPositionAndCollider(
+					fixedBoxes.Add(BoundingBox.FromPositionAndCollider(
 						entity.Position,
 						fixedBody.Collider));
 				}
 			}
-			
+
 			// We need to do a physics update once per time step
 			_accumulator += elapsed;
 			while (_accumulator > Timestep)
@@ -53,45 +52,66 @@ namespace Subterran.Toolbox.SimplePhysics
 					// Add a bit of gravity
 					rigidBody.Item2.Velocity += elapsed.PerSecond(rigidBody.Item2.Gravity);
 
-					// Find the new position for this physics tick and get the collider for it
-					var velocity = rigidBody.Item2.Velocity;
-					var tickVelocity = Timestep.PerSecond(velocity);
-					var oldPosition = rigidBody.Item1.Position;
-					var newPosition = oldPosition + tickVelocity;
-
-					var rigidCollider = rigidBody.Item2.Collider;
-					var rigidBox = BoundingBox.FromPositionAndCollider(newPosition, rigidCollider);
-					
-					// Check if our new position happens to collide
-					// For this we have to go through every fixed body component we detected
-					foreach (var fixedBox in fixedBodies)
-					{
-						if ( // Check if we collide on the axis we're checking
-							rigidBox.Start.Y < fixedBox.End.Y && rigidBox.End.Y > fixedBox.Start.Y &&
-							// Make sure we also collide on the perpendicular axes
-							rigidBox.Start.X < fixedBox.End.X && rigidBox.End.X > fixedBox.Start.X &&
-							rigidBox.Start.Z < fixedBox.End.Z && rigidBox.End.Z > fixedBox.Start.Z)
-						{
-							// Adjust velocity so we won't overlap after update anymore
-							var difference = velocity.Y < 0
-								? fixedBox.End.Y - rigidBox.Start.Y
-								: fixedBox.Start.Y - rigidBox.End.Y;
-							tickVelocity += new Vector3(0, difference, 0);
-
-							// Reset the velocity of the rigidbody so it doesn't keep moving
-							velocity.Y = 0;
-
-							// Update the position based on our new velocity
-							newPosition = oldPosition + tickVelocity;
-							rigidBox = BoundingBox.FromPositionAndCollider(newPosition, rigidCollider);
-						}
-					}
-
-					// Update their position with the set velocity
-					rigidBody.Item1.Position = newPosition;
-					rigidBody.Item2.Velocity = velocity;
+					MoveOnAxis(elapsed, rigidBody, fixedBoxes, v => v.X, (v, x) => v + new Vector3(x, 0, 0));
+					MoveOnAxis(elapsed, rigidBody, fixedBoxes, v => v.Y, (v, y) => v + new Vector3(0, y, 0));
+					MoveOnAxis(elapsed, rigidBody, fixedBoxes, v => v.Z, (v, z) => v + new Vector3(0, 0, z));
 				}
 			}
+		}
+
+		private void MoveOnAxis(TimeSpan elapsed, Tuple<Entity, RigidbodyComponent> rigidBody, IEnumerable<BoundingBox> fixedBoxes,
+			Func<Vector3, float> axisGetter, Func<Vector3, float, Vector3> axisAdder)
+		{
+			// Get a bounding box for the new location
+			var velocity = rigidBody.Item2.Velocity;
+			var tickAxisVelocity = axisGetter(elapsed.PerSecond(velocity));
+			var rigidBox = BoundingBox.FromPositionAndCollider(
+				axisAdder(rigidBody.Item1.Position, tickAxisVelocity),
+				rigidBody.Item2.Collider);
+
+			// Check if any of the fixed boxes collide with our new position
+			foreach (var fixedBox in fixedBoxes)
+			{
+				// If we don't collide we're immediately done here
+				if (!Collides(rigidBox, fixedBox))
+					continue;
+
+				// We do collide, so update our velocity for the collision
+				tickAxisVelocity = ResolveAxisCollision(tickAxisVelocity, rigidBox, fixedBox, axisGetter);
+
+				// Create a new bounding box based on the updated velocity
+				rigidBox = BoundingBox.FromPositionAndCollider(
+					axisAdder(rigidBody.Item1.Position, tickAxisVelocity),
+					rigidBody.Item2.Collider);
+
+				// Reset the velocity so we don't keep moving in the direction we just collided with
+				velocity = axisAdder(velocity, -axisGetter(velocity));
+			}
+
+			// Update position with the checked velocity
+			rigidBody.Item1.Position = axisAdder(rigidBody.Item1.Position, tickAxisVelocity);
+			rigidBody.Item2.Velocity = velocity;
+		}
+
+		private bool Collides(BoundingBox rigidBox, BoundingBox fixedBox)
+		{
+			return rigidBox.Start.Y < fixedBox.End.Y && rigidBox.End.Y > fixedBox.Start.Y &&
+			       rigidBox.Start.X < fixedBox.End.X && rigidBox.End.X > fixedBox.Start.X &&
+			       rigidBox.Start.Z < fixedBox.End.Z && rigidBox.End.Z > fixedBox.Start.Z;
+		}
+
+		private float ResolveAxisCollision(float tickVelocity, BoundingBox rigidBox, BoundingBox fixedBox,
+			Func<Vector3, float> axisGetter)
+		{
+			// Find the depth we're colliding on
+			var depth = tickVelocity < 0
+				? axisGetter(fixedBox.End) - axisGetter(rigidBox.Start)
+				: axisGetter(fixedBox.Start) - axisGetter(rigidBox.End);
+
+			// Adjust velocity so we won't overlap after update anymore
+			tickVelocity += depth;
+
+			return tickVelocity;
 		}
 	}
 }

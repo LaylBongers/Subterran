@@ -5,8 +5,13 @@ namespace Subterran.Toolbox
 {
 	public static class BasicComponents
 	{
-		public static EntityComponent CreateTestBlockComponent()
+		public static EntityComponent CreateTestBlockComponent(Color? color = null)
 		{
+			if (color == null)
+			{
+				color = Color.DarkRed;
+			}
+
 			return new VoxelMapComponent<ColoredVoxel>
 			{
 				MeshGenerator = ColoredVoxelMesher.MeshGenerator,
@@ -17,7 +22,7 @@ namespace Subterran.Toolbox
 							new ColoredVoxel
 							{
 								IsSolid = true,
-								Color = StMath.NormalizeColor(Color.DarkRed)
+								Color = StMath.NormalizeColor(color.Value)
 							}
 						}
 					}
