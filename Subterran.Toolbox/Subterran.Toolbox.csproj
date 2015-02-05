@@ -57,6 +57,7 @@
     <Compile Include="SimplePhysics\BoundingBox.cs" />
     <Compile Include="SimplePhysics\CubeCollider.cs" />
     <Compile Include="SimplePhysics\FixedbodyComponent.cs" />
+    <Compile Include="SimplePhysics\IFixedbodySource.cs" />
     <Compile Include="SimplePhysics\PhysicsHelper.cs" />
     <Compile Include="SimplePhysics\PhysicsWorldComponent.cs" />
     <Compile Include="SimplePhysics\RigidbodyComponent.cs" />
@@ -64,6 +65,7 @@
     <Compile Include="Voxels\ColoredVoxelMesher.cs" />
     <Compile Include="Voxels\VoxelMapComponent.cs" />
     <Compile Include="Voxels\ColoredVoxel.cs" />
+    <Compile Include="Voxels\VoxelMapFixedbodyComponent.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Subterran.Input\Subterran.Input.csproj">

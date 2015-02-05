@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using OpenTK;
 
 namespace Subterran.Toolbox.SimplePhysics
@@ -19,26 +20,8 @@ namespace Subterran.Toolbox.SimplePhysics
 		public void Update(TimeSpan elapsed)
 		{
 			// Optimization Note: Allocating tuples might cause GC issues, perhaps replace with structs?
-			var rigidBodies = new List<Tuple<Entity, RigidbodyComponent>>();
-			var fixedBoxes = new List<BoundingBox>();
-
-			// Get all rigid/fixed bodies that are a direct child of the entity we're attached to
-			foreach (var entity in Entity.Children)
-			{
-				var rigidBody = entity.GetComponent<RigidbodyComponent>();
-				if (rigidBody != null)
-				{
-					rigidBodies.Add(new Tuple<Entity, RigidbodyComponent>(entity, rigidBody));
-				}
-
-				var fixedBody = entity.GetComponent<FixedbodyComponent>();
-				if (fixedBody != null)
-				{
-					fixedBoxes.Add(BoundingBox.FromPositionAndCollider(
-						entity.Position,
-						fixedBody.Collider));
-				}
-			}
+			var rigidBodies = PhysicsHelper.FindRigidBodies(Entity);
+			var fixedBoxes = PhysicsHelper.FindFixedBoundingBoxes(Entity);
 
 			// We need to do a physics update once per time step
 			_accumulator += elapsed;

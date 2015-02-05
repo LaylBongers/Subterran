@@ -5,6 +5,7 @@ using Subterran.Rendering.Components;
 using Subterran.Toolbox;
 using Subterran.Toolbox.Components;
 using Subterran.Toolbox.SimplePhysics;
+using Subterran.Toolbox.Voxels;
 
 namespace Platformer
 {
@@ -15,7 +16,6 @@ namespace Platformer
 			var game = new BasicSubterranGame();
 
 			var player = CreatePlayerEntity();
-			var camera = CreateCameraEntity(player);
 
 			game.World = new Entity
 			{
@@ -26,15 +26,9 @@ namespace Platformer
 				Children =
 				{
 					CreateScriptsEntity(game.Window),
-					CreateTestReferenceEntity(new Vector3(0, 0, 0)),
-					CreateTestReferenceEntity(new Vector3(2, -3, 0)),
-					CreateTestReferenceEntity(new Vector3(3, -3, 0)),
-					CreateTestReferenceEntity(new Vector3(4, -3, 0)),
-					CreateTestReferenceEntity(new Vector3(5, -3, 0)),
-					CreateTestReferenceEntity(new Vector3(6, -3, 0)),
-					CreateTestReferenceEntity(new Vector3(5, 0, 0)),
+					CreateTerrainEntity(),
 					player,
-					camera
+					CreateCameraEntity(player)
 				}
 			};
 
@@ -52,22 +46,30 @@ namespace Platformer
 			};
 		}
 
-		private static Entity CreateTestReferenceEntity(Vector3 position)
+		private static Entity CreateTerrainEntity()
 		{
+			var voxels = new ColoredVoxel[4,1,1];
+
+			voxels[0, 0, 0].IsSolid = true;
+			voxels[0, 0, 0].Color = StMath.NormalizeColor(Color.BlueViolet);
+			voxels[1, 0, 0].IsSolid = true;
+			voxels[2, 0, 0].IsSolid = true;
+			voxels[3, 0, 0].IsSolid = true;
+
 			return new Entity
 			{
-				Position = position,
+				Scale = new Vector3(0.8f, 1, 1),
 				Components =
 				{
 					new MeshRendererComponent(),
-					BasicComponents.CreateTestBlockComponent(),
-					new FixedbodyComponent
+					new VoxelMapComponent<ColoredVoxel>
 					{
-						Collider = new CubeCollider
-						{
-							Origin = new Vector3(0, 0, 0),
-							Size = new Vector3(1, 1, 1)
-						}
+						Voxels = voxels,
+						MeshGenerator = ColoredVoxelMesher.MeshGenerator
+					},
+					new VoxelMapFixedbodyComponent<ColoredVoxel>
+					{
+						IsSolidChecker = v => v.IsSolid
 					}
 				}
 			};
@@ -87,8 +89,8 @@ namespace Platformer
 					BasicComponents.CreateTestBlockComponent(Color.ForestGreen),
 					new RigidbodyComponent
 					{
-						Gravity = new Vector3(0, -15, 0),
-						Collider = new CubeCollider()
+						Gravity = new Vector3(0, -14, 0),
+						Collider = new CubeCollider
 						{
 							Origin = new Vector3(-0.5f, 0, -0.5f),
 							Size = new Vector3(1, 1, 1)
@@ -97,7 +99,7 @@ namespace Platformer
 					new SensorComponent
 					{
 						Name = "JumpSensor",
-						Collider = new CubeCollider()
+						Collider = new CubeCollider
 						{
 							Origin = new Vector3(-0.5f, -0.01f, -0.5f),
 							Size = new Vector3(1, 0.01f, 1)
