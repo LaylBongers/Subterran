@@ -42,17 +42,18 @@ namespace Subterran.Toolbox.SimplePhysics
 						entity.Position,
 						fixedBody.Collider));
 				}
-
-				var fixedBodySource = entity.GetComponent<IFixedbodySource>();
-				if (fixedBodySource != null)
-				{
-					boxes.AddRange(fixedBodySource
-						.Colliders
-						.Select(c => BoundingBox.FromPositionAndCollider(entity.Position, c)));
-				}
 			}
 
 			return boxes;
+		}
+
+		public static IEnumerable<BoundingBox> FindSmartBoundingBoxes(Entity worldEntity, BoundingBox target)
+		{
+			return worldEntity
+				.Children
+				.Select(entity => entity.GetComponent<ISmartFixedbodySource>())
+				.Where(fixedBody => fixedBody != null)
+				.SelectMany(fixedBody => fixedBody.GetPotentialBoundingBoxes(target));
 		}
 	}
 }

@@ -49,5 +49,15 @@ namespace Subterran
 				Range(color.B + random.Next(-randomness, randomness),
 					Byte.MinValue, Byte.MaxValue)));
 		}
+
+		public static int Round(double value)
+		{
+			var retVal = (int)value;
+
+			if (value%1 >= 0.5)
+				retVal++;
+
+			return retVal;
+		}
 	}
 }

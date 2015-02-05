@@ -9,10 +9,13 @@ namespace Subterran.Toolbox.SimplePhysics
 
 		public bool CheckTriggered()
 		{
-			var fixedBodies = PhysicsHelper.FindFixedBoundingBoxes(Entity.Parent);
 			var sensorBoundingBox = BoundingBox.FromPositionAndCollider(Entity.Position, Collider);
 
-			return fixedBodies.Any(fixedBoundingBox => PhysicsHelper.CheckCollision(sensorBoundingBox, fixedBoundingBox));
+			var fixedBoxes = PhysicsHelper.FindFixedBoundingBoxes(Entity.Parent);
+			var smartBoxes = PhysicsHelper.FindSmartBoundingBoxes(Entity.Parent, sensorBoundingBox);
+			var combinedBoxes = fixedBoxes.Concat(smartBoxes);
+
+			return combinedBoxes.Any(fixedBoundingBox => PhysicsHelper.CheckCollision(sensorBoundingBox, fixedBoundingBox));
 		}
 	}
 }

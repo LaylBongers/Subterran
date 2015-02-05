@@ -42,8 +42,8 @@ namespace Subterran.Toolbox.SimplePhysics
 			}
 		}
 
-		private void MoveOnAxis(TimeSpan elapsed, Tuple<Entity,
-			RigidbodyComponent> rigidBody, IEnumerable<BoundingBox> fixedBoxes,
+		private void MoveOnAxis(TimeSpan elapsed,
+			Tuple<Entity, RigidbodyComponent> rigidBody, IEnumerable<BoundingBox> fixedBoxes,
 			Func<Vector3, float> axisGetter, Func<Vector3, float, Vector3> axisAdder)
 		{
 			// Get a bounding box for the new location
@@ -53,8 +53,11 @@ namespace Subterran.Toolbox.SimplePhysics
 				axisAdder(rigidBody.Item1.Position, tickAxisVelocity),
 				rigidBody.Item2.Collider);
 
+			// Get the smart collected bounding boxes we also need to check
+			var smartBoxes = PhysicsHelper.FindSmartBoundingBoxes(Entity, rigidBox).ToList();
+
 			// Check if any of the fixed boxes collide with our new position
-			foreach (var fixedBox in fixedBoxes)
+			foreach (var fixedBox in fixedBoxes.Concat(smartBoxes))
 			{
 				// If we don't collide we're immediately done here
 				if (!PhysicsHelper.CheckCollision(rigidBox, fixedBox))

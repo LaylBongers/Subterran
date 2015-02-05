@@ -12,16 +12,6 @@ namespace VoxelWorld
 	{
 		private const int Height = 50;
 		private const int HeightOffset = 10;
-		private static readonly Random Random = new Random();
-		private static readonly int PerlinSeed = Random.Next();
-
-		private static readonly Perlin PerlinNoise = new Perlin
-		{
-			Frequency = 0.003,
-			Seed = PerlinSeed,
-			Quality = NoiseQuality.Best
-		};
-
 		private static readonly Color Grass = Color.Green;
 		private static readonly Color Dirt = Color.SaddleBrown;
 		private static readonly Color Stone = Color.Gray;
@@ -55,7 +45,9 @@ namespace VoxelWorld
 				map[x, y, z] = new ColoredVoxel
 				{
 					IsSolid = true,
-					Color = StMath.RandomizeColor(Random, 10, GetColorFor(y, height, dirtHeight))
+					Color = StMath.RandomizeColor(Random, 6, GetColorFor(y, height, dirtHeight))
+						// Add an effect that higher up is lighter
+					        *(((float) y/Height)/2f + 0.5f)
 				};
 			}
 		}
@@ -66,8 +58,18 @@ namespace VoxelWorld
 				return Grass;
 			if (y >= height - (dirtHeight + 1))
 				return Dirt;
-			
+
 			return Stone;
 		}
+
+		private static readonly Random Random = new Random();
+		private static readonly int PerlinSeed = Random.Next();
+
+		private static readonly Perlin PerlinNoise = new Perlin
+		{
+			Frequency = 0.003,
+			Seed = PerlinSeed,
+			Quality = NoiseQuality.Best
+		};
 	}
 }

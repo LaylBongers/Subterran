@@ -1,82 +1,65 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenTK;
+using Subterran.Rendering.Components;
 using Subterran.Toolbox.SimplePhysics;
 
 namespace Subterran.Toolbox.Voxels
 {
-	public class VoxelMapFixedbodyComponent<TVoxelType> : EntityComponent, IInitializable, IFixedbodySource
+	public class VoxelMapFixedbodyComponent<TVoxelType> : EntityComponent, IInitializable, ISmartFixedbodySource
 		where TVoxelType : struct
 	{
+		private MeshRendererComponent _renderer;
 		private VoxelMapComponent<TVoxelType> _voxelMap;
 		public Func<TVoxelType, bool> IsSolidChecker { get; set; }
-		public IEnumerable<CubeCollider> Colliders { get; private set; }
 
 		public void Initialize()
 		{
 			_voxelMap = Entity.RequireComponent<VoxelMapComponent<TVoxelType>>();
-			Colliders = GenerateColliders();
+			_renderer = Entity.RequireComponent<MeshRendererComponent>();
 		}
 
-		private List<CubeCollider> GenerateColliders()
+		public IEnumerable<BoundingBox> GetPotentialBoundingBoxes(BoundingBox target)
 		{
-			var colliders = new List<CubeCollider>();
+			if (Entity.Rotation != Vector3.Zero)
+				throw new InvalidOperationException("VoxelMapFixedbodyComponent does not support rotation!");
+
 			var voxels = _voxelMap.Voxels;
 			var width = voxels.GetLength(0);
 			var height = voxels.GetLength(1);
 			var depth = voxels.GetLength(2);
 
-			for (var x = 0; x < width; x++)
+			var position = Entity.Position;
+			var scale = Entity.Scale;
+			var absoluteOffset = _renderer.Offset*scale;
+			var voxelSize = Vector3.One*scale;
+
+			// Get the locations the target falls within in the voxel map
+			var bbXstart = StMath.Range((int) Math.Floor((target.Start.X - position.X - absoluteOffset.X)/scale.X), 0, width);
+			var bbXend = StMath.Range((int) Math.Ceiling((target.End.X - position.X - absoluteOffset.X)/scale.X), 0, width);
+			var bbYstart = StMath.Range((int) Math.Floor((target.Start.Y - position.Y - absoluteOffset.Y)/scale.Y), 0, height);
+			var bbYend = StMath.Range((int) Math.Ceiling((target.End.Y - position.Y - absoluteOffset.Y)/scale.Y), 0, height);
+			var bbZstart = StMath.Range((int) Math.Floor((target.Start.Z - position.Z - absoluteOffset.Z)/scale.Z), 0, depth);
+			var bbZend = StMath.Range((int) Math.Ceiling((target.End.Z - position.Z - absoluteOffset.Z)/scale.Z), 0, depth);
+
+			// Go through all the voxels that fall within that area
+			for (var x = bbXstart; x < bbXend; x++)
 			{
-				for (var z = 0; z < depth; z++)
+				for (var y = bbYstart; y < bbYend; y++)
 				{
-					var inCollider = false;
-					var colliderStart = 0;
-
-					for (var y = 0; y < height; y++)
+					for (var z = bbZstart; z < bbZend; z++)
 					{
-						// If the current voxel needs to be colliding
-						if (IsSolidChecker(voxels[x, y, z]))
-						{
-							// If we're not yet creating a collider
-							if (!inCollider)
-							{
-								inCollider = true;
-								colliderStart = y;
-							}
+						if (!IsSolidChecker(voxels[x, y, z]))
+							continue;
 
-							// If we are creating a collider we don't need to do anything yet
-						}
-						else
-						{
-							// If we were in a collider
-							if (inCollider)
-							{
-								colliders.Add(CreateColliderFor(colliderStart, y, x, z, Entity));
-							}
+						var boundingBox = new BoundingBox();
+						boundingBox.Start = (new Vector3(x, y, z)*scale) + absoluteOffset + position;
+						boundingBox.End = boundingBox.Start + voxelSize;
 
-							// If we weren't in a collider we don't need to do anything
-						}
-					}
-
-					// We've gone through an entire pillar, a collider might have gone entirely to the top
-					if (inCollider)
-					{
-						colliders.Add(CreateColliderFor(colliderStart, height, x, z, Entity));
+						yield return boundingBox;
 					}
 				}
 			}
-
-			return colliders;
-		}
-
-		private CubeCollider CreateColliderFor(int start, int end, int x, int z, Entity parent)
-		{
-			return new CubeCollider
-			{
-				Origin = new Vector3(x, start, z) * parent.Scale,
-				Size = new Vector3(1, end - start, 1) * parent.Scale
-			};
 		}
 	}
 }

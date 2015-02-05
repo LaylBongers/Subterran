@@ -57,7 +57,7 @@
     <Compile Include="SimplePhysics\BoundingBox.cs" />
     <Compile Include="SimplePhysics\CubeCollider.cs" />
     <Compile Include="SimplePhysics\FixedbodyComponent.cs" />
-    <Compile Include="SimplePhysics\IFixedbodySource.cs" />
+    <Compile Include="SimplePhysics\ISmartFixedbodySource.cs" />
     <Compile Include="SimplePhysics\PhysicsHelper.cs" />
     <Compile Include="SimplePhysics\PhysicsWorldComponent.cs" />
     <Compile Include="SimplePhysics\RigidbodyComponent.cs" />

@@ -48,12 +48,14 @@ namespace Platformer
 
 		private static Entity CreateTerrainEntity()
 		{
-			var voxels = new ColoredVoxel[4,1,1];
+			var voxels = new ColoredVoxel[4,3,1];
 
 			voxels[0, 0, 0].IsSolid = true;
 			voxels[0, 0, 0].Color = StMath.NormalizeColor(Color.BlueViolet);
 			voxels[1, 0, 0].IsSolid = true;
 			voxels[2, 0, 0].IsSolid = true;
+			voxels[2, 1, 0].IsSolid = true;
+			voxels[2, 2, 0].IsSolid = true;
 			voxels[3, 0, 0].IsSolid = true;
 
 			return new Entity
