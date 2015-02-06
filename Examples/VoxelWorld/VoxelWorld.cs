@@ -22,7 +22,7 @@ namespace VoxelWorld
 					CreatePlayerEntity(game.Window),
 					CreateVoxelWorldEntity(new Vector3(0, 0, 0)),
 					CreateVoxelWorldEntity(new Vector3(-100, 0, 0)),
-					CreateVoxelWorldEntity(new Vector3(0, 0, -100)),
+					CreateVoxelWorldEntity(new Vector3(0, -10, -100)),
 					CreateVoxelWorldEntity(new Vector3(-100, 0, -100))
 				},
 				Components =
@@ -52,6 +52,16 @@ namespace VoxelWorld
 
 		private static Entity CreatePlayerEntity(Window window)
 		{
+			var collisionReferenceEntity = new Entity
+			{
+				Scale = new Vector3(0.8f, 0.1f, 0.8f),
+				Components =
+				{
+					BasicComponents.CreateTestBlockComponent(),
+					new MeshRendererComponent {Offset = new Vector3(-0.5f, 0, -0.5f)}
+				}
+			};
+
 			var cameraEntity = new Entity
 			{
 				Position = new Vector3(0, 1.5f, 0),
@@ -64,7 +74,7 @@ namespace VoxelWorld
 			return new Entity
 			{
 				Position = new Vector3(0, 50, 0),
-				Children = {cameraEntity},
+				Children = {cameraEntity, collisionReferenceEntity},
 				Components =
 				{
 					new RigidbodyComponent
@@ -81,14 +91,15 @@ namespace VoxelWorld
 						Name = "JumpSensor",
 						Collider = new CubeCollider
 						{
-							Origin = new Vector3(-0.5f, -0.01f, -0.5f),
-							Size = new Vector3(1, 0.01f, 1)
+							Origin = new Vector3(-0.4f, -0.01f, -0.4f),
+							Size = new Vector3(0.8f, 0.01f, 0.8f)
 						}
 					},
 					new PlayerMoveComponent(window)
 					{
 						Speed = 5,
-						JumpHeight = 5,
+						FastSpeed = 10,
+						JumpHeight = 6,
 						CameraEntity = cameraEntity
 					}
 				}

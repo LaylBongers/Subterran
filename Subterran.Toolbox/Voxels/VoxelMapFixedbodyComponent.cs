@@ -31,16 +31,24 @@ namespace Subterran.Toolbox.Voxels
 
 			var position = Entity.Position;
 			var scale = Entity.Scale;
+			var inverseScale = Entity.InverseScale;
 			var absoluteOffset = _renderer.Offset*scale;
 			var voxelSize = Vector3.One*scale;
 
 			// Get the locations the target falls within in the voxel map
-			var bbXstart = StMath.Range((int) Math.Floor((target.Start.X - position.X - absoluteOffset.X)/scale.X), 0, width);
-			var bbXend = StMath.Range((int) Math.Ceiling((target.End.X - position.X - absoluteOffset.X)/scale.X), 0, width);
-			var bbYstart = StMath.Range((int) Math.Floor((target.Start.Y - position.Y - absoluteOffset.Y)/scale.Y), 0, height);
-			var bbYend = StMath.Range((int) Math.Ceiling((target.End.Y - position.Y - absoluteOffset.Y)/scale.Y), 0, height);
-			var bbZstart = StMath.Range((int) Math.Floor((target.Start.Z - position.Z - absoluteOffset.Z)/scale.Z), 0, depth);
-			var bbZend = StMath.Range((int) Math.Ceiling((target.End.Z - position.Z - absoluteOffset.Z)/scale.Z), 0, depth);
+			var bbStart = (target.Start - position - absoluteOffset)*inverseScale;
+			var bbEnd = (target.End - position - absoluteOffset)*inverseScale;
+
+			// Sometimes a Math.Floor results in 4.999 instead of 5, compensate for this.
+			// This will in many situations cause too many blocks to be selected,
+			// but the alternative of blocks not being selected is worse.
+			const float floatErrorCompensation = 1f;
+			var bbXstart = StMath.Range((int) (Math.Floor(bbStart.X) - floatErrorCompensation), 0, width);
+			var bbXend = StMath.Range((int) (Math.Ceiling(bbEnd.X) + floatErrorCompensation), 0, width);
+			var bbYstart = StMath.Range((int) (Math.Floor(bbStart.Y) - floatErrorCompensation), 0, height);
+			var bbYend = StMath.Range((int) (Math.Ceiling(bbEnd.Y) + floatErrorCompensation), 0, height);
+			var bbZstart = StMath.Range((int) (Math.Floor(bbStart.Z) - floatErrorCompensation), 0, depth);
+			var bbZend = StMath.Range((int) (Math.Ceiling(bbEnd.Z) + floatErrorCompensation), 0, depth);
 
 			// Go through all the voxels that fall within that area
 			for (var x = bbXstart; x < bbXend; x++)

@@ -45,7 +45,7 @@ namespace VoxelWorld
 				map[x, y, z] = new ColoredVoxel
 				{
 					IsSolid = true,
-					Color = StMath.RandomizeColor(Random, 6, GetColorFor(y, height, dirtHeight))
+					Color = StMath.RandomizeColor(Random, 8, GetColorFor(y, height, dirtHeight))
 						// Add an effect that higher up is lighter
 					        *(((float) y/Height)/2f + 0.5f)
 				};

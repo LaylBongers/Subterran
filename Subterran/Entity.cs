@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Linq;
-using System.Linq.Expressions;
 using OpenTK;
 
 namespace Subterran
 {
 	public sealed class Entity
 	{
+		private Vector3 _scale;
+
 		public Entity()
 		{
 			// Scale by default needs to be 1 because 0 will give invisible entities
@@ -24,7 +25,18 @@ namespace Subterran
 
 		public Vector3 Position { get; set; }
 		public Vector3 Rotation { get; set; }
-		public Vector3 Scale { get; set; }
+
+		public Vector3 Scale
+		{
+			get { return _scale; }
+			set
+			{
+				_scale = value;
+				InverseScale = new Vector3(1/value.X, 1/value.Y, 1/value.Z);
+			}
+		}
+
+		public Vector3 InverseScale { get; private set; }
 		public Entity Parent { get; private set; }
 		public ObservableCollection<Entity> Children { get; private set; }
 		public ObservableCollection<EntityComponent> Components { get; private set; }

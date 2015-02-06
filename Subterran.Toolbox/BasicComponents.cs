@@ -5,7 +5,7 @@ namespace Subterran.Toolbox
 {
 	public static class BasicComponents
 	{
-		public static EntityComponent CreateTestBlockComponent(Color? color = null)
+		public static VoxelMapComponent<ColoredVoxel> CreateTestBlockComponent(Color? color = null)
 		{
 			if (color == null)
 			{

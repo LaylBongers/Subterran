@@ -84,12 +84,12 @@ namespace Subterran.Toolbox.SimplePhysics
 			Func<Vector3, float> axisGetter)
 		{
 			// Find the depth we're colliding on
-			var depth = tickVelocity < 0
-				? axisGetter(fixedBox.End) - axisGetter(rigidBox.Start)
-				: axisGetter(fixedBox.Start) - axisGetter(rigidBox.End);
+			var depth = tickVelocity > 0
+				? axisGetter(rigidBox.End) - axisGetter(fixedBox.Start)
+				: axisGetter(rigidBox.Start) - axisGetter(fixedBox.End);
 
 			// Adjust velocity so we won't overlap after update anymore
-			tickVelocity += depth;
+			tickVelocity -= depth;
 
 			return tickVelocity;
 		}

@@ -16,7 +16,7 @@ namespace VoxelWorld
 
 		public PlayerMoveComponent(Window window)
 		{
-			// Default values, once C# 6.0 rolls around we can do this inline
+			// Default values
 			Speed = 5.0f;
 			FastSpeed = 10.0f;
 
@@ -89,7 +89,7 @@ namespace VoxelWorld
 
 		private Vector3 GetDirectionVector(KeyboardState state)
 		{
-			var rotationMatrix = CameraEntity.Matrix;
+			var rotationMatrix = Matrix4.CreateRotationY(CameraEntity.Rotation.Y);
 
 			var backwards = Vector3.TransformVector(Vector3.UnitZ, rotationMatrix);
 			var right = Vector3.TransformVector(Vector3.UnitX, rotationMatrix);
