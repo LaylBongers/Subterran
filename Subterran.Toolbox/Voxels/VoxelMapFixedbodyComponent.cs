@@ -19,7 +19,7 @@ namespace Subterran.Toolbox.Voxels
 			_renderer = Entity.RequireComponent<MeshRendererComponent>();
 		}
 
-		public IEnumerable<BoundingBox> GetPotentialBoundingBoxes(BoundingBox target)
+		public IEnumerable<BoundingBox> GetBoundingBoxesWithin(BoundingBox collisionArea)
 		{
 			if (Entity.Rotation != Vector3.Zero)
 				throw new InvalidOperationException("VoxelMapFixedbodyComponent does not support rotation!");
@@ -37,13 +37,13 @@ namespace Subterran.Toolbox.Voxels
 			var axisOffset = position + (_renderer.Offset*scale);
 
 			// Get the locations the target falls within in the voxel map
-			var bbStart = (target.Start - axisOffset)*inverseScale;
-			var bbEnd = (target.End - axisOffset)*inverseScale;
+			var bbStart = (collisionArea.Start - axisOffset)*inverseScale;
+			var bbEnd = (collisionArea.End - axisOffset)*inverseScale;
 
 			// Sometimes a Math.Floor results in 4.999 instead of 5, compensate for this.
 			// This will in many situations cause too many blocks to be selected,
 			// but the alternative of blocks not being selected is worse.
-			const float floatErrorCompensation = 0.1f;
+			const float floatErrorCompensation = 0.001f;
 			var bbXstart = StMath.Range((int) (Math.Floor(bbStart.X) - floatErrorCompensation), 0, width);
 			var bbXend = StMath.Range((int) (Math.Ceiling(bbEnd.X) + floatErrorCompensation), 0, width);
 			var bbYstart = StMath.Range((int) (Math.Floor(bbStart.Y) - floatErrorCompensation), 0, height);

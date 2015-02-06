@@ -8,6 +8,6 @@ namespace Subterran.Toolbox.SimplePhysics
 	/// </summary>
 	public interface ISmartFixedbodySource
 	{
-		IEnumerable<BoundingBox> GetPotentialBoundingBoxes(BoundingBox target);
+		IEnumerable<BoundingBox> GetBoundingBoxesWithin(BoundingBox collisionArea);
 	}
 }

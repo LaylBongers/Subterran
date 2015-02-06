@@ -22,7 +22,7 @@ namespace VoxelWorld
 					CreatePlayerEntity(game.Window),
 					CreateVoxelWorldEntity(new Vector3(0, 0, 0)),
 					CreateVoxelWorldEntity(new Vector3(-100, 0, 0)),
-					CreateVoxelWorldEntity(new Vector3(0, -10, -100)),
+					CreateVoxelWorldEntity(new Vector3(0, -4, -100)),
 					CreateVoxelWorldEntity(new Vector3(-100, 0, -100))
 				},
 				Components =
