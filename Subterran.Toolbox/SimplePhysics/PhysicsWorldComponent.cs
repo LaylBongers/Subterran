@@ -35,9 +35,9 @@ namespace Subterran.Toolbox.SimplePhysics
 					// Add a bit of gravity
 					rigidBody.Item2.Velocity += elapsed.PerSecond(rigidBody.Item2.Gravity);
 
-					MoveOnAxis(elapsed, rigidBody, fixedBoxes, v => v.X, (v, x) => v + new Vector3(x, 0, 0));
-					MoveOnAxis(elapsed, rigidBody, fixedBoxes, v => v.Y, (v, y) => v + new Vector3(0, y, 0));
-					MoveOnAxis(elapsed, rigidBody, fixedBoxes, v => v.Z, (v, z) => v + new Vector3(0, 0, z));
+					MoveOnAxis(Timestep, rigidBody, fixedBoxes, v => v.X, (v, x) => v + new Vector3(x, 0, 0));
+					MoveOnAxis(Timestep, rigidBody, fixedBoxes, v => v.Y, (v, y) => v + new Vector3(0, y, 0));
+					MoveOnAxis(Timestep, rigidBody, fixedBoxes, v => v.Z, (v, z) => v + new Vector3(0, 0, z));
 				}
 			}
 		}
@@ -54,7 +54,7 @@ namespace Subterran.Toolbox.SimplePhysics
 				rigidBody.Item2.Collider);
 
 			// Get the smart collected bounding boxes we also need to check
-			var smartBoxes = PhysicsHelper.FindSmartBoundingBoxes(Entity, rigidBox).ToList();
+			var smartBoxes = PhysicsHelper.FindSmartBoundingBoxes(Entity, rigidBox);
 
 			// Check if any of the fixed boxes collide with our new position
 			foreach (var fixedBox in fixedBoxes.Concat(smartBoxes))

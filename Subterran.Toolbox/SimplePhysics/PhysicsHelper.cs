@@ -49,11 +49,17 @@ namespace Subterran.Toolbox.SimplePhysics
 
 		public static IEnumerable<BoundingBox> FindSmartBoundingBoxes(Entity worldEntity, BoundingBox target)
 		{
-			return worldEntity
-				.Children
-				.Select(entity => entity.GetComponent<ISmartFixedbodySource>())
-				.Where(fixedBody => fixedBody != null)
-				.SelectMany(fixedBody => fixedBody.GetPotentialBoundingBoxes(target));
+			foreach (var entity in worldEntity.Children)
+			{
+				var component = entity.GetComponent<ISmartFixedbodySource>();
+				if (component != null)
+				{
+					foreach (var boundingBox in component.GetPotentialBoundingBoxes(target))
+					{
+						yield return boundingBox;
+					}
+				}
+			}
 		}
 	}
 }

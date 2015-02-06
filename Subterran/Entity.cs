@@ -97,7 +97,14 @@ namespace Subterran
 		public IEnumerable<T> GetComponents<T>()
 			where T : class
 		{
-			return Components.OfType<T>();
+			for (var i = 0; i < Components.Count; i++)
+			{
+				var tComponent = Components[i] as T;
+				if (tComponent != null)
+					yield return tComponent;
+			}
+
+			//return Components.OfType<T>();
 		}
 
 		public T RequireComponent<T>()

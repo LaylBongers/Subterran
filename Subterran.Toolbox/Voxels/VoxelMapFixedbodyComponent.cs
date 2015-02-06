@@ -32,17 +32,18 @@ namespace Subterran.Toolbox.Voxels
 			var position = Entity.Position;
 			var scale = Entity.Scale;
 			var inverseScale = Entity.InverseScale;
-			var absoluteOffset = _renderer.Offset*scale;
 			var voxelSize = Vector3.One*scale;
+			// Full offset from origin to voxel axes origin
+			var axisOffset = position + (_renderer.Offset*scale);
 
 			// Get the locations the target falls within in the voxel map
-			var bbStart = (target.Start - position - absoluteOffset)*inverseScale;
-			var bbEnd = (target.End - position - absoluteOffset)*inverseScale;
+			var bbStart = (target.Start - axisOffset)*inverseScale;
+			var bbEnd = (target.End - axisOffset)*inverseScale;
 
 			// Sometimes a Math.Floor results in 4.999 instead of 5, compensate for this.
 			// This will in many situations cause too many blocks to be selected,
 			// but the alternative of blocks not being selected is worse.
-			const float floatErrorCompensation = 1f;
+			const float floatErrorCompensation = 0.1f;
 			var bbXstart = StMath.Range((int) (Math.Floor(bbStart.X) - floatErrorCompensation), 0, width);
 			var bbXend = StMath.Range((int) (Math.Ceiling(bbEnd.X) + floatErrorCompensation), 0, width);
 			var bbYstart = StMath.Range((int) (Math.Floor(bbStart.Y) - floatErrorCompensation), 0, height);
@@ -61,7 +62,7 @@ namespace Subterran.Toolbox.Voxels
 							continue;
 
 						var boundingBox = new BoundingBox();
-						boundingBox.Start = (new Vector3(x, y, z)*scale) + absoluteOffset + position;
+						boundingBox.Start = (new Vector3(x, y, z)*scale) + axisOffset;
 						boundingBox.End = boundingBox.Start + voxelSize;
 
 						yield return boundingBox;
