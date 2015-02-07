@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using OpenTK;
 
@@ -54,11 +55,40 @@ namespace Subterran.Toolbox.SimplePhysics
 					// Loop through all fixed bounding boxes
 					foreach (var fixedBox in fixedBoxes.Concat(smartBoxes))
 					{
-						// TODO: Actually implement collision resolving
-						if (PhysicsHelper.CheckCollision(targetBox, fixedBox))
+						// Find any we collide on
+						if (!PhysicsHelper.CheckCollision(targetBox, fixedBox))
+							continue;
+
+						var depth = FindCollisionDepth(tickVelocity, targetBox, fixedBox);
+
+						// Resolve formula is:
+						// velocity = prevVelocity * resolveScale
+						// resolveScale = 1-(1/|prevVelocity|*depth)
+						if (depth.X < depth.Y && depth.X < depth.Z)
 						{
-							tickVelocity = Vector3.Zero;
+							// X is smallest
+							var xResolveScale = 1 - (1 / Math.Abs(tickVelocity.X) * depth.X);
+							tickVelocity.X = tickVelocity.X * xResolveScale;
+							velocity.X = 0;
 						}
+						else if (depth.Y < depth.Z)
+						{
+							// Y is smallest
+							var yResolveScale = 1 - (1 / Math.Abs(tickVelocity.Y) * depth.Y);
+							tickVelocity.Y = tickVelocity.Y * yResolveScale;
+							velocity.Y = 0;
+						}
+						else
+						{
+							// Z is smallest
+							var zResolveScale = 1 - (1 / Math.Abs(tickVelocity.Z) * depth.Z);
+							tickVelocity.Z = tickVelocity.Z * zResolveScale;
+							velocity.Z = 0;
+						}
+
+						// Update the values we worked with so the next collison check can be correct
+						targetPosition = originalPosition + tickVelocity;
+						targetBox = BoundingBox.FromPositionAndCollider(targetPosition, collider);
 					}
 
 					// Submit the changes to the rigidbody
@@ -66,6 +96,21 @@ namespace Subterran.Toolbox.SimplePhysics
 					rigidBody.Item2.Velocity = velocity;
 				}
 			}
+		}
+
+		private Vector3 FindCollisionDepth(Vector3 velocity, BoundingBox movingBox, BoundingBox fixedBox)
+		{
+			var xDepth = velocity.X > 0
+				? movingBox.End.X - fixedBox.Start.X
+				: fixedBox.End.X - movingBox.Start.X;
+			var yDepth = velocity.Y > 0
+				? movingBox.End.Y - fixedBox.Start.Y
+				: fixedBox.End.Y - movingBox.Start.Y;
+			var zDepth = velocity.Z > 0
+				? movingBox.End.Z - fixedBox.Start.Z
+				: fixedBox.End.Z - movingBox.Start.Z;
+
+			return new Vector3(xDepth, yDepth, zDepth);
 		}
 
 		private BoundingBox CreateEncompassing(BoundingBox left, BoundingBox right)
