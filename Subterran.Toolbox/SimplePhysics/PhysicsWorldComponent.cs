@@ -62,31 +62,34 @@ namespace Subterran.Toolbox.SimplePhysics
 						var depth = FindCollisionDepth(tickVelocity, targetBox, fixedBox);
 
 						// Resolve formula is:
-						// velocity = prevVelocity * resolveScale
-						// resolveScale = 1-(1/|prevVelocity|*depth)
+						// velocity = prevVelocity * (1-depthScale)
+						// depthScale = (1/|prevVelocity|*depth) <- This is the % of the velocity inside the collision
 						if (depth.X < depth.Y && depth.X < depth.Z)
 						{
 							// X is smallest
-							var xResolveScale = 1 - (1 / Math.Abs(tickVelocity.X) * depth.X);
-							tickVelocity.X = tickVelocity.X * xResolveScale;
+							var xDepthScale = (1/Math.Abs(tickVelocity.X)*depth.X);
+							Debug.Assert(!float.IsNaN(xDepthScale));
+							tickVelocity.X = tickVelocity.X*(1 - xDepthScale);
 							velocity.X = 0;
 						}
 						else if (depth.Y < depth.Z)
 						{
 							// Y is smallest
-							var yResolveScale = 1 - (1 / Math.Abs(tickVelocity.Y) * depth.Y);
-							tickVelocity.Y = tickVelocity.Y * yResolveScale;
+							var yDepthScale = (1/Math.Abs(tickVelocity.Y)*depth.Y);
+							Debug.Assert(!float.IsNaN(yDepthScale));
+							tickVelocity.Y = tickVelocity.Y*(1 - yDepthScale);
 							velocity.Y = 0;
 						}
 						else
 						{
 							// Z is smallest
-							var zResolveScale = 1 - (1 / Math.Abs(tickVelocity.Z) * depth.Z);
-							tickVelocity.Z = tickVelocity.Z * zResolveScale;
-							velocity.Z = 0;
+							var zDepthScale = (1/Math.Abs(tickVelocity.Z)*depth.Z);
+							Debug.Assert(!float.IsNaN(zDepthScale));
+							tickVelocity.Z = tickVelocity.Z*(1 - zDepthScale);
+							velocity.X = 0;
 						}
 
-						// Update the values we worked with so the next collison check can be correct
+						// Update the values we worked with so the next collision check can be correct
 						targetPosition = originalPosition + tickVelocity;
 						targetBox = BoundingBox.FromPositionAndCollider(targetPosition, collider);
 					}
