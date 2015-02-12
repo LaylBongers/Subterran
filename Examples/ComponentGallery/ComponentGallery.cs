@@ -2,6 +2,7 @@
 using System.Linq;
 using OpenTK;
 using Subterran;
+using Subterran.Rendering;
 using Subterran.Rendering.Components;
 using Subterran.Toolbox;
 using Subterran.Toolbox.Components;

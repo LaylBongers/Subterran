@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ColoredVertex.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityComponent.cs" />

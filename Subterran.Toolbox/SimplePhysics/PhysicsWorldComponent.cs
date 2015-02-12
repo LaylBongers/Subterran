@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 using System.Linq;
 using OpenTK;
 
@@ -61,31 +60,28 @@ namespace Subterran.Toolbox.SimplePhysics
 
 						var depth = FindCollisionDepth(tickVelocity, targetBox, fixedBox);
 
-						// Resolve formula is:
-						// velocity = prevVelocity * (1-depthScale)
-						// depthScale = (1/|prevVelocity|*depth) <- This is the % of the velocity inside the collision
 						if (depth.X < depth.Y && depth.X < depth.Z)
 						{
 							// X is smallest
-							var xDepthScale = (1/Math.Abs(tickVelocity.X)*depth.X);
-							Debug.Assert(!float.IsNaN(xDepthScale));
-							tickVelocity.X = tickVelocity.X*(1 - xDepthScale);
+							tickVelocity.X = tickVelocity.X > 0
+								? tickVelocity.X - depth.X
+								: tickVelocity.X + depth.X;
 							velocity.X = 0;
 						}
 						else if (depth.Y < depth.Z)
 						{
 							// Y is smallest
-							var yDepthScale = (1/Math.Abs(tickVelocity.Y)*depth.Y);
-							Debug.Assert(!float.IsNaN(yDepthScale));
-							tickVelocity.Y = tickVelocity.Y*(1 - yDepthScale);
+							tickVelocity.Y = tickVelocity.Y > 0
+								? tickVelocity.Y - depth.Y
+								: tickVelocity.Y + depth.Y;
 							velocity.Y = 0;
 						}
 						else
 						{
 							// Z is smallest
-							var zDepthScale = (1/Math.Abs(tickVelocity.Z)*depth.Z);
-							Debug.Assert(!float.IsNaN(zDepthScale));
-							tickVelocity.Z = tickVelocity.Z*(1 - zDepthScale);
+							tickVelocity.Z = tickVelocity.Z > 0
+								? tickVelocity.Z - depth.Z
+								: tickVelocity.Z + depth.Z;
 							velocity.X = 0;
 						}
 

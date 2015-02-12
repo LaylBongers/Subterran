@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ColoredVertex.cs" />
     <Compile Include="Components\CameraComponent.cs" />
     <Compile Include="Components\MeshRendererComponent.cs" />
     <Compile Include="IRenderable.cs" />

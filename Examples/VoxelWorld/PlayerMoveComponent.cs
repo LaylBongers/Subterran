@@ -34,6 +34,7 @@ namespace VoxelWorld
 			_jumpSensor = Entity.RequireComponent<SensorComponent>(s => s.Name == "JumpSensor");
 
 			_window.ShowCursor = false;
+			_window.ClipCursor = true;
 		}
 
 		public void Update(TimeSpan elapsed)
@@ -52,14 +53,6 @@ namespace VoxelWorld
 			var deltaPosition = new Vector2(
 				state.X - _previousPosition.X,
 				state.Y - _previousPosition.Y);
-
-			// Reset the mouse to the middle of the screen
-			Mouse.SetPosition(
-				_window.Bounds.Left + (_window.Bounds.Width/2),
-				_window.Bounds.Top + (_window.Bounds.Height/2));
-
-			// Store the position of the mouse currently so we can get the delta again next update
-			state = Mouse.GetState();
 			_previousPosition = new Vector2(state.X, state.Y);
 
 			// Update the rotation of the entity based on the difference in mouse position

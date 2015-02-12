@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using OpenTK;
 using Subterran;
+using Subterran.Rendering;
 
 namespace ComponentGallery
 {
