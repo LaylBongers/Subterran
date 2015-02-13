@@ -1,5 +1,6 @@
 ﻿using System;
 using Subterran.Rendering;
+using Subterran.Rendering.Vertices;
 using Subterran.Toolbox.Voxels;
 using Xunit;
 

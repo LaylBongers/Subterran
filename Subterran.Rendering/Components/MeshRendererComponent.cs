@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using Subterran.Rendering.Vertices;
 
 namespace Subterran.Rendering.Components
 {
@@ -70,7 +71,7 @@ namespace Subterran.Rendering.Components
 			}
 
 			// Now that we are sure we have a buffer, render it
-			renderer.RenderBuffer(ref matrix, _buffer, Vertices.Length);
+			renderer.RenderMeshBuffer<ColoredVertex>(ref matrix, _buffer, Vertices.Length);
 		}
 
 		private void UpdateBuffer()

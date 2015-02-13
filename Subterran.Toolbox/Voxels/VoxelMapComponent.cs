@@ -1,6 +1,7 @@
 ﻿using System;
 using Subterran.Rendering;
 using Subterran.Rendering.Components;
+using Subterran.Rendering.Vertices;
 
 namespace Subterran.Toolbox.Voxels
 {

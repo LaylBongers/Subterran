@@ -6,6 +6,7 @@ using System.Linq;
 using OpenTK;
 using Subterran;
 using Subterran.Rendering;
+using Subterran.Rendering.Vertices;
 
 namespace ComponentGallery
 {

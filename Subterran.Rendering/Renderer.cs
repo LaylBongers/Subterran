@@ -1,52 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using Subterran.Rendering.Components;
+using Subterran.Rendering.Vertices;
 
 namespace Subterran.Rendering
 {
 	public sealed class Renderer
 	{
-		private const string VertexShader = @"#version 330
-
-// Transformation Matrices
-uniform mat4 Matrix;
-
-// Data coming into the vertex shader
-layout(location = 0) in vec3 vertexPosition;
-layout(location = 1) in vec3 vertexColor;
-
-// Data going to the fragment shader
-flat out vec3 fragColor;
-
-void main()
-{
-	// Pass the color over to the fragment shader
-	fragColor = vertexColor;
-
-	gl_Position = Matrix * vec4(vertexPosition, 1.0);
-}";
-
-		private const string FragmentShader = @"#version 330
-
-// Data coming from the vertex shader
-flat in vec3 fragColor;
-
-// Output color, automatically gets picked up by OpenGL
-out vec4 st_FragColor;
-
-void main()
-{
-	st_FragColor = vec4(fragColor.rgb, 1.0f);
-}";
-
-		private readonly int _matrixUniform;
-		private readonly int _program;
 		private readonly Window _targetWindow;
+		private readonly Dictionary<Type, IVertexRenderer> _vertexRenderers = new Dictionary<Type, IVertexRenderer>();
 
 		public Renderer(Window targetWindow)
 		{
@@ -59,20 +25,19 @@ void main()
 			GL.Enable(EnableCap.CullFace);
 			GL.CullFace(CullFaceMode.Back);
 			GL.FrontFace(FrontFaceDirection.Ccw);
+		}
 
-			// Create a shader we'll render meshes with
-			_program = GL.CreateProgram();
+		public void RegisterVertexType<TVertex>(IVertexRenderer<TVertex> renderer)
+		{
+			_vertexRenderers.Add(typeof (TVertex), renderer);
+		}
 
-			ShaderUtils.AttachShader(_program, VertexShader, ShaderType.VertexShader);
-			ShaderUtils.AttachShader(_program, FragmentShader, ShaderType.FragmentShader);
-			GL.LinkProgram(_program);
-
-			ShaderUtils.DetectErrors(_program);
-
-			// Set up shader uniforms
-			_matrixUniform = ShaderUtils.GetUniformLocation(_program, "Matrix");
-
-			Trace.TraceInformation("Created new shader program {0}!", _program);
+		private IVertexRenderer<TVertex> RetrieveVertexRenderer<TVertex>()
+		{
+			IVertexRenderer renderer;
+			if (!_vertexRenderers.TryGetValue(typeof (TVertex), out renderer))
+				throw new InvalidOperationException("No vertex renderer has been registered for this vertex type!");
+			return (IVertexRenderer<TVertex>) renderer;
 		}
 
 		public void RenderWorld(Entity world)
@@ -113,6 +78,18 @@ void main()
 					renderable.Component.Render(this, renderable.Matrix*projectionView);
 				}
 			}
+		}
+
+		public void RenderMeshStreaming<TVertex>(ref Matrix4 matrix, TVertex[] vertices)
+		{
+			var renderer = RetrieveVertexRenderer<TVertex>();
+			renderer.RenderMeshStreaming(ref matrix, vertices);
+		}
+
+		public void RenderMeshBuffer<TVertex>(ref Matrix4 matrix, int buffer, int length)
+		{
+			var renderer = RetrieveVertexRenderer<TVertex>();
+			renderer.RenderMeshBuffer(ref matrix, buffer, length);
 		}
 
 		private static RenderData CollapseEntityTree(Entity entity)
@@ -160,57 +137,6 @@ void main()
 			{
 				CollapseEntityTreeTo(child, data, previousMatrix);
 			}
-		}
-
-		public void RenderMeshStreaming(ref Matrix4 matrix, ColoredVertex[] vertices)
-		{
-			// Create a buffer for out vertex data, stream draw since we're streaming it
-			var buffer = GL.GenBuffer();
-			GL.BindBuffer(BufferTarget.ArrayBuffer, buffer);
-			GL.BufferData(
-				BufferTarget.ArrayBuffer,
-				new IntPtr(ColoredVertex.SizeInBytes*vertices.Length),
-				vertices,
-				BufferUsageHint.StreamDraw);
-
-			RenderBuffer(ref matrix, buffer, vertices.Length);
-
-			GL.DeleteBuffer(buffer);
-		}
-
-		public void RenderBuffer(ref Matrix4 matrix, int buffer, int length)
-		{
-			GL.BindBuffer(BufferTarget.ArrayBuffer, buffer);
-
-			// Bind our shader program and give it the matrix uniform
-			GL.UseProgram(_program);
-			GL.UniformMatrix4(_matrixUniform, false, ref matrix);
-
-			// Tell OpenGL where to find the vertex attributes in the vertices
-			GL.EnableVertexAttribArray(0);
-			GL.VertexAttribPointer( // Vertices
-				0, // attribute layout #0
-				3, // size in type
-				VertexAttribPointerType.Float, // type
-				false, // normalize this attribute?
-				ColoredVertex.SizeInBytes, // offset between start of vertex values (0 = tightly packed)
-				0); // start offset
-
-			GL.EnableVertexAttribArray(1);
-			GL.VertexAttribPointer( // Colors
-				1, // attribute layout #1
-				3, // size in type
-				VertexAttribPointerType.Float, // type
-				false, // normalize this attribute?
-				ColoredVertex.SizeInBytes, // offset between start of vertex values (0 = tightly packed)
-				Vector3.SizeInBytes); // start offset
-
-			// Actually draw!
-			GL.DrawArrays(PrimitiveType.Triangles, 0, length);
-
-			// Clean everything up
-			GL.DisableVertexAttribArray(0);
-			GL.DisableVertexAttribArray(1);
 		}
 
 		private class CameraData

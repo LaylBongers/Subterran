@@ -4,6 +4,7 @@ using OpenTK;
 using Subterran;
 using Subterran.Rendering;
 using Subterran.Rendering.Components;
+using Subterran.Rendering.Vertices;
 using Subterran.Toolbox;
 using Subterran.Toolbox.Components;
 using Subterran.Toolbox.Voxels;
@@ -97,7 +98,7 @@ namespace ComponentGallery
 					new VoxelMapComponent<ColoredVoxel>
 					{
 						Voxels = voxels,
-						MeshGenerator = ColoredVoxelMesher.MeshGenerator
+						MeshGenerator = ColoredVoxelMesher.GenerateCubes
 					}
 				}
 			};
@@ -169,7 +170,7 @@ namespace ComponentGallery
 					},
 					new VoxelMapComponent<ColoredVoxel>
 					{
-						MeshGenerator = ColoredVoxelMesher.MeshGenerator
+						MeshGenerator = ColoredVoxelMesher.GenerateCubes
 					}
 				}
 			};

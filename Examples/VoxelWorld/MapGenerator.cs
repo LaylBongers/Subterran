@@ -15,6 +15,7 @@ namespace VoxelWorld
 		private static readonly Color Grass = Color.Green;
 		private static readonly Color Dirt = Color.SaddleBrown;
 		private static readonly Color Stone = Color.Gray;
+		private static readonly Color Bedrock = Color.DimGray;
 
 		public static ColoredVoxel[,,] Generate(int width, int depth, Vector2 position)
 		{
@@ -54,12 +55,26 @@ namespace VoxelWorld
 
 		private static Color GetColorFor(int y, int height, int dirtHeight)
 		{
+			// Bottom bedrock
+			if (y == 0)
+				return Bedrock;
+
+			// Higher up diminishing random chance bedrock
+			if (y == 1 && Random.Next(0, 2) == 1)
+				return Bedrock;
+			if (y == 2 && Random.Next(0, 3) == 1)
+				return Bedrock;
+
+			// Grass & Dirt layer
 			if (y == height - 1)
 				return Grass;
 			if (y >= height - (dirtHeight + 1))
 				return Dirt;
 
-			return Stone;
+			// Everything else is stone with a random chance of a gem (random color) block
+			return Random.Next(0, 50) == 1
+				? Random.NextIntColor()
+				: Stone;
 		}
 
 		private static readonly Random Random = new Random();

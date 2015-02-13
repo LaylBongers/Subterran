@@ -4,12 +4,13 @@ using System.Drawing;
 using OpenTK.Input;
 using Subterran.Input;
 using Subterran.Rendering;
+using Subterran.Rendering.Vertices;
 
 namespace Subterran.Toolbox
 {
 	public sealed class BasicSubterranGame : Disposable
 	{
-		private readonly LoopManager _loopManager = new LoopManager();
+		private readonly LoopManager _loopManager;
 
 		public BasicSubterranGame()
 		{
@@ -20,6 +21,7 @@ namespace Subterran.Toolbox
 			// Set up our engine's modules
 			Input = new InputManager();
 			Renderer = new Renderer(Window);
+			Renderer.RegisterVertexType(new ColoredVertexRenderer());
 
 			// Set up the game world
 			World = new Entity();

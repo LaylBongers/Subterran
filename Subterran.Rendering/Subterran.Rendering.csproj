@@ -43,15 +43,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ColoredVertex.cs" />
+    <Compile Include="Vertices\ColoredVertex.cs" />
     <Compile Include="Components\CameraComponent.cs" />
     <Compile Include="Components\MeshRendererComponent.cs" />
     <Compile Include="IRenderable.cs" />
     <Compile Include="IRenderablePreparer.cs" />
+    <Compile Include="IVertexRenderer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Renderer.cs" />
     <Compile Include="ShaderException.cs" />
     <Compile Include="ShaderUtils.cs" />
+    <Compile Include="Vertices\ColoredVertexRenderer.cs" />
+    <Compile Include="Vertices\TexturedVertex.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Subterran\Subterran.csproj">

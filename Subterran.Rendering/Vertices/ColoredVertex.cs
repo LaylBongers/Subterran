@@ -1,7 +1,7 @@
 ﻿using System.Runtime.InteropServices;
 using OpenTK;
 
-namespace Subterran.Rendering
+namespace Subterran.Rendering.Vertices
 {
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
 	public struct ColoredVertex

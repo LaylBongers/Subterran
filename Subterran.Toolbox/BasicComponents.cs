@@ -14,7 +14,7 @@ namespace Subterran.Toolbox
 
 			return new VoxelMapComponent<ColoredVoxel>
 			{
-				MeshGenerator = ColoredVoxelMesher.MeshGenerator,
+				MeshGenerator = ColoredVoxelMesher.GenerateCubes,
 				Voxels = new[,,]
 				{
 					{

@@ -67,7 +67,7 @@ namespace Platformer
 					new VoxelMapComponent<ColoredVoxel>
 					{
 						Voxels = voxels,
-						MeshGenerator = ColoredVoxelMesher.MeshGenerator
+						MeshGenerator = ColoredVoxelMesher.GenerateCubes
 					},
 					new VoxelMapFixedbodyComponent<ColoredVoxel>
 					{
