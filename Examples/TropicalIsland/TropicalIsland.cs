@@ -26,8 +26,11 @@ namespace TropicalIsland
 		{
 			return new Entity
 			{
-				Position = new Vector3(25, 20, 50),
-				Rotation = new Vector3(-0.05f*StMath.Tau, 0, 0),
+				Transform =
+				{
+					Position = new Vector3(25, 20, 50),
+					Rotation = new Vector3(-0.05f*StMath.Tau, 0, 0)
+				},
 				Components =
 				{
 					new CameraComponent(),

@@ -13,7 +13,7 @@ namespace Platformer
 
 		public void Update(TimeSpan elapsed)
 		{
-			Entity.Position = Target.Position + new Vector3(0, HeightOffset, Distance);
+			Entity.Transform.Position = Target.Transform.Position + new Vector3(0, HeightOffset, Distance);
 		}
 	}
 }

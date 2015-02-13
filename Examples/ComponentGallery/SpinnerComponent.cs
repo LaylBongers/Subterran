@@ -11,7 +11,7 @@ namespace ComponentGallery
 
 		public void Update(TimeSpan elapsed)
 		{
-			Entity.Rotation += new Vector3(0, elapsed.PerSecond(Speed), 0);
+			Entity.Transform.Rotation += new Vector3(0, elapsed.PerSecond(Speed), 0);
 		}
 	}
 }

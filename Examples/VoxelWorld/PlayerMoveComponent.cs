@@ -56,8 +56,8 @@ namespace VoxelWorld
 			_previousPosition = new Vector2(state.X, state.Y);
 
 			// Update the rotation of the entity based on the difference in mouse position
-			var rotation = CameraEntity.Rotation.Xy + (-deltaPosition.Yx * 0.0015f);
-			CameraEntity.Rotation = new Vector3(
+			var rotation = CameraEntity.Transform.Rotation.Xy + (-deltaPosition.Yx * 0.0015f);
+			CameraEntity.Transform.Rotation = new Vector3(
 				MathHelper.Clamp(rotation.X, -StMath.Tau*0.25f, StMath.Tau*0.25f),
 				rotation.Y, 0);
 		}
@@ -82,7 +82,7 @@ namespace VoxelWorld
 
 		private Vector3 GetDirectionVector(KeyboardState state)
 		{
-			var rotationMatrix = Matrix4.CreateRotationY(CameraEntity.Rotation.Y);
+			var rotationMatrix = Matrix4.CreateRotationY(CameraEntity.Transform.Rotation.Y);
 
 			var backwards = Vector3.TransformVector(Vector3.UnitZ, rotationMatrix);
 			var right = Vector3.TransformVector(Vector3.UnitX, rotationMatrix);

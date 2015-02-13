@@ -60,7 +60,10 @@ namespace Platformer
 
 			return new Entity
 			{
+				Transform =
+				{
 				Scale = new Vector3(0.8f, 1, 1),
+},
 				Components =
 				{
 					new MeshRendererComponent(),
@@ -81,7 +84,10 @@ namespace Platformer
 		{
 			return new Entity
 			{
-				Position = new Vector3(0.5f, 5, 0.5f),
+				Transform =
+				{
+					Position = new Vector3(0.5f, 5, 0.5f)
+				},
 				Components =
 				{
 					new MeshRendererComponent

@@ -102,12 +102,13 @@ namespace Subterran.Rendering
 		private static void CollapseEntityTreeTo(Entity entity, RenderData data, Matrix4 previousMatrix)
 		{
 			// Create a multiply matrix representing this entity
+			// TODO: Right now i'm refactoring, come back to this and fix this.
 			var entityMatrix =
-				Matrix4.CreateScale(entity.Scale)*
-				Matrix4.CreateRotationX(entity.Rotation.X)*
-				Matrix4.CreateRotationY(entity.Rotation.Y)*
-				Matrix4.CreateRotationZ(entity.Rotation.Z)*
-				Matrix4.CreateTranslation(entity.Position);
+				Matrix4.CreateScale(entity.Transform.Scale)*
+				Matrix4.CreateRotationX(entity.Transform.Rotation.X)*
+				Matrix4.CreateRotationY(entity.Transform.Rotation.Y)*
+				Matrix4.CreateRotationZ(entity.Transform.Rotation.Z)*
+				Matrix4.CreateTranslation(entity.Transform.Position);
 
 			// Multiply the model matrix with the previously created entity matrix
 			previousMatrix = entityMatrix*previousMatrix;

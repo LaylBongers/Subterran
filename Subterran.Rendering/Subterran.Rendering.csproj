@@ -55,6 +55,7 @@
     <Compile Include="ShaderUtils.cs" />
     <Compile Include="Vertices\ColoredVertexRenderer.cs" />
     <Compile Include="Vertices\TexturedVertex.cs" />
+    <Compile Include="Vertices\TexturedVertexRenderer.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Subterran\Subterran.csproj">

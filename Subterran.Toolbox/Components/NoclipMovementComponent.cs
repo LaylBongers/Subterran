@@ -55,8 +55,8 @@ namespace Subterran.Toolbox.Components
 			_previousPosition = new Vector2(state.X, state.Y);
 
 			// Update the rotation of the entity based on the difference in mouse position
-			var rotation = Entity.Rotation.Xy + (-deltaPosition.Yx*0.0015f);
-			Entity.Rotation = new Vector3(
+			var rotation = Entity.Transform.Rotation.Xy + (-deltaPosition.Yx*0.0015f);
+			Entity.Transform.Rotation = new Vector3(
 				MathHelper.Clamp(rotation.X, -StMath.Tau*0.25f, StMath.Tau*0.25f),
 				rotation.Y, 0);
 		}
@@ -71,13 +71,13 @@ namespace Subterran.Toolbox.Components
 				: Speed;
 
 			targetDirection.NormalizeFast();
-			Entity.Position += elapsed.PerSecond(
+			Entity.Transform.Position += elapsed.PerSecond(
 				targetDirection*speedMultiplier);
 		}
 
 		private Vector3 GetDirectionVector(KeyboardState state)
 		{
-			var rotationMatrix = Entity.Matrix;
+			var rotationMatrix = Entity.Transform.Matrix;
 
 			var backwards = Vector3.TransformVector(Vector3.UnitZ, rotationMatrix);
 			var right = Vector3.TransformVector(Vector3.UnitX, rotationMatrix);

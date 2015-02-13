@@ -38,7 +38,7 @@ namespace Subterran.Toolbox.SimplePhysics
 				if (fixedBody != null)
 				{
 					boxes.Add(BoundingBox.FromPositionAndCollider(
-						entity.Position,
+						entity.Transform.Position,
 						fixedBody.Collider));
 				}
 			}

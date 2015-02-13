@@ -21,7 +21,7 @@ namespace Subterran.Toolbox.Voxels
 
 		public IEnumerable<BoundingBox> GetBoundingBoxesWithin(BoundingBox collisionArea)
 		{
-			if (Entity.Rotation != Vector3.Zero)
+			if (Entity.Transform.Rotation != Vector3.Zero)
 				throw new InvalidOperationException("VoxelMapFixedbodyComponent does not support rotation!");
 
 			var voxels = _voxelMap.Voxels;
@@ -29,9 +29,9 @@ namespace Subterran.Toolbox.Voxels
 			var height = voxels.GetLength(1);
 			var depth = voxels.GetLength(2);
 
-			var position = Entity.Position;
-			var scale = Entity.Scale;
-			var inverseScale = Entity.InverseScale;
+			var position = Entity.Transform.Position;
+			var scale = Entity.Transform.Scale;
+			var inverseScale = Entity.Transform.InverseScale;
 			var voxelSize = Vector3.One*scale;
 			// Full offset from origin to voxel axes origin
 			var axisOffset = position + (_renderer.Offset*scale);

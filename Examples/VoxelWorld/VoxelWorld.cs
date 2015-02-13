@@ -22,7 +22,7 @@ namespace VoxelWorld
 					CreatePlayerEntity(game.Window),
 					CreateVoxelWorldEntity(new Vector3(0, 0, 0)),
 					CreateVoxelWorldEntity(new Vector3(-100, 0, 0)),
-					CreateVoxelWorldEntity(new Vector3(0, -4, -100)),
+					CreateVoxelWorldEntity(new Vector3(0, 0, -100)),
 					CreateVoxelWorldEntity(new Vector3(-100, 0, -100))
 				},
 				Components =
@@ -54,7 +54,10 @@ namespace VoxelWorld
 		{
 			var collisionReferenceEntity = new Entity
 			{
-				Scale = new Vector3(0.8f, 0.1f, 0.8f),
+				Transform =
+				{
+					Scale = new Vector3(0.8f, 0.1f, 0.8f)
+				},
 				Components =
 				{
 					BasicComponents.CreateTestBlockComponent(),
@@ -64,7 +67,10 @@ namespace VoxelWorld
 
 			var cameraEntity = new Entity
 			{
-				Position = new Vector3(0, 1.5f, 0),
+				Transform =
+				{
+					Position = new Vector3(0, 1.5f, 0),
+				},
 				Components =
 				{
 					new CameraComponent()
@@ -73,7 +79,10 @@ namespace VoxelWorld
 
 			return new Entity
 			{
-				Position = new Vector3(0, 50, 0),
+				Transform =
+				{
+					Position = new Vector3(0, 50, 0)
+				},
 				Children = {cameraEntity, collisionReferenceEntity},
 				Components =
 				{
@@ -112,8 +121,11 @@ namespace VoxelWorld
 
 			return new Entity
 			{
-				Position = position,
-				Scale = new Vector3(0.5f),
+				Transform =
+				{
+					Position = position,
+					Scale = new Vector3(0.5f)
+				},
 				Components =
 				{
 					new MeshRendererComponent(),

@@ -5,7 +5,7 @@ using OpenTK.Graphics.OpenGL4;
 
 namespace Subterran.Rendering.Vertices
 {
-	public class ColoredVertexRenderer : IVertexRenderer<ColoredVertex>
+	public sealed class ColoredVertexRenderer : IVertexRenderer<ColoredVertex>
 	{
 		private const string VertexShader = @"#version 330
 

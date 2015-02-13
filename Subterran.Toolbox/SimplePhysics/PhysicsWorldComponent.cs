@@ -34,7 +34,7 @@ namespace Subterran.Toolbox.SimplePhysics
 					// Put the original information in helper variables
 					var collider = rigidBody.Item2.Collider;
 					var velocity = rigidBody.Item2.Velocity;
-					var originalPosition = rigidBody.Item1.Position;
+					var originalPosition = rigidBody.Item1.Transform.Position;
 					var originalBox = BoundingBox.FromPositionAndCollider(originalPosition, collider);
 
 					// Add a bit of gravity
@@ -91,7 +91,7 @@ namespace Subterran.Toolbox.SimplePhysics
 					}
 
 					// Submit the changes to the rigidbody
-					rigidBody.Item1.Position = originalPosition + tickVelocity;
+					rigidBody.Item1.Transform.Position = originalPosition + tickVelocity;
 					rigidBody.Item2.Velocity = velocity;
 				}
 			}

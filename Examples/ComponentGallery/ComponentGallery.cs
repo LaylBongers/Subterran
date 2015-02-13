@@ -2,7 +2,6 @@
 using System.Linq;
 using OpenTK;
 using Subterran;
-using Subterran.Rendering;
 using Subterran.Rendering.Components;
 using Subterran.Rendering.Vertices;
 using Subterran.Toolbox;
@@ -24,8 +23,11 @@ namespace ComponentGallery
 			var teapotWithChild = CreateTeapotEntity(new Vector3(18, 1, -15), -0.4f, teapot);
 			teapotWithChild.Children.Add(new Entity
 			{
-				Position = new Vector3(1, 0.8f, 0),
-				Scale = new Vector3(0.2f),
+				Transform =
+				{
+					Position = new Vector3(1, 0.8f, 0),
+					Scale = new Vector3(0.2f)
+				},
 				Components =
 				{
 					new MeshRendererComponent {Vertices = teapot},
@@ -75,7 +77,7 @@ namespace ComponentGallery
 
 			return new Entity
 			{
-				Components = 
+				Components =
 				{
 					new FpsCounterComponent(game.Window)
 					{
@@ -89,9 +91,12 @@ namespace ComponentGallery
 		{
 			return new Entity
 			{
-				Position = position,
-				Rotation = rotation,
-				Scale = new Vector3(scale, scale, scale),
+				Transform =
+				{
+					Position = position,
+					Rotation = rotation,
+					Scale = new Vector3(scale, scale, scale)
+				},
 				Components =
 				{
 					new MeshRendererComponent(),
@@ -108,8 +113,11 @@ namespace ComponentGallery
 		{
 			return new Entity
 			{
-				Position = new Vector3(25, 20, 40),
-				Rotation = new Vector3(-0.05f*StMath.Tau, 0, 0),
+				Transform =
+				{
+					Position = new Vector3(25, 20, 40),
+					Rotation = new Vector3(-0.05f*StMath.Tau, 0, 0)
+				},
 				Components =
 				{
 					new CameraComponent(),
@@ -122,8 +130,11 @@ namespace ComponentGallery
 		{
 			return new Entity
 			{
-				Position = new Vector3(12, 8, -12),
-				Rotation = new Vector3(-0.25f*StMath.Tau, 0, 0),
+				Transform =
+				{
+					Position = new Vector3(12, 8, -12),
+					Rotation = new Vector3(-0.25f*StMath.Tau, 0, 0)
+				},
 				Components =
 				{
 					new CameraComponent
@@ -140,8 +151,11 @@ namespace ComponentGallery
 		{
 			var entity = new Entity
 			{
-				Position = position,
-				Scale = new Vector3(5),
+				Transform =
+				{
+					Position = position,
+					Scale = new Vector3(5)
+				},
 				Components =
 				{
 					new MeshRendererComponent {Vertices = vertices},
@@ -156,8 +170,11 @@ namespace ComponentGallery
 		{
 			return new Entity
 			{
-				Position = position,
-				Scale = new Vector3(0.25f),
+				Transform =
+				{
+					Position = position,
+					Scale = new Vector3(0.25f)
+				},
 				Components =
 				{
 					new MeshRendererComponent

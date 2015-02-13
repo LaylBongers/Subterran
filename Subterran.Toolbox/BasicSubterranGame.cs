@@ -22,6 +22,7 @@ namespace Subterran.Toolbox
 			Input = new InputManager();
 			Renderer = new Renderer(Window);
 			Renderer.RegisterVertexType(new ColoredVertexRenderer());
+			Renderer.RegisterVertexType(new TexturedVertexRenderer());
 
 			// Set up the game world
 			World = new Entity();
@@ -41,13 +42,9 @@ namespace Subterran.Toolbox
 		}
 
 		public Window Window { get; private set; }
-
 		public InputManager Input { get; private set; }
-
 		public Renderer Renderer { get; private set; }
-
 		public Entity World { get; set; }
-
 		public Collection<PerformanceTracer> PerformanceTracers { get; private set; }
 
 		private Collection<PerformanceTracer> CreatePerformanceTracers()
@@ -55,8 +52,8 @@ namespace Subterran.Toolbox
 			return new Collection<PerformanceTracer>
 			{
 				BasicPerformanceTracers.CreateLoopSlownessTracer(_loopManager),
-				BasicPerformanceTracers.CreateLoopSkippingTracer(_loopManager),
-				// This is commented out because ironically it's causing GC issues, uncomment if needed
+				BasicPerformanceTracers.CreateLoopSkippingTracer(_loopManager)
+				// This is commented out because ironically it's causing GC issues, un-comment if needed
 				//BasicPerformanceTracers.CreateGcTimeTracer()
 			};
 		}

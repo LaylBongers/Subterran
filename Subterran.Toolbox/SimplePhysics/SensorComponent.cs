@@ -2,14 +2,14 @@
 
 namespace Subterran.Toolbox.SimplePhysics
 {
-	public class SensorComponent : EntityComponent
+	public sealed class SensorComponent : EntityComponent
 	{
 		public string Name { get; set; }
 		public CubeCollider Collider { get; set; }
 
 		public bool CheckTriggered()
 		{
-			var sensorBoundingBox = BoundingBox.FromPositionAndCollider(Entity.Position, Collider);
+			var sensorBoundingBox = BoundingBox.FromPositionAndCollider(Entity.Transform.Position, Collider);
 
 			var fixedBoxes = PhysicsHelper.FindFixedBoundingBoxes(Entity.Parent);
 			var smartBoxes = PhysicsHelper.FindSmartBoundingBoxes(Entity.Parent, sensorBoundingBox);
