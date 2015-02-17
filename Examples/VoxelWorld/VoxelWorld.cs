@@ -19,11 +19,33 @@ namespace VoxelWorld
 				Children =
 				{
 					CreateScriptsEntity(game),
+					//BasicEntities.CreateNoclipCameraEntity(game.Window),
 					CreatePlayerEntity(game.Window),
+
+					// Row #0
+					CreateVoxelWorldEntity(new Vector3(100, 0, 100)),
+					CreateVoxelWorldEntity(new Vector3(0, 0, 100)),
+					CreateVoxelWorldEntity(new Vector3(-100, 0, 100)),
+					CreateVoxelWorldEntity(new Vector3(-200, 0, 100)),
+
+					// Row #1
+					CreateVoxelWorldEntity(new Vector3(100, 0, 0)),
 					CreateVoxelWorldEntity(new Vector3(0, 0, 0)),
 					CreateVoxelWorldEntity(new Vector3(-100, 0, 0)),
+					CreateVoxelWorldEntity(new Vector3(-200, 0, 0)),
+
+					// Row #2
+					CreateVoxelWorldEntity(new Vector3(100, 0, -100)),
 					CreateVoxelWorldEntity(new Vector3(0, 0, -100)),
-					CreateVoxelWorldEntity(new Vector3(-100, 0, -100))
+					CreateVoxelWorldEntity(new Vector3(-100, 0, -100)),
+					CreateVoxelWorldEntity(new Vector3(-200, 0, -100)),
+
+
+					// Row #3
+					CreateVoxelWorldEntity(new Vector3(100, 0, -200)),
+					CreateVoxelWorldEntity(new Vector3(0, 0, -200)),
+					CreateVoxelWorldEntity(new Vector3(-100, 0, -200)),
+					CreateVoxelWorldEntity(new Vector3(-200, 0, -200))
 				},
 				Components =
 				{
@@ -69,7 +91,7 @@ namespace VoxelWorld
 			{
 				Transform =
 				{
-					Position = new Vector3(0, 1.5f, 0),
+					Position = new Vector3(0, 1.5f, 0)
 				},
 				Components =
 				{

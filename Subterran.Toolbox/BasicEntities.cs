@@ -1,4 +1,5 @@
 ﻿using Subterran.Rendering.Components;
+using Subterran.Toolbox.Components;
 
 namespace Subterran.Toolbox
 {
@@ -12,6 +13,18 @@ namespace Subterran.Toolbox
 				{
 					new MeshRendererComponent(),
 					BasicComponents.CreateTestBlockComponent()
+				}
+			};
+		}
+
+		public static Entity CreateNoclipCameraEntity(Window window)
+		{
+			return new Entity
+			{
+				Components =
+				{
+					new CameraComponent(),
+					new NoclipMovementComponent(window)
 				}
 			};
 		}
