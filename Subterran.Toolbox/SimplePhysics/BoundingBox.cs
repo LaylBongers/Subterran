@@ -16,5 +16,14 @@ namespace Subterran.Toolbox.SimplePhysics
 
 			return boundingBox;
 		}
+
+		public static  BoundingBox Encompassing(BoundingBox left, BoundingBox right)
+		{
+			return new BoundingBox
+			{
+				Start = Vector3.ComponentMin(left.Start, right.Start),
+				End = Vector3.ComponentMax(left.End, right.End)
+			};
+		}
 	}
 }

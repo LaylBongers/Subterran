@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using OpenTK;
 
@@ -6,6 +7,7 @@ namespace Subterran.Toolbox.SimplePhysics
 {
 	public class PhysicsWorldComponent : EntityComponent, IUpdatable
 	{
+		delegate void RefAction<TRef, in TIn>(ref TRef obj, TIn val);
 		private TimeSpan _accumulator;
 
 		public PhysicsWorldComponent()
@@ -32,93 +34,70 @@ namespace Subterran.Toolbox.SimplePhysics
 				foreach (var rigidBody in rigidBodies)
 				{
 					// Put the original information in helper variables
-					var collider = rigidBody.Item2.Collider;
+					var position = rigidBody.Item1.Transform.Position;
 					var velocity = rigidBody.Item2.Velocity;
-					var originalPosition = rigidBody.Item1.Transform.Position;
-					var originalBox = BoundingBox.FromPositionAndCollider(originalPosition, collider);
+					var collider = rigidBody.Item2.Collider;
 
 					// Add a bit of gravity
 					velocity += elapsed.PerSecond(rigidBody.Item2.Gravity);
 
-					// Find how much we'll move this tick
-					var tickVelocity = Timestep.PerSecond(rigidBody.Item2.Velocity);
-
-					// Find the expected position and bounding box
-					var targetPosition = originalPosition + tickVelocity;
-					var targetBox = BoundingBox.FromPositionAndCollider(targetPosition, collider);
-
-					// Get all the domain-specific broadphase collected colliders
-					var encompassing = CreateEncompassing(originalBox, targetBox);
-					var smartBoxes = PhysicsHelper.FindSmartBoundingBoxes(Entity, encompassing);
-
-					// Loop through all fixed bounding boxes
-					foreach (var fixedBox in fixedBoxes.Concat(smartBoxes))
-					{
-						// Find any we collide on
-						if (!PhysicsHelper.CheckCollision(targetBox, fixedBox))
-							continue;
-
-						var depth = FindCollisionDepth(tickVelocity, targetBox, fixedBox);
-
-						if (depth.X < depth.Y && depth.X < depth.Z)
-						{
-							// X is smallest
-							tickVelocity.X = tickVelocity.X > 0
-								? tickVelocity.X - depth.X
-								: tickVelocity.X + depth.X;
-							velocity.X = 0;
-						}
-						else if (depth.Y < depth.Z)
-						{
-							// Y is smallest
-							tickVelocity.Y = tickVelocity.Y > 0
-								? tickVelocity.Y - depth.Y
-								: tickVelocity.Y + depth.Y;
-							velocity.Y = 0;
-						}
-						else
-						{
-							// Z is smallest
-							tickVelocity.Z = tickVelocity.Z > 0
-								? tickVelocity.Z - depth.Z
-								: tickVelocity.Z + depth.Z;
-							velocity.X = 0;
-						}
-
-						// Update the values we worked with so the next collision check can be correct
-						targetPosition = originalPosition + tickVelocity;
-						targetBox = BoundingBox.FromPositionAndCollider(targetPosition, collider);
-					}
+					// Actually move the rigidbody
+					MoveOnAxis(ref position, ref velocity, collider, fixedBoxes, StVector.GetX, StVector.SetX);
+					MoveOnAxis(ref position, ref velocity, collider, fixedBoxes, StVector.GetY, StVector.SetY);
+					MoveOnAxis(ref position, ref velocity, collider, fixedBoxes, StVector.GetZ, StVector.SetZ);
 
 					// Submit the changes to the rigidbody
-					rigidBody.Item1.Transform.Position = originalPosition + tickVelocity;
+					rigidBody.Item1.Transform.Position = position;
 					rigidBody.Item2.Velocity = velocity;
 				}
 			}
 		}
 
-		private Vector3 FindCollisionDepth(Vector3 velocity, BoundingBox movingBox, BoundingBox fixedBox)
+		private void MoveOnAxis(ref Vector3 position, ref Vector3 velocity, CubeCollider collider,
+			IEnumerable<BoundingBox> fixedBoxes, StVector.AxisGetFunc axisGetter, StVector.AxisSetAction axisSetter)
 		{
-			var xDepth = velocity.X > 0
-				? movingBox.End.X - fixedBox.Start.X
-				: fixedBox.End.X - movingBox.Start.X;
-			var yDepth = velocity.Y > 0
-				? movingBox.End.Y - fixedBox.Start.Y
-				: fixedBox.End.Y - movingBox.Start.Y;
-			var zDepth = velocity.Z > 0
-				? movingBox.End.Z - fixedBox.Start.Z
-				: fixedBox.End.Z - movingBox.Start.Z;
+			// Find how much we'll move this tick
+			var tickVelocity = Timestep.PerSecond(axisGetter(velocity));
 
-			return new Vector3(xDepth, yDepth, zDepth);
-		}
+			// Get a bounding box encompassing the start and end of the rigidbody on this axis
+			// By using the encompassing bounding box, we can avoid passing through blocks by moving fast
+			var original = BoundingBox.FromPositionAndCollider(position, collider);
+			axisSetter(ref position, axisGetter(position) + tickVelocity); // Velocity is added to position here
+			var target = BoundingBox.FromPositionAndCollider(position, collider);
+			var encompassingBox = BoundingBox.Encompassing(original, target);
 
-		private BoundingBox CreateEncompassing(BoundingBox left, BoundingBox right)
-		{
-			return new BoundingBox
+			// Get all the smart broadphase collected colliders
+			var smartBoxes = PhysicsHelper.FindSmartBoundingBoxes(Entity, encompassingBox);
+
+			foreach (var fixedBox in fixedBoxes.Concat(smartBoxes))
 			{
-				Start = Vector3.ComponentMin(left.Start, right.Start),
-				End = Vector3.ComponentMax(left.End, right.End)
-			};
+				// If there is no collision, we've got nothing to do
+				if (!PhysicsHelper.CheckCollision(encompassingBox, fixedBox))
+					continue;
+
+				// Find the depth on this axis
+				float depth;
+				if (tickVelocity > 0) // Do not use Velocity here, that will be reset
+				{
+					depth = axisGetter(target.End) - axisGetter(fixedBox.Start);
+				}
+				else
+				{
+					depth = axisGetter(target.Start) - axisGetter(fixedBox.End);
+				}
+
+				// Add a bit to the depth to avoid floating point errors
+				StMath.AddSigned(depth, 0.001f);
+
+				// Remove the depth from the position to resolve the collision
+				axisSetter(ref position, axisGetter(position) - depth);
+
+				// Reset velocity to prevent the collision from occurring again
+				axisSetter(ref velocity, 0);
+
+				// Recalculate the target for further checks
+				target = BoundingBox.FromPositionAndCollider(position, collider);
+			}
 		}
 	}
 }

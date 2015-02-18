@@ -59,5 +59,12 @@ namespace Subterran
 
 			return retVal;
 		}
+
+		public static float AddSigned(float signed, float addition)
+		{
+			return signed >= 0
+				? signed + addition
+				: signed - addition;
+		}
 	}
 }

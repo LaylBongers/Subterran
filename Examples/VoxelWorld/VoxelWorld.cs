@@ -23,29 +23,29 @@ namespace VoxelWorld
 					CreatePlayerEntity(game.Window),
 
 					// Row #0
-					CreateVoxelWorldEntity(new Vector3(100, 0, 100)),
-					CreateVoxelWorldEntity(new Vector3(0, 0, 100)),
-					CreateVoxelWorldEntity(new Vector3(-100, 0, 100)),
-					CreateVoxelWorldEntity(new Vector3(-200, 0, 100)),
+					//CreateVoxelWorldEntity(new Vector3(100, 0, 100)),
+					//CreateVoxelWorldEntity(new Vector3(0, 0, 100)),
+					//CreateVoxelWorldEntity(new Vector3(-100, 0, 100)),
+					//CreateVoxelWorldEntity(new Vector3(-200, 0, 100)),
 
 					// Row #1
-					CreateVoxelWorldEntity(new Vector3(100, 0, 0)),
+					//CreateVoxelWorldEntity(new Vector3(100, 0, 0)),
 					CreateVoxelWorldEntity(new Vector3(0, 0, 0)),
 					CreateVoxelWorldEntity(new Vector3(-100, 0, 0)),
-					CreateVoxelWorldEntity(new Vector3(-200, 0, 0)),
+					//CreateVoxelWorldEntity(new Vector3(-200, 0, 0)),
 
 					// Row #2
-					CreateVoxelWorldEntity(new Vector3(100, 0, -100)),
+					//CreateVoxelWorldEntity(new Vector3(100, 0, -100)),
 					CreateVoxelWorldEntity(new Vector3(0, 0, -100)),
 					CreateVoxelWorldEntity(new Vector3(-100, 0, -100)),
-					CreateVoxelWorldEntity(new Vector3(-200, 0, -100)),
+					//CreateVoxelWorldEntity(new Vector3(-200, 0, -100)),
 
 
 					// Row #3
-					CreateVoxelWorldEntity(new Vector3(100, 0, -200)),
-					CreateVoxelWorldEntity(new Vector3(0, 0, -200)),
-					CreateVoxelWorldEntity(new Vector3(-100, 0, -200)),
-					CreateVoxelWorldEntity(new Vector3(-200, 0, -200))
+					//CreateVoxelWorldEntity(new Vector3(100, 0, -200)),
+					//CreateVoxelWorldEntity(new Vector3(0, 0, -200)),
+					//CreateVoxelWorldEntity(new Vector3(-100, 0, -200)),
+					//CreateVoxelWorldEntity(new Vector3(-200, 0, -200))
 				},
 				Components =
 				{
