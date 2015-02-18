@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Security.Policy;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using Subterran.Rendering.Vertices;
@@ -38,8 +39,12 @@ namespace Subterran.Rendering.Components
 			}
 		}
 
+		public event EventHandler StartedRender = (s, e) => { };
+
 		public void Render(Renderer renderer, Matrix4 matrix)
 		{
+			 StartedRender(this, EventArgs.Empty);
+
 			// If we don't have a mesh (yet?) we just do nothing
 			if (Vertices == null)
 				return;

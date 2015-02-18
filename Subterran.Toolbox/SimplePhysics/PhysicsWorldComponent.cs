@@ -18,6 +18,8 @@ namespace Subterran.Toolbox.SimplePhysics
 
 		public TimeSpan Timestep { get; set; }
 
+		public event EventHandler Updated = (s, e) => { };
+
 		public void Update(TimeSpan elapsed)
 		{
 			// Optimization Note: Allocating tuples might cause GC issues, perhaps replace with structs?
@@ -25,9 +27,11 @@ namespace Subterran.Toolbox.SimplePhysics
 			var fixedBoxes = PhysicsHelper.FindFixedBoundingBoxes(Entity);
 
 			// We need to do a physics update once per time step
+			var updated = false;
 			_accumulator += elapsed;
 			while (_accumulator > Timestep)
 			{
+				updated = true;
 				_accumulator -= Timestep;
 
 				// Go through all of the rigid bodies 
@@ -50,6 +54,11 @@ namespace Subterran.Toolbox.SimplePhysics
 					rigidBody.Item1.Transform.Position = position;
 					rigidBody.Item2.Velocity = velocity;
 				}
+			}
+
+			if (updated)
+			{
+				Updated(this, EventArgs.Empty);
 			}
 		}
 

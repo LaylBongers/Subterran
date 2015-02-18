@@ -103,7 +103,7 @@ namespace VoxelWorld
 
 		private void UpdateJump(KeyboardState state)
 		{
-			if (state.IsKeyDown(Key.Space) && _jumpSensor.CheckTriggered())
+			if (state.IsKeyDown(Key.Space) && _jumpSensor.IsTriggered)
 			{
 				var velocity = _rigidbody.Velocity;
 				velocity.Y = JumpHeight;

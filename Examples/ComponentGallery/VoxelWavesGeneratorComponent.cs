@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Drawing;
-using OpenTK;
 using SharpNoise.Modules;
 using Subterran;
-using Subterran.Rendering;
 using Subterran.Toolbox;
 using Subterran.Toolbox.Voxels;
 
 namespace ComponentGallery
 {
-	internal class VoxelWavesGeneratorComponent : EntityComponent, IInitializable, IUpdatable, IRenderablePreparer
+	internal class VoxelWavesGeneratorComponent : EntityComponent, IInitializable, IUpdatable
 	{
 		private static readonly Random Random = new Random();
 		private readonly Simplex _simplex = new Simplex {Frequency = 0.01};
@@ -28,15 +26,13 @@ namespace ComponentGallery
 
 		public void Initialize()
 		{
-			_voxelMap = Entity.GetComponent<VoxelMapComponent<ColoredVoxel>>();
-
-			if (_voxelMap == null)
-				throw new InvalidOperationException("This component requires a VoxelMapComponent!");
+			_voxelMap = Entity.RequireComponent<VoxelMapComponent<ColoredVoxel>>();
+			_voxelMap.StartRender += PrepareRender;
 
 			_voxels = GenerateColoredVoxelMap();
 		}
 
-		public void PrepareRender()
+		public void PrepareRender(object sender, EventArgs args)
 		{
 			GenerateWaterHeights(_time.TotalSeconds);
 			_voxelMap.Voxels = _voxels;

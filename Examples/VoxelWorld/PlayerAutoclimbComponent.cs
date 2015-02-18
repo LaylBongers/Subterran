@@ -13,10 +13,12 @@ namespace VoxelWorld
 		private bool _climbing;
 		private Vector3 _climbTarget;
 		private RigidbodyComponent _rigidbody;
+		private SensorComponent _jumpSensor;
 
 		public void Initialize()
 		{
 			_rigidbody = Entity.RequireComponent<RigidbodyComponent>();
+			_jumpSensor = Entity.RequireComponent<SensorComponent>(s => s.Name == "JumpSensor");
 		}
 
 		public void Update(TimeSpan elapsed)
@@ -54,6 +56,10 @@ namespace VoxelWorld
 
 		private void DetectClimbing()
 		{
+			// If we aren't on the ground we can't do a climb
+			if (!_jumpSensor.IsTriggered)
+				return;
+
 			var tickVelocity = _rigidbody.Velocity*0.01f;
 			var position = Entity.Transform.Position;
 			var targetPosition = position + new Vector3(tickVelocity.X, 0, tickVelocity.Z);

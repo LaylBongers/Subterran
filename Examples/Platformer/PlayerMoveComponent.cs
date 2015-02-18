@@ -37,7 +37,7 @@ namespace Platformer
 			}
 
 			// Jumping
-			if (state[Key.W] && _jumpSensor.CheckTriggered())
+			if (state[Key.W] && _jumpSensor.IsTriggered)
 			{
 				velocity.Y = JumpHeight;
 			}

@@ -69,7 +69,6 @@
     <Compile Include="LoopTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StMathTests.cs" />
-    <Compile Include="Toolbox\Voxels\VoxelMapComponentTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
@@ -90,6 +89,10 @@
   </ItemGroup>
   <ItemGroup>
     <Service Include="{82A7F48D-3B50-4B1E-B82E-3ADA8210C358}" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Toolbox\SimplePhysics\" />
+    <Folder Include="Toolbox\Voxels\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

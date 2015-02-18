@@ -116,7 +116,6 @@ namespace Subterran.Toolbox
 		{
 			EnsureInitialized();
 
-			World.ForEach<IRenderablePreparer>(e => e.PrepareRender());
 			Renderer.RenderWorld(World);
 
 			Window.SwapBuffers();

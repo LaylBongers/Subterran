@@ -1,11 +1,10 @@
 ﻿using System;
-using Subterran.Rendering;
 using Subterran.Rendering.Components;
 using Subterran.Rendering.Vertices;
 
 namespace Subterran.Toolbox.Voxels
 {
-	public class VoxelMapComponent<TVoxelType> : EntityComponent, IInitializable, IRenderablePreparer
+	public class VoxelMapComponent<TVoxelType> : EntityComponent, IInitializable
 		where TVoxelType : struct
 	{
 		private bool _meshIsOutdated;
@@ -24,14 +23,19 @@ namespace Subterran.Toolbox.Voxels
 			}
 		}
 
+		public event EventHandler StartRender = (s, e) => { };
+
 		public void Initialize()
 		{
 			_meshIsOutdated = true;
 			_meshRenderer = Entity.RequireComponent<MeshRendererComponent>();
+			_meshRenderer.StartedRender += StartedRender;
 		}
 
-		public void PrepareRender()
+		private void StartedRender(object sender, EventArgs e)
 		{
+			StartRender(this, EventArgs.Empty);
+
 			if (MeshGenerator == null)
 				throw new InvalidOperationException("This component requires MeshGenerator to be set!");
 
