@@ -25,5 +25,14 @@ namespace Subterran.Toolbox.SimplePhysics
 				End = Vector3.ComponentMax(left.End, right.End)
 			};
 		}
+
+		public BoundingBox Translate(Vector3 value)
+		{
+			return new BoundingBox
+			{
+				Start = Start + value,
+				End = End + value
+			};
+		}
 	}
 }

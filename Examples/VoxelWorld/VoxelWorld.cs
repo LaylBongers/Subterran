@@ -132,7 +132,8 @@ namespace VoxelWorld
 						FastSpeed = 10,
 						JumpHeight = 6,
 						CameraEntity = cameraEntity
-					}
+					},
+					new PlayerAutoclimbComponent()
 				}
 			};
 		}
