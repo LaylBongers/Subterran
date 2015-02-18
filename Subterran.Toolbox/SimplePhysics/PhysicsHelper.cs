@@ -19,7 +19,7 @@ namespace Subterran.Toolbox.SimplePhysics
 			foreach (var entity in worldEntity.Children)
 			{
 				var rigidBody = entity.GetComponent<RigidbodyComponent>();
-				if (rigidBody != null)
+				if (rigidBody != null && rigidBody.Enabled)
 				{
 					rigidBodies.Add(new Tuple<Entity, RigidbodyComponent>(entity, rigidBody));
 				}

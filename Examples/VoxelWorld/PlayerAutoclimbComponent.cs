@@ -10,6 +10,8 @@ namespace VoxelWorld
 {
 	internal class PlayerAutoclimbComponent : EntityComponent, IInitializable, IUpdatable
 	{
+		private bool _climbing;
+		private Vector3 _climbTarget;
 		private RigidbodyComponent _rigidbody;
 
 		public void Initialize()
@@ -18,6 +20,39 @@ namespace VoxelWorld
 		}
 
 		public void Update(TimeSpan elapsed)
+		{
+			if (_climbing)
+			{
+				Climb(elapsed);
+			}
+			else
+			{
+				DetectClimbing();
+			}
+		}
+
+		private void Climb(TimeSpan elapsed)
+		{
+			var distance = _climbTarget - Entity.Transform.Position;
+			var tickDistance = distance;
+			tickDistance.NormalizeFast();
+			tickDistance *= 4f; // Speed
+			tickDistance *= (float) elapsed.TotalSeconds;
+
+			// If the distance is lower than the tickDistance, this is the last move tick
+			if (Math.Abs(distance.X) <= Math.Abs(tickDistance.X))
+			{
+				Entity.Transform.Position = _climbTarget;
+				_climbing = false;
+				_rigidbody.Enabled = true;
+			}
+			else
+			{
+				Entity.Transform.Position += tickDistance;
+			}
+		}
+
+		private void DetectClimbing()
 		{
 			var tickVelocity = _rigidbody.Velocity*0.01f;
 			var position = Entity.Transform.Position;
@@ -32,9 +67,10 @@ namespace VoxelWorld
 
 			var fixedBoxes = PhysicsHelper.FindFixedBoundingBoxes(Entity.Parent);
 			var smartBoxes = PhysicsHelper.FindSmartBoundingBoxes(Entity.Parent, encompassing);
+			var allBoxes = fixedBoxes.Concat(smartBoxes).ToList();
 
 			// Actually perform the autoclimb checks on the axes
-			foreach (var fixedBox in fixedBoxes.Concat(smartBoxes))
+			foreach (var fixedBox in fixedBoxes.Concat(allBoxes))
 			{
 				if (!PhysicsHelper.CheckCollision(targetBox, fixedBox))
 					continue;
@@ -48,14 +84,17 @@ namespace VoxelWorld
 					continue;
 
 				// Get the box we'll end up at if we translate to the top of the collided box
-				var climbedBox = targetBox.Translate(new Vector3(0, climbAmount, 0));
+				var climbOffset = new Vector3(tickVelocity.X, climbAmount, tickVelocity.Z);
+				var climbedBox = currentBox.Translate(climbOffset);
 
 				// Make sure the new box isn't taken up by any fixed boxes
-				if (!IsAreaFree(climbedBox, fixedBoxes))
+				if (!IsAreaFree(climbedBox, allBoxes))
 					continue;
 
-				// The new position is valid, apply it and we're done
-				Entity.Transform.Position += new Vector3(tickVelocity.X, climbAmount, tickVelocity.Z);
+				// The new position is valid, set it as a target so we can move to it
+				_climbTarget = Entity.Transform.Position + climbOffset;
+				_climbing = true;
+				_rigidbody.Enabled = false;
 				return;
 			}
 		}

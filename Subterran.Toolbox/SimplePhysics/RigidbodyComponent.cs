@@ -8,6 +8,12 @@ namespace Subterran.Toolbox.SimplePhysics
 		public Vector3 Gravity { get; set; }
 		public Vector3 Velocity { get; set; }
 		public CubeCollider Collider { get; set; }
+		public bool Enabled { get; set; }
+
+		public RigidbodyComponent()
+		{
+			Enabled = true;
+		}
 
 		public void Initialize()
 		{
