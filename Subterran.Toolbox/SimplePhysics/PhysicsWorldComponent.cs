@@ -7,7 +7,6 @@ namespace Subterran.Toolbox.SimplePhysics
 {
 	public class PhysicsWorldComponent : EntityComponent, IUpdatable
 	{
-		delegate void RefAction<TRef, in TIn>(ref TRef obj, TIn val);
 		private TimeSpan _accumulator;
 
 		public PhysicsWorldComponent()
@@ -81,7 +80,7 @@ namespace Subterran.Toolbox.SimplePhysics
 			foreach (var fixedBox in fixedBoxes.Concat(smartBoxes))
 			{
 				// If there is no collision, we've got nothing to do
-				if (!PhysicsHelper.CheckCollision(encompassingBox, fixedBox))
+				if (!PhysicsHelper.CheckCollision(target, fixedBox))
 					continue;
 
 				// Find the depth on this axis
@@ -96,7 +95,7 @@ namespace Subterran.Toolbox.SimplePhysics
 				}
 
 				// Add a bit to the depth to avoid floating point errors
-				StMath.AddSigned(depth, 0.001f);
+				depth = StMath.AddSigned(depth, 0.0001f);
 
 				// Remove the depth from the position to resolve the collision
 				axisSetter(ref position, axisGetter(position) - depth);

@@ -49,5 +49,31 @@ namespace Subterran.Tests
 			// Assert
 			Assert.Equal(0.50, result, 2);
 		}
+
+		[Fact]
+		public void SignedAdd_FiveAndTwo_ReturnsSeven()
+		{
+			// Arrange
+			const float value = 5, addition = 2, expected = 7;
+
+			// Act
+			var result = StMath.AddSigned(value, addition);
+
+			// Assert
+			Assert.Equal(expected, result, 5);
+		}
+
+		[Fact]
+		public void SignedAdd_MinusSixAndTwo_ReturnsMinusEight()
+		{
+			// Arrange
+			const float value = -6, addition = 2, expected = -8;
+
+			// Act
+			var result = StMath.AddSigned(value, addition);
+
+			// Assert
+			Assert.Equal(expected, result, 5);
+		}
 	}
 }

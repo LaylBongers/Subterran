@@ -83,7 +83,7 @@ namespace VoxelWorld
 
 				// Get the amount we need to go up to climb the collided box
 				// Add a small floating point error compensation
-				var climbAmount = fixedBox.End.Y - targetBox.Start.Y + 0.001f;
+				var climbAmount = fixedBox.End.Y - targetBox.Start.Y + 0.0001f;
 
 				// We can only climb up 0.6f in height
 				if (climbAmount > 0.6f)
