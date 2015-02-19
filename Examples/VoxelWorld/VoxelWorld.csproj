@@ -59,10 +59,12 @@
     <Compile Include="PlayerMoveComponent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SpinnerComponent.cs" />
     <Compile Include="VoxelWorld.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+    <None Include="Graphics\OminousCube.pyxel" />
     <None Include="packages.config" />
     <None Include="Graphics\Test.pyxel" />
   </ItemGroup>
@@ -81,6 +83,9 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Graphics\OminousCube.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Graphics\Test.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

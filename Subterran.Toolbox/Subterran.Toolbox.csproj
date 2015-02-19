@@ -47,6 +47,7 @@
     <Compile Include="BasicComponents.cs" />
     <Compile Include="BasicEntities.cs" />
     <Compile Include="BasicMaterials.cs" />
+    <Compile Include="BasicShaders.cs" />
     <Compile Include="BasicSubterranGame.cs" />
     <Compile Include="Components\FpsCounterComponent.cs" />
     <Compile Include="IUpdatable.cs" />

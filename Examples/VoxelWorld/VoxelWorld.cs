@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System.Runtime.Remoting.Messaging;
+using OpenTK;
 using Subterran;
 using Subterran.Rendering;
 using Subterran.Rendering.Components;
@@ -16,8 +17,12 @@ namespace VoxelWorld
 		{
 			var game = new BasicSubterranGame();
 
-			var fullbrightColor = BasicMaterials.CreateFullbrightColor();
-			var fullbrightTexture = BasicMaterials.CreateFullbrightTexture("./Graphics/Test.png");
+			var fullbrightColor = BasicShaders.CreateFullbrightColor();
+			var fullbrightTexture = BasicShaders.CreateFullbrightTexture();
+
+			var playerMaterial = BasicMaterials.CreateFullbrightColor(fullbrightColor);
+			var worldMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTexture, "./Graphics/Test.png");
+			var ominousMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTexture, "./Graphics/OminousCube.png");
 
 			game.World = new Entity
 			{
@@ -26,7 +31,8 @@ namespace VoxelWorld
 				{
 					CreateScriptsEntity(game),
 					//BasicEntities.CreateNoclipCameraEntity(game.Window),
-					CreatePlayerEntity(game.Window, fullbrightColor),
+					CreatePlayerEntity(game.Window, playerMaterial),
+					CreateOminousEntity(ominousMaterial),
 
 					// Row #0
 					//CreateVoxelWorldEntity(new Vector3(100, 0, 100)),
@@ -36,16 +42,15 @@ namespace VoxelWorld
 
 					// Row #1
 					//CreateVoxelWorldEntity(new Vector3(100, 0, 0)),
-					CreateVoxelWorldEntity(new Vector3(0, 0, 0), fullbrightTexture),
-					CreateVoxelWorldEntity(new Vector3(-100, 0, 0), fullbrightTexture),
+					CreateVoxelWorldEntity(new Vector3(0, 0, 0), worldMaterial),
+					CreateVoxelWorldEntity(new Vector3(-100, 0, 0), worldMaterial),
 					//CreateVoxelWorldEntity(new Vector3(-200, 0, 0)),
 
 					// Row #2
 					//CreateVoxelWorldEntity(new Vector3(100, 0, -100)),
-					CreateVoxelWorldEntity(new Vector3(0, 0, -100), fullbrightTexture),
-					CreateVoxelWorldEntity(new Vector3(-100, 0, -100), fullbrightTexture),
+					CreateVoxelWorldEntity(new Vector3(0, 0, -100), worldMaterial),
+					CreateVoxelWorldEntity(new Vector3(-100, 0, -100), worldMaterial)
 					//CreateVoxelWorldEntity(new Vector3(-200, 0, -100)),
-
 
 					// Row #3
 					//CreateVoxelWorldEntity(new Vector3(100, 0, -200)),
@@ -60,6 +65,47 @@ namespace VoxelWorld
 			};
 
 			return game;
+		}
+
+		private static Entity CreateOminousEntity(Material<TexturedVertex> ominousMaterial)
+		{
+			var voxels = new ColoredVoxel[1, 1, 1];
+			voxels[0, 0, 0].IsSolid = true;
+
+			return new Entity
+			{
+				Name = "Ominous Cube",
+				Children =
+				{
+					new Entity
+					{
+						Name = "Inner Actual Cube",
+						Transform =
+						{
+							Position = new Vector3(0, 35, 0),
+							Rotation = new Vector3(StMath.Tau*0.125f, 0, StMath.Tau * 0.125f),
+							Scale = new Vector3(10)
+						},
+						Components =
+						{
+							new VoxelMapComponent<ColoredVoxel, TexturedVertex>
+							{
+								Voxels = voxels,
+								MeshGenerator = TexturedVoxelMesher.GenerateCubes
+							},
+							new MeshRendererComponent<TexturedVertex>
+							{
+								Material = ominousMaterial,
+								Offset = new Vector3(-0.5f, -0.5f, -0.5f)
+							}
+						}
+					}
+				},
+				Components =
+				{
+					new SpinnerComponent()
+				}
+			};
 		}
 
 		private static Entity CreateScriptsEntity(BasicSubterranGame game)
@@ -115,7 +161,7 @@ namespace VoxelWorld
 				Name = "Player",
 				Transform =
 				{
-					Position = new Vector3(0, 50, 0)
+					Position = new Vector3(0, 35, 0/*-20*/)
 				},
 				Children = {cameraEntity, collisionReferenceEntity},
 				Components =
