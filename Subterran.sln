@@ -13,15 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Tests", "Subterra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Toolbox", "Subterran.Toolbox\Subterran.Toolbox.csproj", "{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ComponentGallery", "Examples\ComponentGallery\ComponentGallery.csproj", "{184DD2CB-D774-4201-8A49-C6A3747AF8BF}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Rendering", "Subterran.Rendering\Subterran.Rendering.csproj", "{54554F92-D476-4643-BE25-A0DC6352ADAB}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Input", "Subterran.Input\Subterran.Input.csproj", "{2D8D561A-FFAA-4588-8B61-F4B236C07C83}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoxelWorld", "Examples\VoxelWorld\VoxelWorld.csproj", "{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Platformer", "Examples\Platformer\Platformer.csproj", "{081D8798-36FF-4783-8103-6D6D9C382E15}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -45,10 +41,6 @@ Global
 		{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{184DD2CB-D774-4201-8A49-C6A3747AF8BF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{184DD2CB-D774-4201-8A49-C6A3747AF8BF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{184DD2CB-D774-4201-8A49-C6A3747AF8BF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{184DD2CB-D774-4201-8A49-C6A3747AF8BF}.Release|Any CPU.Build.0 = Release|Any CPU
 		{54554F92-D476-4643-BE25-A0DC6352ADAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{54554F92-D476-4643-BE25-A0DC6352ADAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{54554F92-D476-4643-BE25-A0DC6352ADAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -61,18 +53,12 @@ Global
 		{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391}.Release|Any CPU.Build.0 = Release|Any CPU
-		{081D8798-36FF-4783-8103-6D6D9C382E15}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{081D8798-36FF-4783-8103-6D6D9C382E15}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{081D8798-36FF-4783-8103-6D6D9C382E15}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{081D8798-36FF-4783-8103-6D6D9C382E15}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{A0321BEB-1149-4096-A88B-6AD8AE1FF361} = {073F066E-831E-452F-82AD-E71FBF72C326}
-		{184DD2CB-D774-4201-8A49-C6A3747AF8BF} = {073F066E-831E-452F-82AD-E71FBF72C326}
 		{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391} = {073F066E-831E-452F-82AD-E71FBF72C326}
-		{081D8798-36FF-4783-8103-6D6D9C382E15} = {073F066E-831E-452F-82AD-E71FBF72C326}
 	EndGlobalSection
 EndGlobal
