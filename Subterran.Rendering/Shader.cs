@@ -27,11 +27,17 @@ namespace Subterran.Rendering
 			GL.UseProgram(_program);
 		}
 
-		public void Set(string name, ref Matrix4 matrix)
+		public void SetUniform(string name, ref Matrix4 value)
 		{
 			// TODO: Allow some way of caching the lookup by name
 			var location = ShaderUtils.GetUniformLocation(_program, name);
-			GL.UniformMatrix4(location, false, ref matrix);
+			GL.UniformMatrix4(location, false, ref value);
+		}
+
+		public void SetUniform(string name, int value)
+		{
+			var location = ShaderUtils.GetUniformLocation(_program, name);
+			GL.Uniform1(location, value);
 		}
 	}
 }

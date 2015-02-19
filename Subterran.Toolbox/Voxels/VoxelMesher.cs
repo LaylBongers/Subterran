@@ -2,38 +2,51 @@
 using System.Collections.Generic;
 using System.Linq;
 using OpenTK;
-using Subterran.Rendering;
-using Subterran.Rendering.Materials;
 
 namespace Subterran.Toolbox.Voxels
 {
 	public static class VoxelMesher
 	{
-		private static Vector3[][] _lookupTable;
-		private static readonly List<ColoredVertex> WorkingList = new List<ColoredVertex>();
+		public enum QuadCorner
+		{
+			TopLeft,
+			TopRight,
+			BottomLeft,
+			BottomRight
+		}
 
-		/// <summary>
-		///     If set to true, will optimize for concurrent calling.
-		///     If set to false, will optimize for non-concurrent calling.
-		///     Do not use the MeshGenerator concurrent with AllowConcurrency set to false.
-		/// </summary>
-		public static bool AllowConcurrency { get; set; }
+		private static readonly Vertex[] Square =
+		{
+			new Vertex(new Vector3(0, 1, 0), QuadCorner.TopLeft),
+			new Vertex(new Vector3(0, 0, 0), QuadCorner.BottomLeft),
+			new Vertex(new Vector3(1, 0, 0), QuadCorner.BottomRight),
+			new Vertex(new Vector3(0, 1, 0), QuadCorner.TopLeft),
+			new Vertex(new Vector3(1, 0, 0), QuadCorner.BottomRight),
+			new Vertex(new Vector3(1, 1, 0), QuadCorner.TopRight)
+		};
+
+		private static Vertex[][] _lookupTable;
 
 		/// <summary>
 		///     Generates a mesh from a 3D array of voxels.
 		/// </summary>
 		/// <remarks>Extremely performance critical, likely to cause GC problems.</remarks>
 		/// <param name="voxels">A 3D array of voxels to be converted.</param>
+		/// <param name="workingList">A list to use for working with vertex data to avoid re-growing a list.</param>
+		/// <param name="vertexCreator">A function that creates a vertex based on the vertex and voxel data.</param>
+		/// <param name="solidChecker">A function that checks if the voxel is a solid block.</param>
 		/// <returns>The array of vertices making up the mesh.</returns>
-		public static ColoredVertex[] GenerateCubes(ColoredVoxel[,,] voxels)
+		public static TVertexType[] GenerateCubes<TVoxelType, TVertexType>(TVoxelType[,,] voxels,
+			List<TVertexType> workingList,
+			Func<TVoxelType, Vertex, TVertexType> vertexCreator, Func<TVoxelType, bool> solidChecker)
+			where TVertexType : struct
 		{
 			var width = voxels.GetLength(0);
 			var height = voxels.GetLength(1);
 			var depth = voxels.GetLength(2);
 
 			// Get a list to keep the vertices in until we know how many
-			var verticesEstimate = (width*height*depth)*1.5f;
-			var verticesList = GetVerticesListForSettings((int) verticesEstimate);
+			workingList.Clear();
 
 			for (var x = 0; x < width; x++)
 			{
@@ -41,58 +54,40 @@ namespace Subterran.Toolbox.Voxels
 				{
 					for (var z = 0; z < depth; z++)
 					{
-						if (!voxels[x, y, z].IsSolid)
+						if (!solidChecker(voxels[x, y, z]))
 							continue;
 
 						// Get the vectors for this voxel's mesh
 						var vectors = LookupVoxelMesh(
-							x <= 0 || !voxels[x - 1, y, z].IsSolid,
-							x >= width - 1 || !voxels[x + 1, y, z].IsSolid,
-							y <= 0 || !voxels[x, y - 1, z].IsSolid,
-							y >= height - 1 || !voxels[x, y + 1, z].IsSolid,
-							z <= 0 || !voxels[x, y, z - 1].IsSolid,
-							z >= depth - 1 || !voxels[x, y, z + 1].IsSolid);
+							x <= 0 || !solidChecker(voxels[x - 1, y, z]),
+							x >= width - 1 || !solidChecker(voxels[x + 1, y, z]),
+							y <= 0 || !solidChecker(voxels[x, y - 1, z]),
+							y >= height - 1 || !solidChecker(voxels[x, y + 1, z]),
+							z <= 0 || !solidChecker(voxels[x, y, z - 1]),
+							z >= depth - 1 || !solidChecker(voxels[x, y, z + 1]));
 
 						// Offset them one by one and copy them over into the list
 						var offset = new Vector3(x, y, z);
 						for (var i = 0; i < vectors.Length; i++)
 						{
-							verticesList.Add(new ColoredVertex
-							{
-								Position = vectors[i] + offset,
-								Color = voxels[x, y, z].Color
-							});
+							workingList.Add(vertexCreator(voxels[x, y, z], vectors[i].Offset(offset)));
 						}
 					}
 				}
 			}
 
 			// Finally, trim anything we don't need from the array
-			var verticesCount = verticesList.Count;
-			var finalArray = new ColoredVertex[verticesCount];
+			var verticesCount = workingList.Count;
+			var finalArray = new TVertexType[verticesCount];
 			for (var i = 0; i < verticesCount; i++)
 			{
-				finalArray[i] = verticesList[i];
+				finalArray[i] = workingList[i];
 			}
 
 			return finalArray;
 		}
 
-		private static List<ColoredVertex> GetVerticesListForSettings(int verticesEstimate)
-		{
-			if (AllowConcurrency)
-			{
-				// We're set for concurrency so we can't re-use the working list
-				// Give it a decently high capacity to avoid big GC slowdowns from growing the list
-				return new List<ColoredVertex>(verticesEstimate);
-			}
-
-			// We can re-use the working list so just clear it withour resetting capacity
-			WorkingList.Clear();
-			return WorkingList;
-		}
-
-		private static Vector3[] LookupVoxelMesh(
+		private static Vertex[] LookupVoxelMesh(
 			bool left, bool right,
 			bool bottom, bool top,
 			bool back, bool front)
@@ -121,9 +116,9 @@ namespace Subterran.Toolbox.Voxels
 			return _lookupTable[(int) sides];
 		}
 
-		private static Vector3[][] GenerateLookupTable()
+		private static Vertex[][] GenerateLookupTable()
 		{
-			var table = new Vector3[(int) Sides.Max][];
+			var table = new Vertex[(int) Sides.Max][];
 			for (Sides key = 0; key < Sides.Max; key++)
 			{
 				table[(int) key] = GenerateVoxelMesh(key).ToArray();
@@ -131,74 +126,66 @@ namespace Subterran.Toolbox.Voxels
 			return table;
 		}
 
-		private static IEnumerable<Vector3> GenerateVoxelMesh(Sides sides)
+		private static IEnumerable<Vertex> GenerateVoxelMesh(Sides sides)
 		{
-			// Benchmark: 23 seconds in VoxelWorld
-
-			var square = new[]
-			{
-				new Vector3(0, 1, 0), // Left Top
-				new Vector3(0, 0, 0), // Left Bottom
-				new Vector3(1, 0, 0), // Right Bottom
-
-				new Vector3(0, 1, 0), // Left Top
-				new Vector3(1, 0, 0), // Right Bottom
-				new Vector3(1, 1, 0) // Right Top
-			};
-
-			var vertices = new List<Vector3>();
+			var vertices = new List<Vertex>();
 
 			// X axis
 			if (sides.HasFlag(Sides.Left))
 			{
-				var leftVoxelMatrix =
-					Matrix4.CreateRotationY(-0.25f*StMath.Tau)*
-					Matrix4.CreateTranslation(0, 0, 0);
-				vertices.AddRange(square.Transform(leftVoxelMatrix));
+				vertices.AddRange(GenerateVoxelSide(
+					new Vector3(0, 0, 0),
+					new Vector3(0, -0.25f*StMath.Tau, 0)));
 			}
 
 			if (sides.HasFlag(Sides.Right))
 			{
-				var rightVoxelMatrix =
-					Matrix4.CreateRotationY(0.25f*StMath.Tau)*
-					Matrix4.CreateTranslation(1, 0, 1);
-				vertices.AddRange(square.Transform(rightVoxelMatrix));
+				vertices.AddRange(GenerateVoxelSide(
+					new Vector3(1, 0, 1),
+					new Vector3(0, 0.25f*StMath.Tau, 0)));
 			}
 
 			// Y axis
 			if (sides.HasFlag(Sides.Bottom))
 			{
-				var bottomVoxelMatrix =
-					Matrix4.CreateRotationX(0.25f*StMath.Tau)*
-					Matrix4.CreateTranslation(0, 0, 0);
-				vertices.AddRange(square.Transform(bottomVoxelMatrix));
+				vertices.AddRange(GenerateVoxelSide(
+					new Vector3(0, 0, 0),
+					new Vector3(0.25f*StMath.Tau, 0, 0)));
 			}
 
 			if (sides.HasFlag(Sides.Top))
 			{
-				var topVoxelMatrix =
-					Matrix4.CreateRotationX(-0.25f*StMath.Tau)*
-					Matrix4.CreateTranslation(0, 1, 1);
-				vertices.AddRange(square.Transform(topVoxelMatrix));
+				vertices.AddRange(GenerateVoxelSide(
+					new Vector3(0, 1, 1),
+					new Vector3(-0.25f*StMath.Tau, 0, 0)));
 			}
 
 			// Z axis
 			if (sides.HasFlag(Sides.Back))
 			{
-				var backVoxelMatrix =
-					Matrix4.CreateRotationY(0.5f*StMath.Tau)*
-					Matrix4.CreateTranslation(1, 0, 0);
-				vertices.AddRange(square.Transform(backVoxelMatrix));
+				vertices.AddRange(GenerateVoxelSide(
+					new Vector3(1, 0, 0),
+					new Vector3(0, 0.5f*StMath.Tau, 0)));
 			}
 
 			if (sides.HasFlag(Sides.Front))
 			{
-				var frontVoxelMatrix =
-					Matrix4.CreateTranslation(0, 0, 1);
-				vertices.AddRange(square.Transform(frontVoxelMatrix));
+				vertices.AddRange(GenerateVoxelSide(
+					new Vector3(0, 0, 1),
+					new Vector3(0, 0, 0)));
 			}
 
 			return vertices;
+		}
+
+		private static IEnumerable<Vertex> GenerateVoxelSide(Vector3 offset, Vector3 rotation)
+		{
+			var sideMatrix =
+				Matrix4.CreateRotationX(rotation.X)*
+				Matrix4.CreateRotationY(rotation.Y)*
+				Matrix4.CreateRotationZ(rotation.Z)*
+				Matrix4.CreateTranslation(offset);
+			return Square.Select(v => v.Transform(sideMatrix));
 		}
 
 		[Flags]
@@ -211,6 +198,37 @@ namespace Subterran.Toolbox.Voxels
 			Back = 0x10,
 			Front = 0x20,
 			Max = 0x40
+		}
+
+		public struct Vertex
+		{
+			public Vertex(Vector3 position, QuadCorner corner)
+				: this()
+			{
+				Position = position;
+				Corner = corner;
+			}
+
+			public Vector3 Position { get; set; }
+			public QuadCorner Corner { get; set; }
+
+			public Vertex Offset(Vector3 offset)
+			{
+				return new Vertex
+				{
+					Position = Position + offset,
+					Corner = Corner
+				};
+			}
+
+			public Vertex Transform(Matrix4 matrix)
+			{
+				return new Vertex
+				{
+					Position = Vector3.Transform(Position, matrix),
+					Corner = Corner
+				};
+			}
 		}
 	}
 }

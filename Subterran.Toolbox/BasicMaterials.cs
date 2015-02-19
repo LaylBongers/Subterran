@@ -68,7 +68,7 @@ out vec4 st_FragColor;
 
 void main()
 {
-	st_FragColor = texture(TextureSampler, fragUv);
+	st_FragColor = texture(Texture, fragUv);
 }";
 
 		public static Material<ColoredVertex, ColoredMaterialData> CreateFullbrightColor()

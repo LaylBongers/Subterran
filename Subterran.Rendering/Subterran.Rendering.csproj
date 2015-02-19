@@ -43,6 +43,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="IShaderUniformSettable.cs" />
     <Compile Include="Material.cs" />
     <Compile Include="Materials\ColoredMaterialData.cs" />
     <Compile Include="Materials\ColoredVertex.cs" />

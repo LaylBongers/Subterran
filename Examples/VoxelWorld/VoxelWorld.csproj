@@ -64,7 +64,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
-    <None Include="Test.pyxel" />
+    <None Include="Graphics\Test.pyxel" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Subterran.Rendering\Subterran.Rendering.csproj">
@@ -81,7 +81,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Test.png">
+    <Content Include="Graphics\Test.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

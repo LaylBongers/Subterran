@@ -17,6 +17,7 @@ namespace Subterran.Rendering
 			_targetWindow.MakeCurrent();
 
 			GL.Enable(EnableCap.DepthTest);
+			GL.Enable(EnableCap.Texture2D);
 
 			// Set up back-culling
 			GL.Enable(EnableCap.CullFace);
@@ -74,7 +75,7 @@ namespace Subterran.Rendering
 		private static void CollapseEntityTreeTo(Entity entity, RenderData data, Matrix4 previousMatrix)
 		{
 			// Create a multiply matrix representing this entity
-			// TODO: Right now i'm refactoring, come back to this and fix this.
+			// TODO: Right now i'm refactoring, come back to this and fix this to use Matrix in entity.
 			var entityMatrix =
 				Matrix4.CreateScale(entity.Transform.Scale)*
 				Matrix4.CreateRotationX(entity.Transform.Rotation.X)*
