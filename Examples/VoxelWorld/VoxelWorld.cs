@@ -1,5 +1,6 @@
 ﻿using OpenTK;
 using Subterran;
+using Subterran.Rendering;
 using Subterran.Rendering.Components;
 using Subterran.Toolbox;
 using Subterran.Toolbox.Components;
@@ -14,8 +15,11 @@ namespace VoxelWorld
 		{
 			var game = new BasicSubterranGame();
 
+			var fullbrightColor = new Material();
+
 			game.World = new Entity
 			{
+				Name = "World",
 				Children =
 				{
 					CreateScriptsEntity(game),
@@ -30,14 +34,14 @@ namespace VoxelWorld
 
 					// Row #1
 					//CreateVoxelWorldEntity(new Vector3(100, 0, 0)),
-					CreateVoxelWorldEntity(new Vector3(0, 0, 0)),
-					CreateVoxelWorldEntity(new Vector3(-100, 0, 0)),
+					CreateVoxelWorldEntity(new Vector3(0, 0, 0), fullbrightColor),
+					CreateVoxelWorldEntity(new Vector3(-100, 0, 0), fullbrightColor),
 					//CreateVoxelWorldEntity(new Vector3(-200, 0, 0)),
 
 					// Row #2
 					//CreateVoxelWorldEntity(new Vector3(100, 0, -100)),
-					CreateVoxelWorldEntity(new Vector3(0, 0, -100)),
-					CreateVoxelWorldEntity(new Vector3(-100, 0, -100)),
+					CreateVoxelWorldEntity(new Vector3(0, 0, -100), fullbrightColor),
+					CreateVoxelWorldEntity(new Vector3(-100, 0, -100), fullbrightColor),
 					//CreateVoxelWorldEntity(new Vector3(-200, 0, -100)),
 
 
@@ -62,6 +66,7 @@ namespace VoxelWorld
 
 			return new Entity
 			{
+				Name = "Scripts",
 				Components =
 				{
 					new FpsCounterComponent(game.Window)
@@ -101,6 +106,7 @@ namespace VoxelWorld
 
 			return new Entity
 			{
+				Name = "Player",
 				Transform =
 				{
 					Position = new Vector3(0, 50, 0)
@@ -138,12 +144,13 @@ namespace VoxelWorld
 			};
 		}
 
-		private static Entity CreateVoxelWorldEntity(Vector3 position)
+		private static Entity CreateVoxelWorldEntity(Vector3 position, Material material)
 		{
 			var voxels = MapGenerator.Generate(200, 200, position.Xz*2);
 
 			return new Entity
 			{
+				Name = "Voxel World",
 				Transform =
 				{
 					Position = position,
@@ -151,7 +158,10 @@ namespace VoxelWorld
 				},
 				Components =
 				{
-					new MeshRendererComponent(),
+					new MeshRendererComponent
+					{
+						Material = material
+					},
 					new VoxelMapComponent<ColoredVoxel>
 					{
 						Voxels = voxels,

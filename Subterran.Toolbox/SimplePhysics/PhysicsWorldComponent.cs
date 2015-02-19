@@ -44,10 +44,19 @@ namespace Subterran.Toolbox.SimplePhysics
 					// Add a bit of gravity
 					velocity += elapsed.PerSecond(rigidBody.Item2.Gravity);
 
-					// Actually move the rigidbody
-					MoveOnAxis(ref position, ref velocity, collider, fixedBoxes, StVector.GetX, StVector.SetX);
-					MoveOnAxis(ref position, ref velocity, collider, fixedBoxes, StVector.GetY, StVector.SetY);
-					MoveOnAxis(ref position, ref velocity, collider, fixedBoxes, StVector.GetZ, StVector.SetZ);
+					// If we don't have a collider we can't collide
+					if (collider != null)
+					{
+						// Move the rigid body keeping collisions in mind
+						MoveOnAxis(ref position, ref velocity, collider, fixedBoxes, StVector.GetX, StVector.SetX);
+						MoveOnAxis(ref position, ref velocity, collider, fixedBoxes, StVector.GetY, StVector.SetY);
+						MoveOnAxis(ref position, ref velocity, collider, fixedBoxes, StVector.GetZ, StVector.SetZ);
+					}
+					else
+					{
+						// Move the rigid body without collisions
+						position += elapsed.PerSecond(velocity);
+					}
 
 					// Submit the changes to the rigidbody
 					rigidBody.Item1.Transform.Position = position;

@@ -39,6 +39,8 @@ namespace Subterran.Rendering.Components
 			}
 		}
 
+		public Material Material { get; set; }
+
 		public event EventHandler StartedRender = (s, e) => { };
 
 		public void Render(Renderer renderer, Matrix4 matrix)

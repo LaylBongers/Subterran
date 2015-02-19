@@ -2,15 +2,18 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
+using System.Diagnostics;
 using System.Linq;
 
 namespace Subterran
 {
+	[DebuggerDisplay("{DebuggerDisplay,nq}")]
 	public sealed class Entity
 	{
-
 		public Entity()
 		{
+			Name = "Entity";
+
 			Transform = new Transform();
 			Transform.OwningEntity = this;
 
@@ -21,11 +24,17 @@ namespace Subterran
 			Components.CollectionChanged += Components_CollectionChanged;
 		}
 
+		public string Name { get; set; }
 		public Transform Transform { get; set; }
-
 		public Entity Parent { get; private set; }
 		public ObservableCollection<Entity> Children { get; private set; }
 		public ObservableCollection<EntityComponent> Components { get; private set; }
+		
+		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
+		private string DebuggerDisplay
+		{
+			get { return Name ?? "Anonymous Entity"; }
+		}
 
 		private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
 		{
