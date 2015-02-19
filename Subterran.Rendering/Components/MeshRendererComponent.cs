@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Security.Policy;
+using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using Subterran.Rendering.Vertices;
 
 namespace Subterran.Rendering.Components
 {
-	public class MeshRendererComponent : EntityComponent, IRenderable
+	public class MeshRendererComponent<TVertexType> : EntityComponent, IRenderable
+		where TVertexType : struct 
 	{
 		private int _buffer = -1;
 		private bool _bufferOutdated;
 		private bool _streaming;
-		private ColoredVertex[] _vertices;
+		private TVertexType[] _vertices;
 
 		public Vector3 Offset { get; set; }
 
@@ -29,7 +29,7 @@ namespace Subterran.Rendering.Components
 			}
 		}
 
-		public ColoredVertex[] Vertices
+		public TVertexType[] Vertices
 		{
 			get { return _vertices; }
 			set
@@ -39,7 +39,7 @@ namespace Subterran.Rendering.Components
 			}
 		}
 
-		public Material Material { get; set; }
+		public Material<TVertexType> Material { get; set; }
 
 		public event EventHandler StartedRender = (s, e) => { };
 
@@ -60,7 +60,7 @@ namespace Subterran.Rendering.Components
 			if (Streaming)
 			{
 				// We're rendering it streaming so just send it over
-				renderer.RenderMeshStreaming(ref matrix, Vertices);
+				throw new NotImplementedException();
 			}
 			else
 			{
@@ -78,7 +78,7 @@ namespace Subterran.Rendering.Components
 			}
 
 			// Now that we are sure we have a buffer, render it
-			renderer.RenderMeshBuffer<ColoredVertex>(ref matrix, _buffer, Vertices.Length);
+			Material.RenderBuffer(ref matrix, _buffer, Vertices.Length);
 		}
 
 		private void UpdateBuffer()
@@ -87,12 +87,14 @@ namespace Subterran.Rendering.Components
 			if (_buffer != -1)
 				GL.DeleteBuffer(_buffer);
 
+			var vertexSize = Marshal.SizeOf(typeof (TVertexType));
+
 			// Create a new buffer to store our vertices
 			_buffer = GL.GenBuffer();
 			GL.BindBuffer(BufferTarget.ArrayBuffer, _buffer);
 			GL.BufferData(
 				BufferTarget.ArrayBuffer,
-				new IntPtr(ColoredVertex.SizeInBytes*Vertices.Length),
+				new IntPtr(vertexSize * Vertices.Length),
 				Vertices,
 				BufferUsageHint.StaticDraw);
 

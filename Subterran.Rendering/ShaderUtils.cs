@@ -16,7 +16,7 @@ namespace Subterran.Rendering
 			GL.GetShader(shader, ShaderParameter.CompileStatus, out compileStatus);
 			if (compileStatus != 1)
 			{
-				var message = string.Format(null, "Shader {0} failed to compile!", shader);
+				var message = string.Format("Shader {0} failed to compile!", shader);
 				Trace.TraceWarning(message);
 				throw new ShaderException(
 					message,
@@ -36,7 +36,7 @@ namespace Subterran.Rendering
 			var log = GL.GetProgramInfoLog(program);
 			if (linkStatus != 1)
 			{
-				var message = string.Format(null, "Shader program {0} failed to link!", program);
+				var message = string.Format("Shader program {0} failed to link!", program);
 				Trace.TraceError(message);
 				throw new ProgramException(message, log);
 			}
@@ -61,7 +61,7 @@ namespace Subterran.Rendering
 			if (value != -1)
 				return value;
 
-			var message = string.Format(null, "Shader program {0} does not contain \"{1}\" uniform!", program, name);
+			var message = string.Format("Shader program {0} does not contain \"{1}\" uniform!", program, name);
 			Trace.TraceError(message);
 			throw new ProgramException(message);
 		}

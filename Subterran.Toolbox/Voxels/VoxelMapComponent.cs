@@ -1,17 +1,17 @@
 ﻿using System;
 using Subterran.Rendering.Components;
-using Subterran.Rendering.Vertices;
 
 namespace Subterran.Toolbox.Voxels
 {
-	public class VoxelMapComponent<TVoxelType> : EntityComponent, IInitializable
+	public class VoxelMapComponent<TVoxelType, TVertexType> : EntityComponent, IInitializable
 		where TVoxelType : struct
+		where TVertexType : struct
 	{
 		private bool _meshIsOutdated;
-		private MeshRendererComponent _meshRenderer;
+		private MeshRendererComponent<TVertexType> _meshRenderer;
 		private TVoxelType[,,] _voxels;
 
-		public Func<TVoxelType[,,], ColoredVertex[]> MeshGenerator { get; set; }
+		public Func<TVoxelType[, ,], TVertexType[]> MeshGenerator { get; set; }
 
 		public TVoxelType[,,] Voxels
 		{
@@ -28,7 +28,7 @@ namespace Subterran.Toolbox.Voxels
 		public void Initialize()
 		{
 			_meshIsOutdated = true;
-			_meshRenderer = Entity.RequireComponent<MeshRendererComponent>();
+			_meshRenderer = Entity.RequireComponent<MeshRendererComponent<TVertexType>>();
 			_meshRenderer.StartedRender += StartedRender;
 		}
 

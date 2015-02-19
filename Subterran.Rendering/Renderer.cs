@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 using Subterran.Rendering.Components;
-using Subterran.Rendering.Vertices;
 
 namespace Subterran.Rendering
 {
 	public sealed class Renderer
 	{
 		private readonly Window _targetWindow;
-		private readonly Dictionary<Type, IVertexRenderer> _vertexRenderers = new Dictionary<Type, IVertexRenderer>();
 
 		public Renderer(Window targetWindow)
 		{
@@ -25,19 +22,6 @@ namespace Subterran.Rendering
 			GL.Enable(EnableCap.CullFace);
 			GL.CullFace(CullFaceMode.Back);
 			GL.FrontFace(FrontFaceDirection.Ccw);
-		}
-
-		public void RegisterVertexType<TVertex>(IVertexRenderer<TVertex> renderer)
-		{
-			_vertexRenderers.Add(typeof (TVertex), renderer);
-		}
-
-		private IVertexRenderer<TVertex> RetrieveVertexRenderer<TVertex>()
-		{
-			IVertexRenderer renderer;
-			if (!_vertexRenderers.TryGetValue(typeof (TVertex), out renderer))
-				throw new InvalidOperationException("No vertex renderer has been registered for this vertex type!");
-			return (IVertexRenderer<TVertex>) renderer;
 		}
 
 		public void RenderWorld(Entity world)
@@ -78,18 +62,6 @@ namespace Subterran.Rendering
 					renderable.Component.Render(this, renderable.Matrix*projectionView);
 				}
 			}
-		}
-
-		public void RenderMeshStreaming<TVertex>(ref Matrix4 matrix, TVertex[] vertices)
-		{
-			var renderer = RetrieveVertexRenderer<TVertex>();
-			renderer.RenderMeshStreaming(ref matrix, vertices);
-		}
-
-		public void RenderMeshBuffer<TVertex>(ref Matrix4 matrix, int buffer, int length)
-		{
-			var renderer = RetrieveVertexRenderer<TVertex>();
-			renderer.RenderMeshBuffer(ref matrix, buffer, length);
 		}
 
 		private static RenderData CollapseEntityTree(Entity entity)

@@ -1,5 +1,5 @@
 ﻿using Subterran.Rendering;
-using Subterran.Rendering.Vertices;
+using Subterran.Rendering.Materials;
 
 namespace Subterran.Toolbox.Voxels
 {

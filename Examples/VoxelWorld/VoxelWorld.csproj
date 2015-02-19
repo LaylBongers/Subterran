@@ -64,6 +64,7 @@
   <ItemGroup>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Test.pyxel" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Subterran.Rendering\Subterran.Rendering.csproj">
@@ -78,6 +79,11 @@
       <Project>{ca6493f3-a13c-4dff-b31d-e2d96148211f}</Project>
       <Name>Subterran</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Test.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

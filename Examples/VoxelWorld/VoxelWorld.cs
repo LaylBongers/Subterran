@@ -2,6 +2,7 @@
 using Subterran;
 using Subterran.Rendering;
 using Subterran.Rendering.Components;
+using Subterran.Rendering.Materials;
 using Subterran.Toolbox;
 using Subterran.Toolbox.Components;
 using Subterran.Toolbox.SimplePhysics;
@@ -15,7 +16,8 @@ namespace VoxelWorld
 		{
 			var game = new BasicSubterranGame();
 
-			var fullbrightColor = new Material();
+			var fullbrightColor = BasicMaterials.CreateFullbrightColor();
+			//var fullbrightTexture = BasicMaterials.CreateFullbrightTexture("./Test.png");
 
 			game.World = new Entity
 			{
@@ -24,7 +26,7 @@ namespace VoxelWorld
 				{
 					CreateScriptsEntity(game),
 					//BasicEntities.CreateNoclipCameraEntity(game.Window),
-					CreatePlayerEntity(game.Window),
+					CreatePlayerEntity(game.Window, fullbrightColor),
 
 					// Row #0
 					//CreateVoxelWorldEntity(new Vector3(100, 0, 100)),
@@ -77,7 +79,7 @@ namespace VoxelWorld
 			};
 		}
 
-		private static Entity CreatePlayerEntity(Window window)
+		private static Entity CreatePlayerEntity(Window window, Material<ColoredVertex> material)
 		{
 			var collisionReferenceEntity = new Entity
 			{
@@ -88,7 +90,11 @@ namespace VoxelWorld
 				Components =
 				{
 					BasicComponents.CreateTestBlockComponent(),
-					new MeshRendererComponent {Offset = new Vector3(-0.5f, 0, -0.5f)}
+					new MeshRendererComponent<ColoredVertex>
+					{
+						Material = material,
+						Offset = new Vector3(-0.5f, 0, -0.5f)
+					}
 				}
 			};
 
@@ -144,7 +150,7 @@ namespace VoxelWorld
 			};
 		}
 
-		private static Entity CreateVoxelWorldEntity(Vector3 position, Material material)
+		private static Entity CreateVoxelWorldEntity(Vector3 position, Material<ColoredVertex> material)
 		{
 			var voxels = MapGenerator.Generate(200, 200, position.Xz*2);
 
@@ -158,16 +164,16 @@ namespace VoxelWorld
 				},
 				Components =
 				{
-					new MeshRendererComponent
+					new MeshRendererComponent<ColoredVertex>
 					{
 						Material = material
 					},
-					new VoxelMapComponent<ColoredVoxel>
+					new VoxelMapComponent<ColoredVoxel, ColoredVertex>
 					{
 						Voxels = voxels,
 						MeshGenerator = ColoredVoxelMesher.GenerateCubes
 					},
-					new VoxelMapFixedbodyComponent<ColoredVoxel>
+					new VoxelMapFixedbodyComponent<ColoredVoxel, ColoredVertex>
 					{
 						IsSolidChecker = v => v.IsSolid
 					}

@@ -4,7 +4,6 @@ using System.Drawing;
 using OpenTK.Input;
 using Subterran.Input;
 using Subterran.Rendering;
-using Subterran.Rendering.Vertices;
 
 namespace Subterran.Toolbox
 {
@@ -21,8 +20,6 @@ namespace Subterran.Toolbox
 			// Set up our engine's modules
 			Input = new InputManager();
 			Renderer = new Renderer(Window);
-			Renderer.RegisterVertexType(new ColoredVertexRenderer());
-			Renderer.RegisterVertexType(new TexturedVertexRenderer());
 
 			// Set up the game world
 			World = new Entity();

@@ -6,17 +6,18 @@ using Subterran.Toolbox.SimplePhysics;
 
 namespace Subterran.Toolbox.Voxels
 {
-	public class VoxelMapFixedbodyComponent<TVoxelType> : EntityComponent, IInitializable, ISmartFixedbodySource
+	public class VoxelMapFixedbodyComponent<TVoxelType, TVertexType> : EntityComponent, IInitializable, ISmartFixedbodySource
 		where TVoxelType : struct
+		where TVertexType : struct 
 	{
-		private MeshRendererComponent _renderer;
-		private VoxelMapComponent<TVoxelType> _voxelMap;
+		private MeshRendererComponent<TVertexType> _renderer;
+		private VoxelMapComponent<TVoxelType, TVertexType> _voxelMap;
 		public Func<TVoxelType, bool> IsSolidChecker { get; set; }
 
 		public void Initialize()
 		{
-			_voxelMap = Entity.RequireComponent<VoxelMapComponent<TVoxelType>>();
-			_renderer = Entity.RequireComponent<MeshRendererComponent>();
+			_voxelMap = Entity.RequireComponent<VoxelMapComponent<TVoxelType, TVertexType>>();
+			_renderer = Entity.RequireComponent<MeshRendererComponent<TVertexType>>();
 		}
 
 		public IEnumerable<BoundingBox> GetBoundingBoxesWithin(BoundingBox collisionArea)
