@@ -10,8 +10,7 @@ namespace Subterran.Toolbox.Voxels
 		private bool _meshIsOutdated;
 		private MeshRendererComponent<TVertexType> _meshRenderer;
 		private TVoxelType[,,] _voxels;
-
-		public Func<TVoxelType[, ,], TVertexType[]> MeshGenerator { get; set; }
+		public Func<TVoxelType[,,], TVertexType[]> MeshGenerator { get; set; }
 
 		public TVoxelType[,,] Voxels
 		{
@@ -23,8 +22,6 @@ namespace Subterran.Toolbox.Voxels
 			}
 		}
 
-		public event EventHandler StartRender = (s, e) => { };
-
 		public void Initialize()
 		{
 			_meshIsOutdated = true;
@@ -32,12 +29,16 @@ namespace Subterran.Toolbox.Voxels
 			_meshRenderer.StartedRender += StartedRender;
 		}
 
+		public event EventHandler StartRender = (s, e) => { };
+
 		private void StartedRender(object sender, EventArgs e)
 		{
 			StartRender(this, EventArgs.Empty);
 
+			if (Voxels == null)
+				throw new InvalidOperationException("VoxelMapRendererComponent requires Voxels to be set!");
 			if (MeshGenerator == null)
-				throw new InvalidOperationException("This component requires MeshGenerator to be set!");
+				throw new InvalidOperationException("VoxelMapRendererComponent requires MeshGenerator to be set!");
 
 			// If the mesh is outdated, we need to (re)generate it
 			if (_meshIsOutdated)

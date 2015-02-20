@@ -16,6 +16,8 @@ namespace Subterran.Toolbox.Voxels
 		{
 			if (Entity.Transform.Rotation != Vector3.Zero)
 				throw new InvalidOperationException("VoxelMapFixedbodyComponent does not support rotation!");
+			if (Voxels == null)
+				throw new InvalidOperationException("VoxelMapFixedbodyComponent requires Voxels to be set!");
 
 			var voxels = Voxels;
 			var width = voxels.GetLength(0);
