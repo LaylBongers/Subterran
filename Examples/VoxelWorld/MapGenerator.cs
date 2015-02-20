@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Drawing;
 using OpenTK;
 using SharpNoise;
 using SharpNoise.Modules;
@@ -12,14 +11,15 @@ namespace VoxelWorld
 	{
 		private const int Height = 50;
 		private const int HeightOffset = 10;
-		private static readonly Color Grass = Color.Green;
-		private static readonly Color Dirt = Color.SaddleBrown;
-		private static readonly Color Stone = Color.Gray;
-		private static readonly Color Bedrock = Color.DimGray;
+		private static readonly ITexturedVoxelType StoneType = new StoneVoxelType();
+		private static readonly ITexturedVoxelType GrassType = new GrassVoxelType();
+		private static readonly ITexturedVoxelType DirtType = new DirtVoxelType();
+		private static readonly ITexturedVoxelType DiamondType = new DiamondVoxelType();
+		private static readonly ITexturedVoxelType BedrockType = new BedrockVoxelType();
 
-		public static ColoredVoxel[,,] Generate(int width, int depth, Vector2 perlinOffset)
+		public static TexturedVoxel[,,] Generate(int width, int depth, Vector2 perlinOffset)
 		{
-			var map = new ColoredVoxel[width, Height, depth];
+			var map = new TexturedVoxel[width, Height, depth];
 
 			for (var x = 0; x < width; x++)
 			{
@@ -32,7 +32,7 @@ namespace VoxelWorld
 			return map;
 		}
 
-		private static void GeneratePillar(ColoredVoxel[,,] map, int x, int z, Vector2 perlinOffset)
+		private static void GeneratePillar(TexturedVoxel[,,] map, int x, int z, Vector2 perlinOffset)
 		{
 			// We want a range of just about 0-1, this won't be always that but usually it is
 			var rangedNoise = HeightNoise.GetValue(x + perlinOffset.X, 0.5, z + perlinOffset.Y)*0.5 + 0.5;
@@ -47,13 +47,13 @@ namespace VoxelWorld
 			}
 		}
 
-		private static ColoredVoxel GenerateBlock(int x, int y, int z, int pillarHeight, int dirtHeight, Vector2 perlinOffset)
+		private static TexturedVoxel GenerateBlock(int x, int y, int z, int pillarHeight, int dirtHeight, Vector2 perlinOffset)
 		{
-			var voxel = new ColoredVoxel {IsSolid = true};
+			var voxel = new TexturedVoxel();
 
 			if (IsBedrock(y))
 			{
-				voxel.Color = DimForHeight(StMath.RandomizeColor(Random, 8, Bedrock), y);
+				voxel.Type = BedrockType;
 				return voxel;
 			}
 
@@ -62,18 +62,12 @@ namespace VoxelWorld
 
 			if (isCave)
 			{
-				voxel.IsSolid = false;
 				return voxel;
 			}
 
-			voxel.Color = DimForHeight(StMath.RandomizeColor(Random, 8, GetColorFor(y, pillarHeight, dirtHeight)), y);
+			voxel.Type = GetTypeFor(y, pillarHeight, dirtHeight);
 
 			return voxel;
-		}
-
-		private static Vector3 DimForHeight(Vector3 color, int y)
-		{
-			return color*(((float) y/Height)/2f + 0.5f);
 		}
 
 		private static bool IsBedrock(int y)
@@ -91,18 +85,18 @@ namespace VoxelWorld
 			return false;
 		}
 
-		private static Color GetColorFor(int y, int height, int dirtHeight)
+		private static ITexturedVoxelType GetTypeFor(int y, int height, int dirtHeight)
 		{
 			// Grass & Dirt layer
 			if (y == height - 1)
-				return Grass;
+				return GrassType;
 			if (y >= height - (dirtHeight + 1))
-				return Dirt;
+				return DirtType;
 
-			// Everything else is stone with a random chance of a gem (random color) block
+			// Everything else is stone with a random chance of a gem block
 			return Random.Next(0, 50) == 1
-				? Random.NextIntColor()
-				: Stone;
+				? DiamondType
+				: StoneType;
 		}
 
 		private static readonly Random Random = new Random();

@@ -7,31 +7,29 @@ namespace Subterran.Toolbox.Voxels
 {
 	public static class TexturedVoxelMesher
 	{
-		private static readonly List<TexturedVertex> WorkingList = new List<TexturedVertex>();
-
-		public static TexturedVertex[] GenerateCubes(ColoredVoxel[,,] voxels)
+		public static TexturedVertex[] GenerateCubes(TexturedVoxel[, ,] voxels)
 		{
-			return VoxelMesher.GenerateCubes(voxels, WorkingList,
+			return VoxelMesher.GenerateCubes(voxels, new List<TexturedVertex>(), 
 				(voxel, vertex) => new TexturedVertex
 				{
 					Position = vertex.Position,
-					TexCoord = GetTexCoordForCorner(vertex.Corner)
+					TexCoord = GetTexCoordForCorner(vertex.Corner, voxel.Type.GetTexture(vertex.Side))
 				},
-				voxel => voxel.IsSolid);
+				voxel => voxel.Type != null);
 		}
 
-		private static Vector2 GetTexCoordForCorner(VoxelMesher.QuadCorner corner)
+		private static Vector2 GetTexCoordForCorner(VoxelSideCorner corner, TextureLocation location)
 		{
 			switch (corner)
 			{
-				case VoxelMesher.QuadCorner.TopLeft:
-					return new Vector2(0, 0);
-				case VoxelMesher.QuadCorner.TopRight:
-					return new Vector2(1, 0);
-				case VoxelMesher.QuadCorner.BottomLeft:
-					return new Vector2(0, 1);
-				case VoxelMesher.QuadCorner.BottomRight:
-					return new Vector2(1, 1);
+				case VoxelSideCorner.TopLeft:
+					return location.Start;
+				case VoxelSideCorner.TopRight:
+					return new Vector2(location.End.X, location.Start.Y);
+				case VoxelSideCorner.BottomLeft:
+					return new Vector2(location.Start.X, location.End.Y);
+				case VoxelSideCorner.BottomRight:
+					return location.End;
 			}
 
 			throw new InvalidOperationException("Unknown quad corner type!");

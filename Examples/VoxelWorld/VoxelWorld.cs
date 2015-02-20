@@ -1,5 +1,4 @@
-﻿using System.Runtime.Remoting.Messaging;
-using OpenTK;
+﻿using OpenTK;
 using Subterran;
 using Subterran.Rendering;
 using Subterran.Rendering.Components;
@@ -91,7 +90,7 @@ namespace VoxelWorld
 							new VoxelMapComponent<ColoredVoxel, TexturedVertex>
 							{
 								Voxels = voxels,
-								MeshGenerator = TexturedVoxelMesher.GenerateCubes
+								MeshGenerator = ColoredVoxelMesher.GenerateCubesWithTexture
 							},
 							new MeshRendererComponent<TexturedVertex>
 							{
@@ -161,7 +160,7 @@ namespace VoxelWorld
 				Name = "Player",
 				Transform =
 				{
-					Position = new Vector3(0, 35, 0/*-20*/)
+					Position = new Vector3(0, 35, -20)
 				},
 				Children = {cameraEntity, collisionReferenceEntity},
 				Components =
@@ -214,14 +213,14 @@ namespace VoxelWorld
 					{
 						Material = material
 					},
-					new VoxelMapComponent<ColoredVoxel, TexturedVertex>
+					new VoxelMapComponent<TexturedVoxel, TexturedVertex>
 					{
 						Voxels = voxels,
 						MeshGenerator = TexturedVoxelMesher.GenerateCubes
 					},
-					new VoxelMapFixedbodyComponent<ColoredVoxel, TexturedVertex>
+					new VoxelMapFixedbodyComponent<TexturedVoxel, TexturedVertex>
 					{
-						IsSolidChecker = v => v.IsSolid
+						IsSolidChecker = v => v.Type != null
 					}
 				}
 			};

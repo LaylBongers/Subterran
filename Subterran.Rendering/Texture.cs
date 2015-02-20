@@ -31,6 +31,7 @@ namespace Subterran.Rendering
 				TextureParameterName.TextureMinFilter, (int)(TextureMinFilter.NearestMipmapLinear));
 			GL.TexParameter(TextureTarget.Texture2D,
 				TextureParameterName.TextureMagFilter, (int)(TextureMagFilter.Nearest));
+			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMaxLevel, 4);
 
 			// Load the texture
 			GL.TexImage2D(

@@ -7,25 +7,17 @@ namespace Subterran.Toolbox.Voxels
 {
 	public static class VoxelMesher
 	{
-		public enum QuadCorner
+		private static readonly VoxelVertex[] Square =
 		{
-			TopLeft,
-			TopRight,
-			BottomLeft,
-			BottomRight
-		}
-
-		private static readonly Vertex[] Square =
-		{
-			new Vertex(new Vector3(0, 1, 0), QuadCorner.TopLeft),
-			new Vertex(new Vector3(0, 0, 0), QuadCorner.BottomLeft),
-			new Vertex(new Vector3(1, 0, 0), QuadCorner.BottomRight),
-			new Vertex(new Vector3(0, 1, 0), QuadCorner.TopLeft),
-			new Vertex(new Vector3(1, 0, 0), QuadCorner.BottomRight),
-			new Vertex(new Vector3(1, 1, 0), QuadCorner.TopRight)
+			new VoxelVertex(new Vector3(0, 1, 0), VoxelSideCorner.TopLeft),
+			new VoxelVertex(new Vector3(0, 0, 0), VoxelSideCorner.BottomLeft),
+			new VoxelVertex(new Vector3(1, 0, 0), VoxelSideCorner.BottomRight),
+			new VoxelVertex(new Vector3(0, 1, 0), VoxelSideCorner.TopLeft),
+			new VoxelVertex(new Vector3(1, 0, 0), VoxelSideCorner.BottomRight),
+			new VoxelVertex(new Vector3(1, 1, 0), VoxelSideCorner.TopRight)
 		};
 
-		private static Vertex[][] _lookupTable;
+		private static VoxelVertex[][] _lookupTable;
 
 		/// <summary>
 		///     Generates a mesh from a 3D array of voxels.
@@ -38,7 +30,7 @@ namespace Subterran.Toolbox.Voxels
 		/// <returns>The array of vertices making up the mesh.</returns>
 		public static TVertexType[] GenerateCubes<TVoxelType, TVertexType>(TVoxelType[,,] voxels,
 			List<TVertexType> workingList,
-			Func<TVoxelType, Vertex, TVertexType> vertexCreator, Func<TVoxelType, bool> solidChecker)
+			Func<TVoxelType, VoxelVertex, TVertexType> vertexCreator, Func<TVoxelType, bool> solidChecker)
 			where TVertexType : struct
 		{
 			var width = voxels.GetLength(0);
@@ -87,7 +79,7 @@ namespace Subterran.Toolbox.Voxels
 			return finalArray;
 		}
 
-		private static Vertex[] LookupVoxelMesh(
+		private static VoxelVertex[] LookupVoxelMesh(
 			bool left, bool right,
 			bool bottom, bool top,
 			bool back, bool front)
@@ -116,9 +108,9 @@ namespace Subterran.Toolbox.Voxels
 			return _lookupTable[(int) sides];
 		}
 
-		private static Vertex[][] GenerateLookupTable()
+		private static VoxelVertex[][] GenerateLookupTable()
 		{
-			var table = new Vertex[(int) Sides.Max][];
+			var table = new VoxelVertex[(int) Sides.Max][];
 			for (Sides key = 0; key < Sides.Max; key++)
 			{
 				table[(int) key] = GenerateVoxelMesh(key).ToArray();
@@ -126,23 +118,25 @@ namespace Subterran.Toolbox.Voxels
 			return table;
 		}
 
-		private static IEnumerable<Vertex> GenerateVoxelMesh(Sides sides)
+		private static IEnumerable<VoxelVertex> GenerateVoxelMesh(Sides sides)
 		{
-			var vertices = new List<Vertex>();
+			var vertices = new List<VoxelVertex>();
 
 			// X axis
 			if (sides.HasFlag(Sides.Left))
 			{
 				vertices.AddRange(GenerateVoxelSide(
 					new Vector3(0, 0, 0),
-					new Vector3(0, -0.25f*StMath.Tau, 0)));
+					new Vector3(0, -0.25f*StMath.Tau, 0),
+					VoxelSide.West));
 			}
 
 			if (sides.HasFlag(Sides.Right))
 			{
 				vertices.AddRange(GenerateVoxelSide(
 					new Vector3(1, 0, 1),
-					new Vector3(0, 0.25f*StMath.Tau, 0)));
+					new Vector3(0, 0.25f * StMath.Tau, 0),
+					VoxelSide.East));
 			}
 
 			// Y axis
@@ -150,14 +144,16 @@ namespace Subterran.Toolbox.Voxels
 			{
 				vertices.AddRange(GenerateVoxelSide(
 					new Vector3(0, 0, 0),
-					new Vector3(0.25f*StMath.Tau, 0, 0)));
+					new Vector3(0.25f * StMath.Tau, 0, 0),
+					VoxelSide.Bottom));
 			}
 
 			if (sides.HasFlag(Sides.Top))
 			{
 				vertices.AddRange(GenerateVoxelSide(
 					new Vector3(0, 1, 1),
-					new Vector3(-0.25f*StMath.Tau, 0, 0)));
+					new Vector3(-0.25f * StMath.Tau, 0, 0),
+					VoxelSide.Top));
 			}
 
 			// Z axis
@@ -165,27 +161,29 @@ namespace Subterran.Toolbox.Voxels
 			{
 				vertices.AddRange(GenerateVoxelSide(
 					new Vector3(1, 0, 0),
-					new Vector3(0, 0.5f*StMath.Tau, 0)));
+					new Vector3(0, 0.5f * StMath.Tau, 0),
+					VoxelSide.South));
 			}
 
 			if (sides.HasFlag(Sides.Front))
 			{
 				vertices.AddRange(GenerateVoxelSide(
 					new Vector3(0, 0, 1),
-					new Vector3(0, 0, 0)));
+					new Vector3(0, 0, 0),
+					VoxelSide.North));
 			}
 
 			return vertices;
 		}
 
-		private static IEnumerable<Vertex> GenerateVoxelSide(Vector3 offset, Vector3 rotation)
+		private static IEnumerable<VoxelVertex> GenerateVoxelSide(Vector3 offset, Vector3 rotation, VoxelSide side)
 		{
 			var sideMatrix =
 				Matrix4.CreateRotationX(rotation.X)*
 				Matrix4.CreateRotationY(rotation.Y)*
 				Matrix4.CreateRotationZ(rotation.Z)*
 				Matrix4.CreateTranslation(offset);
-			return Square.Select(v => v.Transform(sideMatrix));
+			return Square.Select(v => v.Transform(sideMatrix, side));
 		}
 
 		[Flags]
@@ -198,37 +196,6 @@ namespace Subterran.Toolbox.Voxels
 			Back = 0x10,
 			Front = 0x20,
 			Max = 0x40
-		}
-
-		public struct Vertex
-		{
-			public Vertex(Vector3 position, QuadCorner corner)
-				: this()
-			{
-				Position = position;
-				Corner = corner;
-			}
-
-			public Vector3 Position { get; set; }
-			public QuadCorner Corner { get; set; }
-
-			public Vertex Offset(Vector3 offset)
-			{
-				return new Vertex
-				{
-					Position = Position + offset,
-					Corner = Corner
-				};
-			}
-
-			public Vertex Transform(Matrix4 matrix)
-			{
-				return new Vertex
-				{
-					Position = Vector3.Transform(Position, matrix),
-					Corner = Corner
-				};
-			}
 		}
 	}
 }

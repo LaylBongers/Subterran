@@ -65,10 +65,15 @@
     <Compile Include="SimplePhysics\RigidbodyComponent.cs" />
     <Compile Include="SimplePhysics\SensorComponent.cs" />
     <Compile Include="Voxels\ColoredVoxelMesher.cs" />
+    <Compile Include="Voxels\ITexturedVoxelType.cs" />
+    <Compile Include="Voxels\TexturedVoxel.cs" />
     <Compile Include="Voxels\VoxelMesher.cs" />
     <Compile Include="Voxels\VoxelMapComponent.cs" />
     <Compile Include="Voxels\ColoredVoxel.cs" />
     <Compile Include="Voxels\VoxelMapFixedbodyComponent.cs" />
+    <Compile Include="Voxels\VoxelSide.cs" />
+    <Compile Include="Voxels\VoxelSideCorner.cs" />
+    <Compile Include="Voxels\VoxelVertex.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Subterran.Input\Subterran.Input.csproj">
