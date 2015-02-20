@@ -58,6 +58,7 @@
     <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="StMath.cs" />
     <Compile Include="Transform.cs" />
+    <Compile Include="Vector3i.cs" />
     <Compile Include="VectorExtensions.cs" />
     <Compile Include="Window.cs" />
   </ItemGroup>

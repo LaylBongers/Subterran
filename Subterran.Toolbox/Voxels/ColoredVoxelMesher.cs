@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenTK;
-using Subterran.Rendering.Materials;
+using Subterran.Toolbox.Materials;
 
 namespace Subterran.Toolbox.Voxels
 {

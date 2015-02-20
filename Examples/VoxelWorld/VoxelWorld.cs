@@ -2,9 +2,9 @@
 using Subterran;
 using Subterran.Rendering;
 using Subterran.Rendering.Components;
-using Subterran.Rendering.Materials;
 using Subterran.Toolbox;
 using Subterran.Toolbox.Components;
+using Subterran.Toolbox.Materials;
 using Subterran.Toolbox.SimplePhysics;
 using Subterran.Toolbox.Voxels;
 
@@ -87,7 +87,7 @@ namespace VoxelWorld
 						},
 						Components =
 						{
-							new VoxelMapComponent<ColoredVoxel, TexturedVertex>
+							new VoxelMapRendererComponent<ColoredVoxel, TexturedVertex>
 							{
 								Voxels = voxels,
 								MeshGenerator = ColoredVoxelMesher.GenerateCubesWithTexture
@@ -213,13 +213,14 @@ namespace VoxelWorld
 					{
 						Material = material
 					},
-					new VoxelMapComponent<TexturedVoxel, TexturedVertex>
+					new VoxelMapRendererComponent<TexturedVoxel, TexturedVertex>
 					{
 						Voxels = voxels,
 						MeshGenerator = TexturedVoxelMesher.GenerateCubes
 					},
-					new VoxelMapFixedbodyComponent<TexturedVoxel, TexturedVertex>
+					new VoxelMapFixedbodyComponent<TexturedVoxel>
 					{
+						Voxels = voxels,
 						IsSolidChecker = v => v.Type != null
 					}
 				}

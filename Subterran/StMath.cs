@@ -26,6 +26,30 @@ namespace Subterran
 			return value;
 		}
 
+		public static Vector3i Floor(Vector3 value)
+		{
+			return new Vector3i(
+				(int) Math.Floor(value.X),
+				(int) Math.Floor(value.Y),
+				(int) Math.Floor(value.Z));
+		}
+
+		public static Vector3i Ceiling(Vector3 value)
+		{
+			return new Vector3i(
+				(int) Math.Ceiling(value.X),
+				(int) Math.Ceiling(value.Y),
+				(int) Math.Ceiling(value.Z));
+		}
+
+		public static Vector3i Range(Vector3i value, Vector3i min, Vector3i max)
+		{
+			return new Vector3i(
+				Range(value.X, min.X, max.X),
+				Range(value.Y, min.Y, max.Y),
+				Range(value.Z, min.Z, max.Z));
+		}
+
 		public static float NormalizeColor(int value)
 		{
 			return (float) value/byte.MaxValue;
@@ -52,7 +76,7 @@ namespace Subterran
 
 		public static int Round(double value)
 		{
-			var retVal = (int)value;
+			var retVal = (int) value;
 
 			if (value%1 >= 0.5)
 				retVal++;

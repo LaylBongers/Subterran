@@ -1,12 +1,12 @@
 ﻿using System.Runtime.InteropServices;
 using OpenTK;
 
-namespace Subterran.Rendering.Materials
+namespace Subterran.Toolbox.Materials
 {
 	[StructLayout(LayoutKind.Sequential, Pack = 1)]
-	public struct TexturedVertex
+	public struct ColoredVertex
 	{
 		public Vector3 Position;
-		public Vector2 TexCoord;
+		public Vector3 Color;
 	}
 }

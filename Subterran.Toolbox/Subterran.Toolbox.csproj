@@ -50,6 +50,10 @@
     <Compile Include="BasicShaders.cs" />
     <Compile Include="BasicSubterranGame.cs" />
     <Compile Include="Components\FpsCounterComponent.cs" />
+    <Compile Include="Materials\ColoredMaterialData.cs" />
+    <Compile Include="Materials\ColoredVertex.cs" />
+    <Compile Include="Materials\TexturedMaterialData.cs" />
+    <Compile Include="Materials\TexturedVertex.cs" />
     <Compile Include="IUpdatable.cs" />
     <Compile Include="Components\LookAtComponent.cs" />
     <Compile Include="PerformanceTracer.cs" />
@@ -68,7 +72,7 @@
     <Compile Include="Voxels\ITexturedVoxelType.cs" />
     <Compile Include="Voxels\TexturedVoxel.cs" />
     <Compile Include="Voxels\VoxelMesher.cs" />
-    <Compile Include="Voxels\VoxelMapComponent.cs" />
+    <Compile Include="Voxels\VoxelMapRendererComponent.cs" />
     <Compile Include="Voxels\ColoredVoxel.cs" />
     <Compile Include="Voxels\VoxelMapFixedbodyComponent.cs" />
     <Compile Include="Voxels\VoxelSide.cs" />

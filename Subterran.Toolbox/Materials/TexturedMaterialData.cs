@@ -1,4 +1,6 @@
-﻿namespace Subterran.Rendering.Materials
+﻿using Subterran.Rendering;
+
+namespace Subterran.Toolbox.Materials
 {
 	public class TexturedMaterialData
 	{

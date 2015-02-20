@@ -3,7 +3,7 @@ using Subterran.Rendering.Components;
 
 namespace Subterran.Toolbox.Voxels
 {
-	public class VoxelMapComponent<TVoxelType, TVertexType> : EntityComponent, IInitializable
+	public class VoxelMapRendererComponent<TVoxelType, TVertexType> : EntityComponent, IInitializable
 		where TVoxelType : struct
 		where TVertexType : struct
 	{

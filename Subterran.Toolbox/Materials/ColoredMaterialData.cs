@@ -1,4 +1,4 @@
-﻿namespace Subterran.Rendering.Materials
+﻿namespace Subterran.Toolbox.Materials
 {
 	public class ColoredMaterialData
 	{

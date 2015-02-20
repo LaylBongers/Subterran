@@ -1,63 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
 using OpenTK;
-using Subterran.Rendering.Components;
 using Subterran.Toolbox.SimplePhysics;
 
 namespace Subterran.Toolbox.Voxels
 {
-	public class VoxelMapFixedbodyComponent<TVoxelType, TVertexType> : EntityComponent, IInitializable, ISmartFixedbodySource
+	public class VoxelMapFixedbodyComponent<TVoxelType> : EntityComponent, ISmartFixedbodySource
 		where TVoxelType : struct
-		where TVertexType : struct 
 	{
-		private MeshRendererComponent<TVertexType> _renderer;
-		private VoxelMapComponent<TVoxelType, TVertexType> _voxelMap;
 		public Func<TVoxelType, bool> IsSolidChecker { get; set; }
-
-		public void Initialize()
-		{
-			_voxelMap = Entity.RequireComponent<VoxelMapComponent<TVoxelType, TVertexType>>();
-			_renderer = Entity.RequireComponent<MeshRendererComponent<TVertexType>>();
-		}
+		public Vector3 Offset { get; set; }
+		public TVoxelType[,,] Voxels { get; set; }
 
 		public IEnumerable<BoundingBox> GetBoundingBoxesWithin(BoundingBox collisionArea)
 		{
 			if (Entity.Transform.Rotation != Vector3.Zero)
 				throw new InvalidOperationException("VoxelMapFixedbodyComponent does not support rotation!");
 
-			var voxels = _voxelMap.Voxels;
+			var voxels = Voxels;
 			var width = voxels.GetLength(0);
 			var height = voxels.GetLength(1);
 			var depth = voxels.GetLength(2);
+			var size = new Vector3i(width, height, depth);
 
 			var position = Entity.Transform.Position;
 			var scale = Entity.Transform.Scale;
 			var inverseScale = Entity.Transform.InverseScale;
 			var voxelSize = Vector3.One*scale;
 			// Full offset from origin to voxel axes origin
-			var axisOffset = position + (_renderer.Offset*scale);
-
-			// Get the locations the target falls within in the voxel map
-			var bbStart = (collisionArea.Start - axisOffset)*inverseScale;
-			var bbEnd = (collisionArea.End - axisOffset)*inverseScale;
+			var axisOffset = position + (Offset*scale);
 
 			// Sometimes a Math.Floor results in 4.999 instead of 5, compensate for this.
 			// This will in many situations cause too many blocks to be selected,
 			// but the alternative of blocks not being selected is worse.
-			const float floatErrorCompensation = 0.001f;
-			var bbXstart = StMath.Range((int) (Math.Floor(bbStart.X) - floatErrorCompensation), 0, width);
-			var bbXend = StMath.Range((int) (Math.Ceiling(bbEnd.X) + floatErrorCompensation), 0, width);
-			var bbYstart = StMath.Range((int) (Math.Floor(bbStart.Y) - floatErrorCompensation), 0, height);
-			var bbYend = StMath.Range((int) (Math.Ceiling(bbEnd.Y) + floatErrorCompensation), 0, height);
-			var bbZstart = StMath.Range((int) (Math.Floor(bbStart.Z) - floatErrorCompensation), 0, depth);
-			var bbZend = StMath.Range((int) (Math.Ceiling(bbEnd.Z) + floatErrorCompensation), 0, depth);
+			var floatErrorCompensation = new Vector3(0.001f);
+
+			// Get the locations the target falls within in the voxel map
+			var bbStart = StMath.Range(
+				StMath.Floor((collisionArea.Start - axisOffset)*inverseScale - floatErrorCompensation),
+				new Vector3i(0), size);
+			var bbEnd = StMath.Range(
+				StMath.Ceiling((collisionArea.End - axisOffset)*inverseScale + floatErrorCompensation),
+				new Vector3i(0), size);
 
 			// Go through all the voxels that fall within that area
-			for (var x = bbXstart; x < bbXend; x++)
+			for (var x = bbStart.X; x < bbEnd.X; x++)
 			{
-				for (var y = bbYstart; y < bbYend; y++)
+				for (var y = bbStart.Y; y < bbEnd.Y; y++)
 				{
-					for (var z = bbZstart; z < bbZend; z++)
+					for (var z = bbStart.Z; z < bbEnd.Z; z++)
 					{
 						if (!IsSolidChecker(voxels[x, y, z]))
 							continue;

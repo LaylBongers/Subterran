@@ -1,7 +1,7 @@
 ﻿using Subterran.Rendering;
 using Subterran.Rendering.Components;
-using Subterran.Rendering.Materials;
 using Subterran.Toolbox.Components;
+using Subterran.Toolbox.Materials;
 
 namespace Subterran.Toolbox
 {

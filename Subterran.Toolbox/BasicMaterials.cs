@@ -1,5 +1,5 @@
 ﻿using Subterran.Rendering;
-using Subterran.Rendering.Materials;
+using Subterran.Toolbox.Materials;
 
 namespace Subterran.Toolbox
 {
