@@ -10,6 +10,8 @@ namespace Subterran
 	[DebuggerDisplay("{DebuggerDisplay,nq}")]
 	public sealed class Entity
 	{
+		private Dictionary<Type, object> _getComponentsCache = new Dictionary<Type, object>();
+
 		public Entity()
 		{
 			Name = "Entity";
@@ -44,6 +46,9 @@ namespace Subterran
 
 		private void Components_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
 		{
+			// Invalidate the cache
+			_getComponentsCache.Clear();
+
 			StCollection.ExecuteForAdded<EntityComponent>(args, i => i.UpdateEntityBinding(this));
 			StCollection.ExecuteForRemoved<EntityComponent>(args, i => i.UpdateEntityBinding(this));
 		}
@@ -57,14 +62,20 @@ namespace Subterran
 		public IEnumerable<T> GetComponents<T>()
 			where T : class
 		{
-			for (var i = 0; i < Components.Count; i++)
+			var type = typeof (T);
+
+			// Try to retrieve from the cache
+			object cachedComponents;
+			if (_getComponentsCache.TryGetValue(type, out cachedComponents))
 			{
-				var tComponent = Components[i] as T;
-				if (tComponent != null)
-					yield return tComponent;
+				return (T[])cachedComponents;
 			}
 
-			//return Components.OfType<T>();
+			// We couldn't retrieve
+			var components = Components.OfType<T>().ToArray();
+			_getComponentsCache.Add(type, components);
+
+			return components;
 		}
 
 		public T RequireComponent<T>()

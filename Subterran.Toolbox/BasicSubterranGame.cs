@@ -49,7 +49,7 @@ namespace Subterran.Toolbox
 			return new Collection<PerformanceTracer>
 			{
 				BasicPerformanceTracers.CreateLoopSlownessTracer(_loopManager),
-				BasicPerformanceTracers.CreateLoopSkippingTracer(_loopManager)
+				BasicPerformanceTracers.CreateLoopSkippingTracer(_loopManager),
 				// This is commented out because ironically it's causing GC issues, un-comment if needed
 				//BasicPerformanceTracers.CreateGcTimeTracer()
 			};
@@ -67,6 +67,12 @@ namespace Subterran.Toolbox
 
 		public void Run()
 		{
+			// Force a full GC collect to avoid lingering stuff causing problems
+			GC.Collect();
+			GC.WaitForPendingFinalizers();
+			GC.WaitForFullGCComplete();
+			GC.Collect();
+
 			_loopManager.Run();
 		}
 
