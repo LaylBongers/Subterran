@@ -2,7 +2,7 @@
 using OpenTK;
 using Subterran.Toolbox.Voxels;
 
-namespace VoxelWorld
+namespace VoxelWorld.VoxelTypes
 {
 	internal class GrassVoxelType : ITexturedVoxelType
 	{

@@ -75,6 +75,7 @@
     <Compile Include="Voxels\VoxelMapRendererComponent.cs" />
     <Compile Include="Voxels\ColoredVoxel.cs" />
     <Compile Include="Voxels\VoxelMapFixedbodyComponent.cs" />
+    <Compile Include="Voxels\VoxelMesherListCache.cs" />
     <Compile Include="Voxels\VoxelSide.cs" />
     <Compile Include="Voxels\VoxelSideCorner.cs" />
     <Compile Include="Voxels\VoxelVertex.cs" />

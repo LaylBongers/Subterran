@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using OpenTK;
 using Subterran.Toolbox.Materials;
 
@@ -12,7 +11,7 @@ namespace Subterran.Toolbox.Voxels
 
 		public static TexturedVertex[] GenerateCubes(TexturedVoxel[, ,] voxels)
 		{
-			return VoxelMesher.GenerateCubes(voxels, new List<TexturedVertex>(), 
+			return VoxelMesher.GenerateCubes(voxels, VoxelMesherListCache.Textured, 
 				(voxel, vertex) => new TexturedVertex
 				{
 					Position = vertex.Position,

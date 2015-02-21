@@ -4,6 +4,7 @@ using SharpNoise;
 using SharpNoise.Modules;
 using Subterran;
 using Subterran.Toolbox.Voxels;
+using VoxelWorld.VoxelTypes;
 
 namespace VoxelWorld
 {

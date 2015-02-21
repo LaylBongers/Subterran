@@ -54,11 +54,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DiamondVoxelType.cs" />
-    <Compile Include="DirtVoxelType.cs" />
-    <Compile Include="StoneVoxelType.cs" />
-    <Compile Include="BedrockVoxelType.cs" />
-    <Compile Include="GrassVoxelType.cs" />
+    <Compile Include="VoxelTypes\DiamondVoxelType.cs" />
+    <Compile Include="VoxelTypes\DirtVoxelType.cs" />
+    <Compile Include="VoxelTypes\StoneVoxelType.cs" />
+    <Compile Include="VoxelTypes\BedrockVoxelType.cs" />
+    <Compile Include="VoxelTypes\GrassVoxelType.cs" />
     <Compile Include="MapGenerator.cs" />
     <Compile Include="PlayerAutoclimbComponent.cs" />
     <Compile Include="PlayerMoveComponent.cs" />
