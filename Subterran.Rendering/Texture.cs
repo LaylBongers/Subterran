@@ -13,8 +13,8 @@ namespace Subterran.Rendering
 		public Texture(Bitmap bitmap)
 		{
 			// Save some metadata
-			//Width = bitmap.Width;
-			//Height = bitmap.Height;
+			Width = bitmap.Width;
+			Height = bitmap.Height;
 
 			// Load the data from the bitmap
 			var textureData = bitmap.LockBits(
@@ -28,9 +28,9 @@ namespace Subterran.Rendering
 
 			// Configure the texture
 			GL.TexParameter(TextureTarget.Texture2D,
-				TextureParameterName.TextureMinFilter, (int)(TextureMinFilter.NearestMipmapLinear));
+				TextureParameterName.TextureMinFilter, (int) (TextureMinFilter.NearestMipmapLinear));
 			GL.TexParameter(TextureTarget.Texture2D,
-				TextureParameterName.TextureMagFilter, (int)(TextureMagFilter.Nearest));
+				TextureParameterName.TextureMagFilter, (int) (TextureMagFilter.Nearest));
 			GL.TexParameter(TextureTarget.Texture2D, TextureParameterName.TextureMaxLevel, 4);
 
 			// Load the texture
@@ -51,13 +51,8 @@ namespace Subterran.Rendering
 			GL.BindTexture(TextureTarget.Texture2D, 0);
 		}
 
-		public static Texture FromPath(string path)
-		{
-			using (var bitmap = new Bitmap(path))
-			{
-				return new Texture(bitmap);
-			}
-		}
+		public int Width { get; set; }
+		public int Height { get; set; }
 
 		public void Set(Shader shader, string uniformName)
 		{
@@ -70,6 +65,14 @@ namespace Subterran.Rendering
 		{
 			GL.ActiveTexture(TextureUnit.Texture0);
 			GL.BindTexture(TextureTarget.Texture2D, 0);
+		}
+
+		public static Texture FromPath(string path)
+		{
+			using (var bitmap = new Bitmap(path))
+			{
+				return new Texture(bitmap);
+			}
 		}
 	}
 }

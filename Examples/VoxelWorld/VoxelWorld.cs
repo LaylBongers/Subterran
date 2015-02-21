@@ -7,6 +7,7 @@ using Subterran.Toolbox.Components;
 using Subterran.Toolbox.Materials;
 using Subterran.Toolbox.SimplePhysics;
 using Subterran.Toolbox.Voxels;
+using VoxelWorld.Generation;
 
 namespace VoxelWorld
 {
@@ -20,7 +21,7 @@ namespace VoxelWorld
 			var fullbrightTexture = BasicShaders.CreateFullbrightTexture();
 
 			var playerMaterial = BasicMaterials.CreateFullbrightColor(fullbrightColor);
-			var worldMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTexture, "./Graphics/Test.png");
+			var worldMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTexture, "./Graphics/Tilemap.png");
 			var ominousMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTexture, "./Graphics/OminousCube.png");
 
 			game.World = new Entity

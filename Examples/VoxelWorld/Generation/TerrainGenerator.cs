@@ -4,42 +4,35 @@ using SharpNoise;
 using SharpNoise.Modules;
 using Subterran;
 using Subterran.Toolbox.Voxels;
-using VoxelWorld.VoxelTypes;
+using VoxelWorld.Voxels;
 
-namespace VoxelWorld
+namespace VoxelWorld.Generation
 {
-	internal static class MapGenerator
+	public static class TerrainGenerator
 	{
-		private const int Height = 50;
-		private const int HeightOffset = 10;
-		private static readonly ITexturedVoxelType StoneType = new StoneVoxelType();
-		private static readonly ITexturedVoxelType GrassType = new GrassVoxelType();
-		private static readonly ITexturedVoxelType DirtType = new DirtVoxelType();
-		private static readonly ITexturedVoxelType DiamondType = new DiamondVoxelType();
-		private static readonly ITexturedVoxelType BedrockType = new BedrockVoxelType();
-
-		public static TexturedVoxel[,,] Generate(int width, int depth, Vector2 perlinOffset)
+		public static void Generate(TexturedVoxel[,,] map, Vector2 perlinOffset, int heightOffset)
 		{
-			var map = new TexturedVoxel[width, Height, depth];
+			var width = map.GetLength(0);
+			var height = map.GetLength(1);
+			var depth = map.GetLength(2);
 
 			for (var x = 0; x < width; x++)
 			{
 				for (var z = 0; z < depth; z++)
 				{
-					GeneratePillar(map, x, z, perlinOffset);
+					GeneratePillar(map, x, z, perlinOffset, height, heightOffset);
 				}
 			}
-
-			return map;
 		}
 
-		private static void GeneratePillar(TexturedVoxel[,,] map, int x, int z, Vector2 perlinOffset)
+		private static void GeneratePillar(TexturedVoxel[,,] map, int x, int z, Vector2 perlinOffset, int height,
+			int heightOffset)
 		{
 			// We want a range of just about 0-1, this won't be always that but usually it is
-			var rangedNoise = HeightNoise.GetValue(x + perlinOffset.X, 0.5, z + perlinOffset.Y)*0.5 + 0.5;
-			var rawPillarHeight = (rangedNoise*(Height - HeightOffset)) + HeightOffset;
+			var rawNoise = (float) HeightNoise.GetValue(x + perlinOffset.X, 0.5, z + perlinOffset.Y)*0.5f + 0.5f;
+			var rawPillarHeight = (StMath.Range(rawNoise, 0.0f, 1.0f)*(height - heightOffset)) + heightOffset;
 
-			var pillarHeight = StMath.Range((int) rawPillarHeight, 1, Height);
+			var pillarHeight = StMath.Range((int) rawPillarHeight, 1, height);
 			var dirtHeight = Random.Next(2, 5);
 
 			for (var y = 0; y < pillarHeight; y++)
@@ -52,9 +45,10 @@ namespace VoxelWorld
 		{
 			var voxel = new TexturedVoxel();
 
+			// Bedrock overrides everything, it NEEDS to be there
 			if (IsBedrock(y))
 			{
-				voxel.Type = BedrockType;
+				voxel.Type = VoxelTypes.Bedrock;
 				return voxel;
 			}
 
@@ -90,14 +84,14 @@ namespace VoxelWorld
 		{
 			// Grass & Dirt layer
 			if (y == height - 1)
-				return GrassType;
+				return VoxelTypes.Grass;
 			if (y >= height - (dirtHeight + 1))
-				return DirtType;
+				return VoxelTypes.Dirt;
 
 			// Everything else is stone with a random chance of a gem block
 			return Random.Next(0, 50) == 1
-				? DiamondType
-				: StoneType;
+				? VoxelTypes.Diamond
+				: VoxelTypes.Stone;
 		}
 
 		private static readonly Random Random = new Random();

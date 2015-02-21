@@ -2,10 +2,15 @@
 using OpenTK;
 using Subterran.Toolbox.Voxels;
 
-namespace VoxelWorld.VoxelTypes
+namespace VoxelWorld.Voxels
 {
 	internal class GrassVoxelType : ITexturedVoxelType
 	{
+		public bool IsTransparent
+		{
+			get { return false; }
+		}
+
 		public TextureLocation GetTexture(VoxelSide side)
 		{
 			switch (side)

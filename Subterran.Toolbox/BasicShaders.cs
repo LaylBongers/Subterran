@@ -67,7 +67,14 @@ out vec4 st_FragColor;
 
 void main()
 {
-	st_FragColor = texture(Texture, fragUv);
+	vec4 color = texture(Texture, fragUv);
+
+	// Mimpapping messes with the alpha channel
+	// This is a good enough hack for now
+	if(color.a < 0.4)
+		discard;
+
+	st_FragColor = color;
 }";
 
 		public static Shader CreateFullbrightColor()

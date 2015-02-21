@@ -14,7 +14,8 @@ namespace Subterran.Toolbox.Voxels
 					Position = vertex.Position,
 					Color = voxel.Color
 				},
-				voxel => voxel.IsSolid);
+				voxel => voxel.IsSolid,
+				voxel => !voxel.IsSolid);
 		}
 
 		public static TexturedVertex[] GenerateCubesWithTexture(ColoredVoxel[,,] voxels)
@@ -25,7 +26,8 @@ namespace Subterran.Toolbox.Voxels
 					Position = vertex.Position,
 					TexCoord = GetTexCoordForCorner(vertex.Corner)
 				},
-				voxel => voxel.IsSolid);
+				voxel => voxel.IsSolid,
+				voxel => !voxel.IsSolid);
 		}
 
 		private static Vector2 GetTexCoordForCorner(VoxelSideCorner corner)

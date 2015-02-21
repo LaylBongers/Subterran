@@ -17,7 +17,8 @@ namespace Subterran.Toolbox.Voxels
 					Position = vertex.Position,
 					TexCoord = GetTexCoordForCorner(vertex.Corner, voxel.Type.GetTexture(vertex.Side))
 				},
-				voxel => voxel.Type != null);
+				voxel => voxel.Type != null,
+				voxel => voxel.Type == null || voxel.Type.IsTransparent);
 		}
 
 		private static Vector2 GetTexCoordForCorner(VoxelSideCorner corner, TextureLocation location)

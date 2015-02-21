@@ -26,11 +26,16 @@ namespace Subterran.Toolbox.Voxels
 		/// <param name="voxels">A 3D array of voxels to be converted.</param>
 		/// <param name="workingList">A list to use for working with vertex data to avoid re-growing a list.</param>
 		/// <param name="vertexCreator">A function that creates a vertex based on the vertex and voxel data.</param>
-		/// <param name="solidChecker">A function that checks if the voxel is a solid block.</param>
+		/// <param name="solidChecker">A function that returns true if the voxel is a solid block.</param>
+		/// <param name="borderTransparentChecker">
+		///     A function that returns true if the bordering voxel is transparent.
+		///     (should include checking for air)
+		/// </param>
 		/// <returns>The array of vertices making up the mesh.</returns>
 		public static TVertexType[] GenerateCubes<TVoxelType, TVertexType>(TVoxelType[,,] voxels,
 			List<TVertexType> workingList,
-			Func<TVoxelType, VoxelVertex, TVertexType> vertexCreator, Func<TVoxelType, bool> solidChecker)
+			Func<TVoxelType, VoxelVertex, TVertexType> vertexCreator,
+			Func<TVoxelType, bool> solidChecker, Func<TVoxelType, bool> borderTransparentChecker)
 			where TVertexType : struct
 		{
 			var width = voxels.GetLength(0);
@@ -51,12 +56,12 @@ namespace Subterran.Toolbox.Voxels
 
 						// Get the vectors for this voxel's mesh
 						var vectors = LookupVoxelMesh(
-							x <= 0 || !solidChecker(voxels[x - 1, y, z]),
-							x >= width - 1 || !solidChecker(voxels[x + 1, y, z]),
-							y <= 0 || !solidChecker(voxels[x, y - 1, z]),
-							y >= height - 1 || !solidChecker(voxels[x, y + 1, z]),
-							z <= 0 || !solidChecker(voxels[x, y, z - 1]),
-							z >= depth - 1 || !solidChecker(voxels[x, y, z + 1]));
+							x <= 0 || borderTransparentChecker(voxels[x - 1, y, z]),
+							x >= width - 1 || borderTransparentChecker(voxels[x + 1, y, z]),
+							y <= 0 || borderTransparentChecker(voxels[x, y - 1, z]),
+							y >= height - 1 || borderTransparentChecker(voxels[x, y + 1, z]),
+							z <= 0 || borderTransparentChecker(voxels[x, y, z - 1]),
+							z >= depth - 1 || borderTransparentChecker(voxels[x, y, z + 1]));
 
 						// Offset them one by one and copy them over into the list
 						var offset = new Vector3(x, y, z);
@@ -135,7 +140,7 @@ namespace Subterran.Toolbox.Voxels
 			{
 				vertices.AddRange(GenerateVoxelSide(
 					new Vector3(1, 0, 1),
-					new Vector3(0, 0.25f * StMath.Tau, 0),
+					new Vector3(0, 0.25f*StMath.Tau, 0),
 					VoxelSide.East));
 			}
 
@@ -144,7 +149,7 @@ namespace Subterran.Toolbox.Voxels
 			{
 				vertices.AddRange(GenerateVoxelSide(
 					new Vector3(0, 0, 0),
-					new Vector3(0.25f * StMath.Tau, 0, 0),
+					new Vector3(0.25f*StMath.Tau, 0, 0),
 					VoxelSide.Bottom));
 			}
 
@@ -152,7 +157,7 @@ namespace Subterran.Toolbox.Voxels
 			{
 				vertices.AddRange(GenerateVoxelSide(
 					new Vector3(0, 1, 1),
-					new Vector3(-0.25f * StMath.Tau, 0, 0),
+					new Vector3(-0.25f*StMath.Tau, 0, 0),
 					VoxelSide.Top));
 			}
 
@@ -161,7 +166,7 @@ namespace Subterran.Toolbox.Voxels
 			{
 				vertices.AddRange(GenerateVoxelSide(
 					new Vector3(1, 0, 0),
-					new Vector3(0, 0.5f * StMath.Tau, 0),
+					new Vector3(0, 0.5f*StMath.Tau, 0),
 					VoxelSide.South));
 			}
 
