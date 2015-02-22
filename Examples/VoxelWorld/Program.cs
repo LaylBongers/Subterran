@@ -1,12 +1,23 @@
-﻿namespace VoxelWorld
+﻿using System;
+using Subterran.Rendering;
+
+namespace VoxelWorld
 {
 	internal static class Program
 	{
 		private static void Main()
 		{
-			using (var game = VoxelWorld.Create())
+			try
 			{
-				game.Run();
+				using (var game = VoxelWorld.Create())
+				{
+					game.Run();
+				}
+			}
+			catch (ShaderException ex)
+			{
+				Console.WriteLine("Shader compile log:\n" + ex.ShaderLog);
+				throw;
 			}
 		}
 	}
