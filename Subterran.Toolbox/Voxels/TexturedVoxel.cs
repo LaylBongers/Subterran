@@ -2,6 +2,6 @@
 {
 	public struct TexturedVoxel
 	{
-		public ITexturedVoxelType Type { get; set; }
+		public TexturedVoxelType Type { get; set; }
 	}
 }

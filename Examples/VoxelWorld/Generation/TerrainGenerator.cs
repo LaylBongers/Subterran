@@ -4,7 +4,6 @@ using SharpNoise;
 using SharpNoise.Modules;
 using Subterran;
 using Subterran.Toolbox.Voxels;
-using VoxelWorld.Voxels;
 
 namespace VoxelWorld.Generation
 {
@@ -80,7 +79,7 @@ namespace VoxelWorld.Generation
 			return false;
 		}
 
-		private static ITexturedVoxelType GetTypeFor(int y, int height, int dirtHeight)
+		private static TexturedVoxelType GetTypeFor(int y, int height, int dirtHeight)
 		{
 			// Grass & Dirt layer
 			if (y == height - 1)

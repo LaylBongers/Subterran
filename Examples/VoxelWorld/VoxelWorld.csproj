@@ -57,21 +57,13 @@
   <ItemGroup>
     <Compile Include="Generation\HouseGenerator.cs" />
     <Compile Include="Generation\TerrainGenerator.cs" />
-    <Compile Include="Voxels\PlanksVoxelType.cs" />
-    <Compile Include="Voxels\GlassVoxelType.cs" />
-    <Compile Include="Voxels\DiamondVoxelType.cs" />
-    <Compile Include="Voxels\CobblestoneVoxelType.cs" />
-    <Compile Include="Voxels\DirtVoxelType.cs" />
-    <Compile Include="Voxels\StoneVoxelType.cs" />
-    <Compile Include="Voxels\BedrockVoxelType.cs" />
-    <Compile Include="Voxels\GrassVoxelType.cs" />
     <Compile Include="Generation\MapGenerator.cs" />
     <Compile Include="PlayerAutoclimbComponent.cs" />
     <Compile Include="PlayerMoveComponent.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpinnerComponent.cs" />
-    <Compile Include="Voxels\VoxelTypes.cs" />
+    <Compile Include="VoxelTypes.cs" />
     <Compile Include="VoxelWorld.cs" />
   </ItemGroup>
   <ItemGroup>

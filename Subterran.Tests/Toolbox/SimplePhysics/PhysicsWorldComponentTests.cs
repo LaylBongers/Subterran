@@ -1,6 +1,5 @@
 ﻿using System;
 using OpenTK;
-using Subterran.Toolbox;
 using Subterran.Toolbox.SimplePhysics;
 using Xunit;
 
@@ -35,6 +34,7 @@ namespace Subterran.Tests.Toolbox.SimplePhysics
 
 			// Assert
 			Assert.True(entity.Transform.Position.X > 0.9f);
+			Assert.True(entity.Transform.Position.X < 1.1f);
 		}
 	}
 }

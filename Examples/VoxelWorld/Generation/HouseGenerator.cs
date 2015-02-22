@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Runtime.InteropServices;
 using Subterran.Toolbox.Voxels;
-using VoxelWorld.Voxels;
 
 namespace VoxelWorld.Generation
 {

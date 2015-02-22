@@ -15,7 +15,7 @@ namespace Subterran.Toolbox.Voxels
 				(voxel, vertex) => new TexturedVertex
 				{
 					Position = vertex.Position,
-					TexCoord = GetTexCoordForCorner(vertex.Corner, voxel.Type.GetTexture(vertex.Side))
+					TexCoord = GetTexCoordForCorner(vertex.Corner, voxel.Type.GetSide(vertex.Side))
 				},
 				voxel => voxel.Type != null,
 				voxel => voxel.Type == null || voxel.Type.IsTransparent);

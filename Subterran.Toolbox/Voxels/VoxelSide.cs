@@ -7,6 +7,7 @@
 		Bottom,
 		Top,
 		South,
-		North
+		North,
+		Count
 	}
 }
