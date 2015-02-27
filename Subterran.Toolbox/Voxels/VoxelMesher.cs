@@ -27,15 +27,17 @@ namespace Subterran.Toolbox.Voxels
 		/// <param name="workingList">A list to use for working with vertex data to avoid re-growing a list.</param>
 		/// <param name="vertexCreator">A function that creates a vertex based on the vertex and voxel data.</param>
 		/// <param name="solidChecker">A function that returns true if the voxel is a solid block.</param>
-		/// <param name="borderTransparentChecker">
-		///     A function that returns true if the bordering voxel is transparent.
-		///     (should include checking for air)
+		/// <param name="borderingVisibilityChecker">
+		///     A function that returns true if the voxel is visible from the bordering side.
+		///     Can be used to distinguish between transparent and opaque voxels.
+		///     Parameter 1 is the current voxel.
+		///     Parameter 2 is the bordering voxel.
 		/// </param>
 		/// <returns>The array of vertices making up the mesh.</returns>
 		public static TVertexType[] GenerateCubes<TVoxelType, TVertexType>(TVoxelType[,,] voxels,
 			List<TVertexType> workingList,
 			Func<TVoxelType, VoxelVertex, TVertexType> vertexCreator,
-			Func<TVoxelType, bool> solidChecker, Func<TVoxelType, bool> borderTransparentChecker)
+			Func<TVoxelType, bool> solidChecker, Func<TVoxelType, TVoxelType, bool> borderingVisibilityChecker)
 			where TVertexType : struct
 		{
 			var width = voxels.GetLength(0);
@@ -51,17 +53,20 @@ namespace Subterran.Toolbox.Voxels
 				{
 					for (var z = 0; z < depth; z++)
 					{
-						if (!solidChecker(voxels[x, y, z]))
+						var current = voxels[x, y, z];
+
+						// If this voxel isn't solid, we don't need to render it
+						if (!solidChecker(current))
 							continue;
 
 						// Get the vectors for this voxel's mesh
 						var vectors = LookupVoxelMesh(
-							x <= 0 || borderTransparentChecker(voxels[x - 1, y, z]),
-							x >= width - 1 || borderTransparentChecker(voxels[x + 1, y, z]),
-							y <= 0 || borderTransparentChecker(voxels[x, y - 1, z]),
-							y >= height - 1 || borderTransparentChecker(voxels[x, y + 1, z]),
-							z <= 0 || borderTransparentChecker(voxels[x, y, z - 1]),
-							z >= depth - 1 || borderTransparentChecker(voxels[x, y, z + 1]));
+							x <= 0 || borderingVisibilityChecker(current, voxels[x - 1, y, z]),
+							x >= width - 1 || borderingVisibilityChecker(current, voxels[x + 1, y, z]),
+							y <= 0 || borderingVisibilityChecker(current, voxels[x, y - 1, z]),
+							y >= height - 1 || borderingVisibilityChecker(current, voxels[x, y + 1, z]),
+							z <= 0 || borderingVisibilityChecker(current, voxels[x, y, z - 1]),
+							z >= depth - 1 || borderingVisibilityChecker(current, voxels[x, y, z + 1]));
 
 						// Offset them one by one and copy them over into the list
 						var offset = new Vector3(x, y, z);

@@ -11,14 +11,20 @@ namespace Subterran.Toolbox.Voxels
 
 		public static TexturedVertex[] GenerateCubes(TexturedVoxel[, ,] voxels)
 		{
-			return VoxelMesher.GenerateCubes(voxels, VoxelMesherListCache.Textured, 
+			return VoxelMesher.GenerateCubes(voxels, VoxelMesherListCache.Textured,
 				(voxel, vertex) => new TexturedVertex
 				{
 					Position = vertex.Position,
 					TexCoord = GetTexCoordForCorner(vertex.Corner, voxel.Type.GetSide(vertex.Side))
 				},
 				voxel => voxel.Type != null,
-				voxel => voxel.Type == null || voxel.Type.IsTransparent);
+				(current, bordering) =>
+					// Blocks can be seen through air
+					bordering.Type == null ||
+					// Blocks can be seen through transparent blocks
+					(bordering.Type.IsTransparent &&
+						// Transparent blocks should not be visible through themselves (this prevents borders inside glass)
+						!(current.Type.IsTransparent && current.Type == bordering.Type)));
 		}
 
 		private static Vector2 GetTexCoordForCorner(VoxelSideCorner corner, TextureLocation location)

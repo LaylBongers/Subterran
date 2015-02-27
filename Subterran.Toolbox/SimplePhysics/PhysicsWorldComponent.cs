@@ -55,7 +55,7 @@ namespace Subterran.Toolbox.SimplePhysics
 					else
 					{
 						// Move the rigid body without collisions
-						position += elapsed.PerSecond(velocity);
+						position += Timestep.PerSecond(velocity);
 					}
 
 					// Submit the changes to the rigidbody

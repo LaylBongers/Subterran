@@ -33,8 +33,9 @@ namespace Subterran.Tests.Toolbox.SimplePhysics
 			physicsWorld.Update(TimeSpan.FromSeconds(1.0));
 
 			// Assert
-			Assert.True(entity.Transform.Position.X > 0.9f);
-			Assert.True(entity.Transform.Position.X < 1.1f);
+			var value = entity.Transform.Position.X;
+			Assert.True(value > 0.9f, "Expected > 0.9f, Actual value: " + value);
+			Assert.True(value < 1.1f, "Expected < 1.1f, Actual value: " + value);
 		}
 	}
 }
