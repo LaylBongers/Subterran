@@ -29,7 +29,7 @@ namespace TropicalIsland
 				Transform =
 				{
 					Position = new Vector3(25, 20, 50),
-					Rotation = new Vector3(-0.05f*StMath.Tau, 0, 0)
+					Rotation = new Vector3(-0.05f * StMath.Tau, 0, 0)
 				},
 				Components =
 				{

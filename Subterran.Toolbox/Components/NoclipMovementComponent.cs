@@ -55,7 +55,7 @@ namespace Subterran.Toolbox.Components
 			_previousPosition = new Vector2(state.X, state.Y);
 
 			// Update the rotation of the entity based on the difference in mouse position
-			var rotation = Entity.Transform.Rotation.Xy + (-deltaPosition.Yx*0.0015f);
+			var rotation = Entity.Transform.Rotation.Xy + (-deltaPosition.Yx * 0.0015f);
 			Entity.Transform.Rotation = new Vector3(
 				MathHelper.Clamp(rotation.X, -StMath.Tau*0.25f, StMath.Tau*0.25f),
 				rotation.Y, 0);

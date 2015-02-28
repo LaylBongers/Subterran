@@ -10,7 +10,7 @@ namespace Subterran
 	[DebuggerDisplay("{DebuggerDisplay,nq}")]
 	public sealed class Entity
 	{
-		private Dictionary<Type, object> _getComponentsCache = new Dictionary<Type, object>();
+		private readonly Dictionary<Type, object> _getComponentsCache = new Dictionary<Type, object>();
 
 		public Entity()
 		{

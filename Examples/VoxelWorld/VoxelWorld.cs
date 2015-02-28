@@ -17,12 +17,13 @@ namespace VoxelWorld
 		{
 			var game = new BasicSubterranGame();
 
-			var fullbrightColor = BasicShaders.CreateFullbrightColor();
-			var fullbrightTexture = BasicShaders.CreateFullbrightTexture();
+			var fullbrightTextureShader = BasicShaders.CreateFullbrightTexture();
 
-			var playerMaterial = BasicMaterials.CreateFullbrightColor(fullbrightColor);
-			var worldMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTexture, "./Graphics/Tilemap.png");
-			var ominousMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTexture, "./Graphics/OminousCube.png");
+			var worldMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTextureShader, "./Graphics/Tilemap.png");
+			var ominousMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTextureShader, "./Graphics/OminousCube.png");
+			var targetReferenceMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTextureShader, "./Graphics/TargetReference.png");
+
+			var blockTargetReferenceEntity = CreateBlockTargetReferenceEntity(targetReferenceMaterial);
 
 			game.World = new Entity
 			{
@@ -31,7 +32,8 @@ namespace VoxelWorld
 				{
 					CreateScriptsEntity(game),
 					//BasicEntities.CreateNoclipCameraEntity(game.Window),
-					CreatePlayerEntity(game.Window, playerMaterial),
+					blockTargetReferenceEntity,
+					CreatePlayerEntity(game.Window, blockTargetReferenceEntity),
 					CreateOminousEntity(ominousMaterial),
 
 					// Row #0
@@ -67,47 +69,6 @@ namespace VoxelWorld
 			return game;
 		}
 
-		private static Entity CreateOminousEntity(Material<TexturedVertex> ominousMaterial)
-		{
-			var voxels = new ColoredVoxel[1, 1, 1];
-			voxels[0, 0, 0].IsSolid = true;
-
-			return new Entity
-			{
-				Name = "Ominous Cube",
-				Children =
-				{
-					new Entity
-					{
-						Name = "Inner Actual Cube",
-						Transform =
-						{
-							Position = new Vector3(0, 35, 0),
-							Rotation = new Vector3(StMath.Tau*0.125f, 0, StMath.Tau * 0.125f),
-							Scale = new Vector3(10)
-						},
-						Components =
-						{
-							new VoxelMapRendererComponent<ColoredVoxel, TexturedVertex>
-							{
-								Voxels = voxels,
-								MeshGenerator = ColoredVoxelMesher.GenerateCubesWithTexture
-							},
-							new MeshRendererComponent<TexturedVertex>
-							{
-								Material = ominousMaterial,
-								Offset = new Vector3(-0.5f, -0.5f, -0.5f)
-							}
-						}
-					}
-				},
-				Components =
-				{
-					new SpinnerComponent()
-				}
-			};
-		}
-
 		private static Entity CreateScriptsEntity(BasicSubterranGame game)
 		{
 			// Misc useful scripts that just need to be added to the scene
@@ -125,25 +86,80 @@ namespace VoxelWorld
 			};
 		}
 
-		private static Entity CreatePlayerEntity(Window window, Material<ColoredVertex> material)
+		private static Entity CreateOminousEntity(Material<TexturedVertex> material)
 		{
-			var collisionReferenceEntity = new Entity
+			var voxels = new ColoredVoxel[1, 1, 1];
+			voxels[0, 0, 0].IsSolid = true;
+
+			return new Entity
 			{
+				Name = "Ominous Cube",
 				Transform =
 				{
-					Scale = new Vector3(0.8f, 0.1f, 0.8f)
+					Position = new Vector3(0, 35, 0)
+				},
+				Children =
+				{
+					new Entity
+					{
+						Name = "Inner Actual Cube",
+						Transform =
+						{
+							Rotation = new Vector3(StMath.Tau*0.125f, 0, StMath.Tau*0.125f),
+							Scale = new Vector3(10)
+						},
+						Components =
+						{
+							new VoxelMapRendererComponent<ColoredVoxel, TexturedVertex>
+							{
+								Voxels = voxels,
+								MeshGenerator = ColoredVoxelMesher.GenerateCubesWithTexture
+							},
+							new MeshRendererComponent<TexturedVertex>
+							{
+								Material = material,
+								Offset = new Vector3(-0.5f, -0.5f, -0.5f)
+							}
+						}
+					}
 				},
 				Components =
 				{
-					BasicComponents.CreateTestBlockComponent(),
-					new MeshRendererComponent<ColoredVertex>
+					new SpinnerComponent()
+				}
+			};
+		}
+
+		private static Entity CreateBlockTargetReferenceEntity(Material<TexturedVertex> material)
+		{
+			var voxels = new ColoredVoxel[1, 1, 1];
+			voxels[0, 0, 0].IsSolid = true;
+
+			return new Entity
+			{
+				Name = "Block Target Reference",
+				Transform =
+				{
+					Scale = new Vector3(0.51f)
+				},
+				Components =
+				{
+					new VoxelMapRendererComponent<ColoredVoxel, TexturedVertex>
+					{
+						Voxels = voxels,
+						MeshGenerator = ColoredVoxelMesher.GenerateCubesWithTexture
+					},
+					new MeshRendererComponent<TexturedVertex>
 					{
 						Material = material,
-						Offset = new Vector3(-0.5f, 0, -0.5f)
+						Offset = new Vector3(-0.5f, -0.5f, -0.5f)
 					}
 				}
 			};
+		}
 
+		private static Entity CreatePlayerEntity(Window window, Entity blockTargetReferenceEntity)
+		{
 			var cameraEntity = new Entity
 			{
 				Transform =
@@ -152,7 +168,11 @@ namespace VoxelWorld
 				},
 				Components =
 				{
-					new CameraComponent()
+					new CameraComponent(),
+					new AimPlaceBlockComponent
+					{
+						TargetReference = blockTargetReferenceEntity
+					}
 				}
 			};
 
@@ -163,7 +183,7 @@ namespace VoxelWorld
 				{
 					Position = new Vector3(0, 35, -20)
 				},
-				Children = {cameraEntity, collisionReferenceEntity},
+				Children = {cameraEntity},
 				Components =
 				{
 					new RigidbodyComponent
