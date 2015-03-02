@@ -2,6 +2,6 @@
     "Name": "Json Game Example",
     "EngineType": "Subterran.Toolbox.BasicEngine",
     "EngineParameters": {
-        "StartScene": "./MainScene.json"
+        "StartScene": "@GameRoot/MainScene.json"
     }
 }

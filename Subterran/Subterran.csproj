@@ -49,8 +49,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assembling\DirectoryAssetSource.cs" />
     <Compile Include="Assembling\EngineEntryPointAttribute.cs" />
     <Compile Include="Assembling\EngineHelpers.cs" />
+    <Compile Include="Assembling\EngineSceneSectionAttribute.cs" />
+    <Compile Include="Assembling\IAssetSource.cs" />
+    <Compile Include="Assembling\Scene.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityComponent.cs" />
@@ -61,6 +65,7 @@
     <Compile Include="Loop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomExtensions.cs" />
+    <Compile Include="Serialization\Assets.cs" />
     <Compile Include="StCollection.cs" />
     <Compile Include="StVector.cs" />
     <Compile Include="TimeSpanExtensions.cs" />

@@ -14,11 +14,12 @@ namespace Subterran.Assembling
 				return false;
 
 			var pars = info.GetParameters();
-			if (pars.Length != 1)
+			if (pars.Length != 2)
 				return false;
 
-			var par = pars[0];
-			if (par.ParameterType != typeof(Dictionary<string, string>))
+			if (pars[0].ParameterType != typeof(Game))
+				return false;
+			if (pars[1].ParameterType != typeof(Dictionary<string, string>))
 				return false;
 
 			return true;

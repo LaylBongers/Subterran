@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using Subterran.Assembling;
 
@@ -6,16 +7,23 @@ namespace Subterran.Toolbox
 {
 	public class BasicEngine
 	{
-		public BasicEngine(Dictionary<string, string> args)
+		public BasicEngine(Game game, Dictionary<string, string> args)
 		{
-			var startScenePath = args["StartScene"];
-			Trace.TraceInformation("Start Scene: " + startScenePath);
+			game.AddAssetSource("GameRoot", new DirectoryAssetSource("./"));
+
+			string startSceneAssetPath;
+			if(!args.TryGetValue("StartScene", out startSceneAssetPath))
+				throw new InvalidOperationException("StartScene engine parameter is not provided!");
+
+			Trace.TraceInformation("Loading start scene at \"" + startSceneAssetPath + "\"...");
+			var scene = game.GetAsset<Scene>(startSceneAssetPath);
+			Trace.TraceInformation("Loaded scene: " + scene.Name);
 		}
 
-		//[EngineSceneSection]
+		[EngineSceneSection]
 		public Entity World { get; set; }
 
-		//[EngineSceneSection]
+		[EngineSceneSection]
 		public Entity Ui { get; set; }
 
 		[EngineEntryPoint]

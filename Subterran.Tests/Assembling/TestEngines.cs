@@ -7,7 +7,7 @@ namespace Subterran.Tests.Assembling
 	{
 		public bool WasRun { get; set; }
 
-		public ValidEngine(Dictionary<string, string> args)
+		public ValidEngine(Game game, Dictionary<string, string> args)
 		{
 		}
 
