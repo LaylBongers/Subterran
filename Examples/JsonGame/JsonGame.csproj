@@ -4,15 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{CA6493F3-A13C-4DFF-B31D-E2D96148211F}</ProjectGuid>
-    <OutputType>Library</OutputType>
+    <ProjectGuid>{98D60E85-477C-45C0-8744-80921C2DD2DF}</ProjectGuid>
+    <OutputType>Exe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Subterran</RootNamespace>
-    <AssemblyName>Subterran</AssemblyName>
+    <RootNamespace>JsonGame</RootNamespace>
+    <AssemblyName>JsonGame</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -22,26 +23,17 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <DebugType>none</DebugType>
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
-    <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
-    <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
-      <HintPath>..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -49,34 +41,36 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assembling\EngineEntryPointAttribute.cs" />
-    <Compile Include="Assembling\EngineHelpers.cs" />
-    <Compile Include="Disposable.cs" />
-    <Compile Include="Entity.cs" />
-    <Compile Include="EntityComponent.cs" />
-    <Compile Include="Assembling\Game.cs" />
-    <Compile Include="Assembling\GameInfo.cs" />
-    <Compile Include="IInitializable.cs" />
-    <Compile Include="LoopManager.cs" />
-    <Compile Include="Loop.cs" />
+    <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RandomExtensions.cs" />
-    <Compile Include="StCollection.cs" />
-    <Compile Include="StVector.cs" />
-    <Compile Include="TimeSpanExtensions.cs" />
-    <Compile Include="StMath.cs" />
-    <Compile Include="Transform.cs" />
-    <Compile Include="Vector3i.cs" />
-    <Compile Include="VectorExtensions.cs" />
-    <Compile Include="Window.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="packages.config" />
+    <None Include="App.config" />
+    <None Include="MainScene.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Game.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
-    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
+    <ProjectReference Include="..\..\Subterran.Input\Subterran.Input.csproj">
+      <Project>{2d8d561a-ffaa-4588-8b61-f4b236c07c83}</Project>
+      <Name>Subterran.Input</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Subterran.Rendering\Subterran.Rendering.csproj">
+      <Project>{54554f92-d476-4643-be25-a0dc6352adab}</Project>
+      <Name>Subterran.Rendering</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Subterran.Toolbox\Subterran.Toolbox.csproj">
+      <Project>{fd41c4ed-9387-48d1-bf6f-bb1347dfa10c}</Project>
+      <Name>Subterran.Toolbox</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Subterran\Subterran.csproj">
+      <Project>{ca6493f3-a13c-4dff-b31d-e2d96148211f}</Project>
+      <Name>Subterran</Name>
+    </ProjectReference>
   </ItemGroup>
-  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

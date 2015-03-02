@@ -31,7 +31,6 @@ namespace VoxelWorld
 				Children =
 				{
 					CreateScriptsEntity(game),
-					//BasicEntities.CreateNoclipCameraEntity(game.Window),
 					blockTargetReferenceEntity,
 					CreatePlayerEntity(game.Window, blockTargetReferenceEntity),
 					CreateOminousEntity(ominousMaterial),

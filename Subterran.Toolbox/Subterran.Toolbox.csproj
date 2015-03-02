@@ -45,11 +45,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicComponents.cs" />
+    <Compile Include="BasicEngine.cs" />
     <Compile Include="BasicEntities.cs" />
     <Compile Include="BasicMaterials.cs" />
     <Compile Include="BasicShaders.cs" />
     <Compile Include="BasicSubterranGame.cs" />
     <Compile Include="Components\FpsCounterComponent.cs" />
+    <Compile Include="Dummy.cs" />
     <Compile Include="Materials\ColoredMaterialData.cs" />
     <Compile Include="Materials\ColoredVertex.cs" />
     <Compile Include="Materials\TexturedMaterialData.cs" />
@@ -66,6 +68,7 @@
     <Compile Include="SimplePhysics\ISmartFixedbodySource.cs" />
     <Compile Include="SimplePhysics\PhysicsHelper.cs" />
     <Compile Include="SimplePhysics\PhysicsWorldComponent.cs" />
+    <Compile Include="SimplePhysics\Ray.cs" />
     <Compile Include="SimplePhysics\RigidbodyComponent.cs" />
     <Compile Include="SimplePhysics\SensorComponent.cs" />
     <Compile Include="Voxels\ColoredVoxelMesher.cs" />

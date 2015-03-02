@@ -18,8 +18,8 @@ before_build:
 build:
   verbosity: minimal
   publish_nuget: true             # package projects with .nuspec files and push to artifacts
-# Symbol server died, had to comment out to allow the nuget push to go through
-#  publish_nuget_symbols: true     # generate and publish NuGet symbol packages
+# If the symbol server dies, disable this so nuget updates can go through
+  publish_nuget_symbols: true     # generate and publish NuGet symbol packages
 
 artifacts:
   # Subterran.Toolbox contains all the Subterran libraries in the output

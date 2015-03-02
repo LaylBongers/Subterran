@@ -42,7 +42,7 @@ namespace VoxelWorld
 			_targetPosition = position + direction;
 
 			// Perform the actual raycast
-			//physics.Raycast(position, )
+			//var ray = physics.Raycast(position, direction);
 		}
 
 		private void PlaceBlock()

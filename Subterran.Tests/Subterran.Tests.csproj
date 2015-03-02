@@ -33,6 +33,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\packages\Newtonsoft.Json.7.0.1-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
     <Reference Include="NSubstitute, Version=1.8.1.0, Culture=neutral, PublicKeyToken=92dd2e9066daa5ca, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\packages\NSubstitute.1.8.1.0\lib\net45\NSubstitute.dll</HintPath>
@@ -61,6 +65,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Assembling\GameInfoTests.cs" />
+    <Compile Include="Assembling\GameTests.cs" />
+    <Compile Include="Assembling\TestEngines.cs" />
     <Compile Include="DisposableTests.cs" />
     <Compile Include="EntityComponentTests.cs" />
     <Compile Include="EntityTests.cs" />
@@ -71,6 +78,9 @@
     <Compile Include="Toolbox\SimplePhysics\PhysicsWorldComponentTests.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Assembling\MinimalValidGameInfo.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

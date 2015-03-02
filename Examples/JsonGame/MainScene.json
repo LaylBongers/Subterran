@@ -1,0 +1,13 @@
+﻿{
+    "Name": "Main Scene",
+    "Sections": [
+        {
+            "Name": "World",
+            "Root": { }
+        },
+        {
+            "Name": "Ui",
+            "Root": { }
+        }
+    ]
+}

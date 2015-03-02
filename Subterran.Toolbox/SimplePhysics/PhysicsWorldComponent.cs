@@ -116,5 +116,10 @@ namespace Subterran.Toolbox.SimplePhysics
 				target = BoundingBox.FromPositionAndCollider(position, collider);
 			}
 		}
+
+		public Ray Raycast(Vector3 position, Vector3 direction)
+		{
+			throw new NotImplementedException();
+		}
 	}
 }
