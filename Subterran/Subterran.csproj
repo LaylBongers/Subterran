@@ -31,9 +31,9 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json, Version=7.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\Newtonsoft.Json.7.0.1-beta1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    <Reference Include="Newtonsoft.Json, Version=6.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <HintPath>..\packages\Newtonsoft.Json.6.0.8\lib\net45\Newtonsoft.Json.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="OpenTK, Version=1.1.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4, processorArchitecture=MSIL">
       <HintPath>..\packages\OpenTK.1.1.1589.5942\lib\NET40\OpenTK.dll</HintPath>
@@ -52,9 +52,7 @@
     <Compile Include="Assembling\DirectoryAssetSource.cs" />
     <Compile Include="Assembling\EngineEntryPointAttribute.cs" />
     <Compile Include="Assembling\EngineHelpers.cs" />
-    <Compile Include="Assembling\EngineSceneSectionAttribute.cs" />
     <Compile Include="Assembling\IAssetSource.cs" />
-    <Compile Include="Assembling\Scene.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityComponent.cs" />

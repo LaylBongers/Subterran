@@ -11,20 +11,17 @@ namespace Subterran.Toolbox
 		{
 			game.AddAssetSource("GameRoot", new DirectoryAssetSource("./"));
 
+			// Get the initial scene
 			string startSceneAssetPath;
-			if(!args.TryGetValue("StartScene", out startSceneAssetPath))
+			if (!args.TryGetValue("StartScene", out startSceneAssetPath))
 				throw new InvalidOperationException("StartScene engine parameter is not provided!");
 
 			Trace.TraceInformation("Loading start scene at \"" + startSceneAssetPath + "\"...");
-			var scene = game.GetAsset<Scene>(startSceneAssetPath);
+			var scene = game.GetAsset<BasicScene>(startSceneAssetPath);
 			Trace.TraceInformation("Loaded scene: " + scene.Name);
 		}
 
-		[EngineSceneSection]
-		public Entity World { get; set; }
-
-		[EngineSceneSection]
-		public Entity Ui { get; set; }
+		public BasicScene Scene { get; set; }
 
 		[EngineEntryPoint]
 		public void Run()
