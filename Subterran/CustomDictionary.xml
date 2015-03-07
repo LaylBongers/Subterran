@@ -6,11 +6,22 @@
 			<Word>Subterran</Word>
 
 			<Word>Initializable</Word>
+			<Word>Renderable</Word>
+			
+			<Word>Shader</Word>
 
 			<Word>X</Word>
 			<Word>Y</Word>
 			<Word>Z</Word>
 			<Word>W</Word>
+			<Word>Fov</Word>
+			<Word>Utils</Word>
 		</Recognized>
 	</Words>
+	<Acronyms>
+		<CasingExceptions>
+			<Acronym>St</Acronym>
+			<Acronym>i</Acronym>
+		</CasingExceptions>
+	</Acronyms>
 </Dictionary>

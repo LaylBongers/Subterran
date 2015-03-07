@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
@@ -28,15 +29,11 @@ namespace Subterran.Rendering
 				UpdateStreaming();
 			}
 		}
-
-		public TVertexType[] Vertices
+		
+		public void SetMesh(TVertexType[] vertices)
 		{
-			get { return _vertices; }
-			set
-			{
-				_vertices = value;
-				MarkOutdated();
-			}
+			_vertices = vertices;
+			MarkOutdated();
 		}
 
 		public Material<TVertexType> Material { get; set; }
@@ -48,7 +45,7 @@ namespace Subterran.Rendering
 			 StartedRender(this, EventArgs.Empty);
 
 			// If we don't have a mesh (yet?) we just do nothing
-			if (Vertices == null)
+			if (_vertices == null)
 				return;
 
 			// If we're streaming or not, if we have an offset we need to add that to the matrix
@@ -64,11 +61,12 @@ namespace Subterran.Rendering
 			}
 			else
 			{
-				RenderNonStreaming(renderer, ref matrix);
+				RenderNonStreaming(ref matrix);
 			}
 		}
 
-		private void RenderNonStreaming(Renderer renderer, ref Matrix4 matrix)
+		[SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
+		private void RenderNonStreaming(ref Matrix4 matrix)
 		{
 			// Check if we have a valid buffer
 			if (_buffer == -1 || _bufferOutdated)
@@ -78,7 +76,7 @@ namespace Subterran.Rendering
 			}
 
 			// Now that we are sure we have a buffer, render it
-			Material.RenderBuffer(ref matrix, _buffer, Vertices.Length);
+			Material.RenderBuffer(ref matrix, _buffer, _vertices.Length);
 		}
 
 		private void UpdateBuffer()
@@ -94,8 +92,8 @@ namespace Subterran.Rendering
 			GL.BindBuffer(BufferTarget.ArrayBuffer, _buffer);
 			GL.BufferData(
 				BufferTarget.ArrayBuffer,
-				new IntPtr(vertexSize * Vertices.Length),
-				Vertices,
+				new IntPtr(vertexSize * _vertices.Length),
+				_vertices,
 				BufferUsageHint.StaticDraw);
 
 			_bufferOutdated = false;

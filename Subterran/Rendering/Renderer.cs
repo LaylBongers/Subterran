@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using OpenTK;
@@ -12,6 +13,9 @@ namespace Subterran.Rendering
 
 		public Renderer(Window targetWindow)
 		{
+			if(targetWindow == null)
+				throw new ArgumentNullException("targetWindow");
+
 			_targetWindow = targetWindow;
 			_targetWindow.MakeCurrent();
 
@@ -52,7 +56,7 @@ namespace Subterran.Rendering
 
 				// Set up the matrices we will need to actually render
 				var projection = Matrix4.CreatePerspectiveFieldOfView(
-					camera.Component.VerticalFoV, (float) size.Width/size.Height,
+					camera.Component.VerticalFov, (float) size.Width/size.Height,
 					camera.Component.ZNear, camera.Component.ZFar);
 				var projectionView = camera.Matrix.Inverted()*projection;
 
@@ -74,13 +78,7 @@ namespace Subterran.Rendering
 		private static void CollapseEntityTreeTo(Entity entity, RenderData data, Matrix4 previousMatrix)
 		{
 			// Create a multiply matrix representing this entity
-			// TODO: Right now i'm refactoring, come back to this and fix this to use Matrix in entity.
-			var entityMatrix =
-				Matrix4.CreateScale(entity.Transform.Scale)*
-				Matrix4.CreateRotationX(entity.Transform.Rotation.X)*
-				Matrix4.CreateRotationY(entity.Transform.Rotation.Y)*
-				Matrix4.CreateRotationZ(entity.Transform.Rotation.Z)*
-				Matrix4.CreateTranslation(entity.Transform.Position);
+			var entityMatrix = entity.Transform.Matrix;
 
 			// Multiply the model matrix with the previously created entity matrix
 			previousMatrix = entityMatrix*previousMatrix;
@@ -88,7 +86,7 @@ namespace Subterran.Rendering
 			// Add all the entities we're interested in to the list
 			data.Renderables.AddRange(
 				entity
-					.GetComponentsOfType<IRenderable>()
+					.GetMany<IRenderable>()
 					.Select(c => new RenderableData
 					{
 						Matrix = previousMatrix,
@@ -97,7 +95,7 @@ namespace Subterran.Rendering
 				);
 			data.Cameras.AddRange(
 				entity
-					.GetComponentsOfType<CameraComponent>()
+					.GetMany<CameraComponent>()
 					.Select(c => new CameraData
 					{
 						Matrix = previousMatrix,

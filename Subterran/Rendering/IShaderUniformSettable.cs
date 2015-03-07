@@ -2,7 +2,7 @@
 {
 	public interface IShaderUniformSettable
 	{
-		void Set(Shader shader, string uniformName);
+		void SetIn(Shader shader, string uniformName);
 		void DisposeSet();
 	}
 }

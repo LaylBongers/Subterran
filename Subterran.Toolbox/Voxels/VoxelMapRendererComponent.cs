@@ -25,7 +25,7 @@ namespace Subterran.Toolbox.Voxels
 		public void Initialize()
 		{
 			_meshIsOutdated = true;
-			_meshRenderer = Entity.RequireComponentOfType<MeshRendererComponent<TVertexType>>();
+			_meshRenderer = Entity.RequireOne<MeshRendererComponent<TVertexType>>();
 			_meshRenderer.StartedRender += StartedRender;
 		}
 
@@ -43,7 +43,7 @@ namespace Subterran.Toolbox.Voxels
 			// If the mesh is outdated, we need to (re)generate it
 			if (_meshIsOutdated)
 			{
-				_meshRenderer.Vertices = MeshGenerator(Voxels);
+				_meshRenderer.SetMesh(MeshGenerator(Voxels));
 				_meshIsOutdated = false;
 			}
 		}

@@ -18,7 +18,7 @@ namespace Subterran.Toolbox.SimplePhysics
 
 			foreach (var entity in worldEntity.Children)
 			{
-				var rigidBody = entity.GetComponentOfType<RigidbodyComponent>();
+				var rigidBody = entity.GetOne<RigidbodyComponent>();
 				if (rigidBody != null && rigidBody.Enabled)
 				{
 					rigidBodies.Add(new Tuple<Entity, RigidbodyComponent>(entity, rigidBody));
@@ -34,7 +34,7 @@ namespace Subterran.Toolbox.SimplePhysics
 
 			foreach (var entity in worldEntity.Children)
 			{
-				var fixedBody = entity.GetComponentOfType<FixedbodyComponent>();
+				var fixedBody = entity.GetOne<FixedbodyComponent>();
 				if (fixedBody != null)
 				{
 					boxes.Add(BoundingBox.FromPositionAndCollider(
@@ -50,7 +50,7 @@ namespace Subterran.Toolbox.SimplePhysics
 		{
 			foreach (var entity in worldEntity.Children)
 			{
-				var component = entity.GetComponentOfType<ISmartFixedbodySource>();
+				var component = entity.GetOne<ISmartFixedbodySource>();
 				if (component != null)
 				{
 					foreach (var boundingBox in component.GetBoundingBoxesWithin(collisionArea))

@@ -58,7 +58,7 @@ namespace Subterran.Toolbox.SimplePhysics
 						position += Timestep.PerSecond(velocity);
 					}
 
-					// Submit the changes to the rigidbody
+					// Submit the changes to the rigid body
 					rigidBody.Item1.Transform.Position = position;
 					rigidBody.Item2.Velocity = velocity;
 				}
@@ -71,19 +71,19 @@ namespace Subterran.Toolbox.SimplePhysics
 		}
 
 		private void MoveOnAxis(ref Vector3 position, ref Vector3 velocity, CubeCollider collider,
-			IEnumerable<BoundingBox> fixedBoxes, StVector.AxisGetFunc axisGetter, StVector.AxisSetAction axisSetter)
+			IEnumerable<BoundingBox> fixedBoxes, AxisGetFunc axisGetter, AxisSetAction axisSetter)
 		{
 			// Find how much we'll move this tick
 			var tickVelocity = Timestep.PerSecond(axisGetter(velocity));
 
-			// Get a bounding box encompassing the start and end of the rigidbody on this axis
+			// Get a bounding box encompassing the start and end of the rigid body on this axis
 			// By using the encompassing bounding box, we can avoid passing through blocks by moving fast
 			var original = BoundingBox.FromPositionAndCollider(position, collider);
 			axisSetter(ref position, axisGetter(position) + tickVelocity); // Velocity is added to position here
 			var target = BoundingBox.FromPositionAndCollider(position, collider);
 			var encompassingBox = BoundingBox.Encompassing(original, target);
 
-			// Get all the smart broadphase collected colliders
+			// Get all the smart broad-phase collected colliders
 			var smartBoxes = PhysicsHelper.FindSmartBoundingBoxes(Entity, encompassingBox);
 
 			foreach (var fixedBox in fixedBoxes.Concat(smartBoxes))

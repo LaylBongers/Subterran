@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System.Diagnostics.CodeAnalysis;
+using OpenTK;
 
 namespace Subterran
 {
@@ -19,23 +20,27 @@ namespace Subterran
 			return value.Z;
 		}
 
+		[SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
 		public static void SetX(ref Vector3 output, float value)
 		{
 			output.X = value;
 		}
 
+		[SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
 		public static void SetY(ref Vector3 output, float value)
 		{
 			output.Y = value;
 		}
 
+		[SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
 		public static void SetZ(ref Vector3 output, float value)
 		{
 			output.Z = value;
 		}
-
-		public delegate float AxisGetFunc(Vector3 value);
-
-		public delegate void AxisSetAction(ref Vector3 output, float value);
 	}
+
+	public delegate float AxisGetFunc(Vector3 value);
+
+	[SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
+	public delegate void AxisSetAction(ref Vector3 output, float value);
 }

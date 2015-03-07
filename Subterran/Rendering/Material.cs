@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.InteropServices;
@@ -15,6 +16,7 @@ namespace Subterran.Rendering
 		{
 		}
 
+		[SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
 		public abstract void RenderBuffer(ref Matrix4 matrix, int buffer, int length);
 	}
 
@@ -97,7 +99,7 @@ namespace Subterran.Rendering
 			_uniformSetters.Add((d, s) =>
 			{
 				var value = (IShaderUniformSettable) getter.Invoke(d, new object[0]);
-				value.Set(Shader, uniformName);
+				value.SetIn(Shader, uniformName);
 			});
 			_uniformDisposers.Add(d =>
 			{

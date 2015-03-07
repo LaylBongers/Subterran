@@ -7,7 +7,7 @@ namespace Subterran.Rendering
 		public CameraComponent()
 		{
 			// Default values
-			VerticalFoV = 0.2f*StMath.Tau;
+			VerticalFov = 0.2f*StMath.Tau;
 			ZNear = 0.1f;
 			ZFar = 500f;
 			Color = Color.CornflowerBlue;
@@ -16,7 +16,7 @@ namespace Subterran.Rendering
 		public Point Position { get; set; }
 		public Size Size { get; set; }
 
-		public float VerticalFoV { get; set; }
+		public float VerticalFov { get; set; }
 
 		public float ZNear { get; set; }
 		public float ZFar { get; set; }

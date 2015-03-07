@@ -14,21 +14,29 @@ namespace Subterran
 
 		public Window(Size size)
 		{
-			_window = new GameWindow(
-				size.Width, size.Height,
-				// Deferred rendering so no samples.
-				// If you want AA, it has to be post-process.
-				new GraphicsMode(32, 16, 0, 0),
-				"Subterran",
-				GameWindowFlags.FixedWindow)
+			try
 			{
-				Visible = true,
-				VSync = VSyncMode.Adaptive
-			};
-			_window.Closing += _window_Closing;
-			_window.Resize += _window_ResizeMoveFocus;
-			_window.Move += _window_ResizeMoveFocus;
-			_window.FocusedChanged += _window_ResizeMoveFocus;
+				// Do not use initialization list, it might throw an exception in the list and then it's not yet set
+				_window = new GameWindow(
+					size.Width, size.Height,
+					// Deferred rendering so no samples.
+					// If you want AA, it has to be post-process.
+					new GraphicsMode(32, 16, 0, 0),
+					"Subterran",
+					GameWindowFlags.FixedWindow);
+
+				_window.Visible = true;
+				_window.VSync = VSyncMode.Adaptive;
+				_window.Closing += _window_Closing;
+				_window.Resize += _window_ResizeMoveFocus;
+				_window.Move += _window_ResizeMoveFocus;
+				_window.FocusedChanged += _window_ResizeMoveFocus;
+			}
+			catch
+			{
+				_window?.Dispose();
+				throw;
+			}
 		}
 
 		public string Title
@@ -77,7 +85,7 @@ namespace Subterran
 			get { return _clipCursor; }
 		}
 
-		public event EventHandler Closing = (s, e) => { };
+		public event EventHandler Closing;
 
 		protected override void Dispose(bool managed)
 		{
@@ -118,7 +126,7 @@ namespace Subterran
 				_window.ClientSize.Height);
 		}
 
-		private void ClearCursorClip()
+		private static void ClearCursorClip()
 		{
 			Cursor.Clip = Rectangle.Empty;
 		}
@@ -138,7 +146,7 @@ namespace Subterran
 		private void _window_Closing(object sender, CancelEventArgs args)
 		{
 			ClearCursorClip();
-			Closing(this, EventArgs.Empty);
+			Closing?.Invoke(this, EventArgs.Empty);
 		}
 	}
 }

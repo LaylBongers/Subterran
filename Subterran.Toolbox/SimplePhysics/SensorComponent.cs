@@ -11,7 +11,7 @@ namespace Subterran.Toolbox.SimplePhysics
 
 		public void Initialize()
 		{
-			var world = Entity.Parent.RequireComponentOfType<PhysicsWorldComponent>();
+			var world = Entity.Parent.RequireOne<PhysicsWorldComponent>();
 			world.Updated += WorldUpdated;
 		}
 

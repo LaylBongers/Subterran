@@ -1,4 +1,5 @@
-﻿using System.Drawing;
+﻿using System;
+using System.Drawing;
 using System.Drawing.Imaging;
 using OpenTK.Graphics.OpenGL4;
 using GLPixelFormat = OpenTK.Graphics.OpenGL4.PixelFormat;
@@ -12,7 +13,10 @@ namespace Subterran.Rendering
 
 		public Texture(Bitmap bitmap)
 		{
-			// Save some metadata
+			if(bitmap == null)
+				throw new ArgumentNullException("bitmap");
+
+			// Save some meta-data
 			Width = bitmap.Width;
 			Height = bitmap.Height;
 
@@ -54,8 +58,13 @@ namespace Subterran.Rendering
 		public int Width { get; set; }
 		public int Height { get; set; }
 
-		public void Set(Shader shader, string uniformName)
+		public void SetIn(Shader shader, string uniformName)
 		{
+			if(shader == null)
+				throw new ArgumentNullException("shader");
+			if (shader == null)
+				throw new ArgumentNullException("uniformName");
+
 			GL.ActiveTexture(TextureUnit.Texture0);
 			GL.BindTexture(TextureTarget.Texture2D, _texture);
 			shader.SetUniform(uniformName, 0);

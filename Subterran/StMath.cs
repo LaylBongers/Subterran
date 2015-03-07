@@ -73,6 +73,9 @@ namespace Subterran
 
 		public static Vector3 RandomizeColor(Random random, int randomness, Color color)
 		{
+			if(random == null)
+				throw new ArgumentNullException("random");
+
 			return NormalizeColor(Color.FromArgb(
 				Range(color.R + random.Next(-randomness, randomness),
 					Byte.MinValue, Byte.MaxValue),

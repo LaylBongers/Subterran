@@ -35,8 +35,8 @@ namespace Subterran
 
 		private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
 		{
-			StCollection.ExecuteForAdded<Entity>(args, i => i.Parent = this);
-			StCollection.ExecuteForRemoved<Entity>(args, i => i.Parent = null);
+			args.ExecuteForAdded<Entity>(i => i.Parent = this);
+			args.ExecuteForRemoved<Entity>(i => i.Parent = null);
 		}
 
 		private void Components_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
@@ -44,17 +44,17 @@ namespace Subterran
 			// Invalidate the cache
 			_getComponentsCache.Clear();
 
-			StCollection.ExecuteForAdded<EntityComponent>(args, i => i.UpdateEntityBinding(this));
-			StCollection.ExecuteForRemoved<EntityComponent>(args, i => i.UpdateEntityBinding(this));
+			args.ExecuteForAdded<EntityComponent>(i => i.UpdateEntityBinding(this));
+			args.ExecuteForRemoved<EntityComponent>(i => i.UpdateEntityBinding(this));
 		}
 
-		public T GetComponentOfType<T>()
+		public T GetOne<T>()
 			where T : class
 		{
-			return GetComponentsOfType<T>().FirstOrDefault();
+			return GetMany<T>().FirstOrDefault();
 		}
 
-		public IEnumerable<T> GetComponentsOfType<T>()
+		public IEnumerable<T> GetMany<T>()
 			where T : class
 		{
 			var type = typeof (T);
@@ -73,10 +73,10 @@ namespace Subterran
 			return components;
 		}
 
-		public T RequireComponentOfType<T>()
+		public T RequireOne<T>()
 			where T : class
 		{
-			var value = GetComponentOfType<T>();
+			var value = GetOne<T>();
 
 			if (value == null)
 				throw new InvalidOperationException("This component requires a " + typeof (T).Name);
@@ -84,10 +84,10 @@ namespace Subterran
 			return value;
 		}
 
-		public T RequireComponentOfType<T>(Func<T, bool> predicate)
+		public T RequireOne<T>(Func<T, bool> predicate)
 			where T : class
 		{
-			var value = GetComponentsOfType<T>().FirstOrDefault(predicate);
+			var value = GetMany<T>().FirstOrDefault(predicate);
 
 			if (value == null)
 				throw new InvalidOperationException(
@@ -109,7 +109,7 @@ namespace Subterran
 			if(func == null)
 				throw new ArgumentNullException("func");
 
-			foreach (var component in GetComponentsOfType<T>())
+			foreach (var component in GetMany<T>())
 			{
 				func(component);
 			}

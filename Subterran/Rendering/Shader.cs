@@ -1,4 +1,5 @@
-﻿using OpenTK;
+﻿using System.Diagnostics.CodeAnalysis;
+using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Subterran.Rendering
@@ -25,7 +26,8 @@ namespace Subterran.Rendering
 		{
 			GL.UseProgram(_program);
 		}
-
+		
+		[SuppressMessage("Microsoft.Design", "CA1045:DoNotPassTypesByReference")]
 		public void SetUniform(string name, ref Matrix4 value)
 		{
 			// TODO: Allow some way of caching the lookup by name

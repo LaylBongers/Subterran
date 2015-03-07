@@ -36,7 +36,7 @@ namespace VoxelWorld
 				(float) -Math.Cos(rotation.Y) * (float)Math.Cos(rotation.X));
 			
 			// Get the physics world which we need to do the raycast
-			var physics = Entity.Parent.Parent.GetComponentOfType<PhysicsWorldComponent>();
+			var physics = Entity.Parent.Parent.GetOne<PhysicsWorldComponent>();
 
 			// TODO: Remove this test
 			_targetPosition = position + direction;

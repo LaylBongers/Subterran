@@ -1,4 +1,5 @@
-﻿using System.Diagnostics;
+﻿using System.Globalization;
+using System.IO;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Subterran.Rendering
@@ -16,8 +17,10 @@ namespace Subterran.Rendering
 			GL.GetShader(shader, ShaderParameter.CompileStatus, out compileStatus);
 			if (compileStatus != 1)
 			{
-				var message = string.Format("Shader {0} failed to compile!", shader);
-				Trace.TraceWarning(message);
+				var message = string.Format(CultureInfo.InvariantCulture,
+					ExceptionMessages.ShaderUtils_ShaderFailedCompile, shader);
+
+				StLogging.Error(message);
 				throw new ShaderException(
 					message,
 					GL.GetShaderInfoLog(shader),
@@ -36,21 +39,26 @@ namespace Subterran.Rendering
 			var log = GL.GetProgramInfoLog(program);
 			if (linkStatus != 1)
 			{
-				var message = string.Format("Shader program {0} failed to link!", program);
-				Trace.TraceError(message);
+				var message = string.Format(CultureInfo.InvariantCulture,
+					ExceptionMessages.ShaderUtils_ProgramFailedLinking, program);
+
+				StLogging.Error(message);
 				throw new ProgramException(message, log);
 			}
 
 			// If there's anything in the log, it might be a warning
 			if (!string.IsNullOrEmpty(log))
 			{
-				Trace.TraceWarning("Shader program {0} compiled with warnings:", program);
-				Trace.Indent();
-				foreach (var logLine in log.Split('\n'))
+				using (var message = new StringWriter(CultureInfo.InvariantCulture))
 				{
-					Trace.TraceWarning(logLine);
+					message.WriteLine(ExceptionMessages.ShaderUtils_ProgramDoesNotContainUniform, program);
+					foreach (var logLine in log.Split('\n'))
+					{
+						message.WriteLine("  " + logLine);
+					}
+
+					StLogging.Warning(message.ToString());
 				}
-				Trace.Unindent();
 			}
 		}
 
@@ -61,8 +69,10 @@ namespace Subterran.Rendering
 			if (value != -1)
 				return value;
 
-			var message = string.Format("Shader program {0} does not contain \"{1}\" uniform!", program, name);
-			Trace.TraceError(message);
+			var message = string.Format(CultureInfo.InvariantCulture,
+				ExceptionMessages.ShaderUtils_ProgramDoesNotContainUniform, program, name);
+
+			StLogging.Error(message);
 			throw new ProgramException(message);
 		}
 	}
