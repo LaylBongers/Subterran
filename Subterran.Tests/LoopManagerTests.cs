@@ -21,7 +21,7 @@ namespace Subterran.Tests
 			// Arrange
 			var manager = new LoopManager();
 			var called = false;
-			manager.Loops.Add(new Loop(_ =>
+			manager.Loops.Add(new GameLoop(_ =>
 			{
 				// By putting this check in front, it runs twice
 				if (called)

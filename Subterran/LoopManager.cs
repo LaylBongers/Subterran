@@ -8,21 +8,13 @@ namespace Subterran
 	public sealed class LoopManager
 	{
 		private bool _keepRunning = true;
-
-		/// <summary>
-		///     Creates and starts a new instance of the Subterran engine.
-		/// </summary>
-		public LoopManager()
-		{
-			Loops = new Collection<Loop>();
-		}
-
+		
 		/// <summary>
 		///     Gets if the instance is currently running.
 		/// </summary>
 		public bool IsRunning { get; private set; }
 
-		public Collection<Loop> Loops { get; set; }
+		public Collection<GameLoop> Loops { get; } = new Collection<GameLoop>();
 
 		public void Run()
 		{

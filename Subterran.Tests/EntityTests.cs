@@ -14,7 +14,7 @@ namespace Subterran.Tests
 			var entity = new Entity {Components = {component}};
 
 			// Act
-			var result = entity.GetComponent<ComponentA>();
+			var result = entity.GetComponentOfType<ComponentA>();
 
 			// Assert
 			Assert.Same(component, result);
@@ -27,7 +27,7 @@ namespace Subterran.Tests
 			var entity = new Entity();
 
 			// Act
-			var result = entity.GetComponent<ComponentA>();
+			var result = entity.GetComponentOfType<ComponentA>();
 
 			// Assert
 			Assert.Null(result);
@@ -41,7 +41,7 @@ namespace Subterran.Tests
 			var entity = new Entity {Components = {component}};
 
 			// Act
-			var result = entity.GetComponent<ComponentA>();
+			var result = entity.GetComponentOfType<ComponentA>();
 
 			// Assert
 			Assert.Null(result);
@@ -56,7 +56,7 @@ namespace Subterran.Tests
 			var entity = new Entity {Components = {componentA, componentB}};
 
 			// Act
-			var result = entity.GetComponent<ComponentA>();
+			var result = entity.GetComponentOfType<ComponentA>();
 
 			// Assert
 			Assert.Same(componentA, result);
@@ -130,7 +130,7 @@ namespace Subterran.Tests
 			var entity = new Entity {Components = {component}};
 
 			// Act
-			var result = entity.RequireComponent<ComponentA>();
+			var result = entity.RequireComponentOfType<ComponentA>();
 
 			// Assert
 			Assert.Same(component, result);
@@ -143,7 +143,7 @@ namespace Subterran.Tests
 			var entity = new Entity();
 
 			// Act & Assert
-			Assert.Throws<InvalidOperationException>(() => entity.RequireComponent<ComponentA>());
+			Assert.Throws<InvalidOperationException>(() => entity.RequireComponentOfType<ComponentA>());
 		}
 
 		[Fact]
@@ -156,7 +156,7 @@ namespace Subterran.Tests
 			var ex = new InvalidOperationException("No exception happened :C");
 			try
 			{
-				entity.RequireComponent<ComponentA>();
+				entity.RequireComponentOfType<ComponentA>();
 			}
 			catch (InvalidOperationException e)
 			{
@@ -176,7 +176,7 @@ namespace Subterran.Tests
 			var entity = new Entity {Components = {component}};
 
 			// Act
-			var result = entity.RequireComponent<ComponentA>(c => c.Data == "Matching");
+			var result = entity.RequireComponentOfType<ComponentA>(c => c.Data == "Matching");
 
 			// Assert
 			Assert.Same(component, result);
@@ -191,7 +191,7 @@ namespace Subterran.Tests
 			var entity = new Entity {Components = {component}};
 
 			// Act & Assert
-			Assert.Throws<InvalidOperationException>(() => entity.RequireComponent<ComponentA>(c => c.Data == "Matching"));
+			Assert.Throws<InvalidOperationException>(() => entity.RequireComponentOfType<ComponentA>(c => c.Data == "Matching"));
 		}
 
 		public abstract class ComponentA : EntityComponent

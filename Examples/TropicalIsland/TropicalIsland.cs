@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 using Subterran;
-using Subterran.Rendering.Components;
+using Subterran.Rendering;
 using Subterran.Toolbox;
 
 namespace TropicalIsland

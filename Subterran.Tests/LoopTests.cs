@@ -11,7 +11,7 @@ namespace Subterran.Tests
 		{
 			// Arrange
 			var func = Substitute.For<Action>();
-			var loop = new Loop(_ => func());
+			var loop = new GameLoop(_ => func());
 
 			// Act
 			loop.ExecuteTicks(TimeSpan.FromSeconds(1));
@@ -27,7 +27,7 @@ namespace Subterran.Tests
 			var func = Substitute.For<Action>();
 
 			// Act
-			var loop = new Loop(_ => func(), 2);
+			var loop = new GameLoop(_ => func(), 2);
 
 			// Assert
 			loop.ExecuteTicks(TimeSpan.FromSeconds(1));
@@ -39,7 +39,7 @@ namespace Subterran.Tests
 		{
 			// Arrange
 			var func = Substitute.For<Action<TimeSpan>>();
-			var loop = new Loop(func, 4) {MaximumTicksPerExecution = 4};
+			var loop = new GameLoop(func, 4) {MaximumTicksPerExecution = 4};
 
 			// Act
 			loop.ExecuteTicks(TimeSpan.FromSeconds(2));
@@ -53,7 +53,7 @@ namespace Subterran.Tests
 		{
 			// Arrange
 			var func = Substitute.For<Action>();
-			var loop = new Loop(_ => func(), 4) {MaximumTicksPerExecution = 4};
+			var loop = new GameLoop(_ => func(), 4) {MaximumTicksPerExecution = 4};
 
 			// Act
 			loop.ExecuteTicks(TimeSpan.FromSeconds(2));

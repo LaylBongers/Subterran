@@ -20,6 +20,7 @@
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -60,11 +61,11 @@
     <Compile Include="Assembling\GameInfo.cs" />
     <Compile Include="IInitializable.cs" />
     <Compile Include="LoopManager.cs" />
-    <Compile Include="Loop.cs" />
+    <Compile Include="GameLoop.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomExtensions.cs" />
-    <Compile Include="Rendering\Components\CameraComponent.cs" />
-    <Compile Include="Rendering\Components\MeshRendererComponent.cs" />
+    <Compile Include="Rendering\CameraComponent.cs" />
+    <Compile Include="Rendering\MeshRendererComponent.cs" />
     <Compile Include="Rendering\IRenderable.cs" />
     <Compile Include="Rendering\IShaderUniformSettable.cs" />
     <Compile Include="Rendering\Material.cs" />
@@ -73,7 +74,6 @@
     <Compile Include="Rendering\ShaderException.cs" />
     <Compile Include="Rendering\ShaderUtils.cs" />
     <Compile Include="Rendering\Texture.cs" />
-    <Compile Include="Serialization\Assets.cs" />
     <Compile Include="StCollection.cs" />
     <Compile Include="StLogging.cs" />
     <Compile Include="StVector.cs" />
@@ -91,7 +91,9 @@
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <CodeAnalysisDictionary Include="CustomDictionary.xml" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

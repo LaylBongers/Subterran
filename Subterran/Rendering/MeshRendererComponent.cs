@@ -3,7 +3,7 @@ using System.Runtime.InteropServices;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
-namespace Subterran.Rendering.Components
+namespace Subterran.Rendering
 {
 	public class MeshRendererComponent<TVertexType> : EntityComponent, IRenderable
 		where TVertexType : struct 

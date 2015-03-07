@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Diagnostics;
+using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
 namespace Subterran
@@ -16,27 +17,21 @@ namespace Subterran
 		{
 			Name = "Entity";
 
-			Transform = new Transform();
 			Transform.OwningEntity = this;
 
-			Children = new ObservableCollection<Entity>();
 			Children.CollectionChanged += Children_CollectionChanged;
-
-			Components = new ObservableCollection<EntityComponent>();
 			Components.CollectionChanged += Components_CollectionChanged;
 		}
 
 		public string Name { get; set; }
-		public Transform Transform { get; set; }
+		public Transform Transform { get; set; } = new Transform();
 		public Entity Parent { get; private set; }
-		public ObservableCollection<Entity> Children { get; private set; }
-		public ObservableCollection<EntityComponent> Components { get; private set; }
-		
+		public ObservableCollection<Entity> Children { get; } = new ObservableCollection<Entity>();
+		public ObservableCollection<EntityComponent> Components { get; } = new ObservableCollection<EntityComponent>();
+
 		[DebuggerBrowsable(DebuggerBrowsableState.Never)]
-		private string DebuggerDisplay
-		{
-			get { return Name ?? "Anonymous Entity"; }
-		}
+		[SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
+		private string DebuggerDisplay => Name ?? "Anonymous Entity";
 
 		private void Children_CollectionChanged(object sender, NotifyCollectionChangedEventArgs args)
 		{
@@ -53,13 +48,13 @@ namespace Subterran
 			StCollection.ExecuteForRemoved<EntityComponent>(args, i => i.UpdateEntityBinding(this));
 		}
 
-		public T GetComponent<T>()
+		public T GetComponentOfType<T>()
 			where T : class
 		{
-			return GetComponents<T>().FirstOrDefault();
+			return GetComponentsOfType<T>().FirstOrDefault();
 		}
 
-		public IEnumerable<T> GetComponents<T>()
+		public IEnumerable<T> GetComponentsOfType<T>()
 			where T : class
 		{
 			var type = typeof (T);
@@ -68,7 +63,7 @@ namespace Subterran
 			object cachedComponents;
 			if (_getComponentsCache.TryGetValue(type, out cachedComponents))
 			{
-				return (T[])cachedComponents;
+				return (T[]) cachedComponents;
 			}
 
 			// We couldn't retrieve
@@ -78,10 +73,10 @@ namespace Subterran
 			return components;
 		}
 
-		public T RequireComponent<T>()
+		public T RequireComponentOfType<T>()
 			where T : class
 		{
-			var value = GetComponent<T>();
+			var value = GetComponentOfType<T>();
 
 			if (value == null)
 				throw new InvalidOperationException("This component requires a " + typeof (T).Name);
@@ -89,10 +84,10 @@ namespace Subterran
 			return value;
 		}
 
-		public T RequireComponent<T>(Func<T, bool> predicate)
+		public T RequireComponentOfType<T>(Func<T, bool> predicate)
 			where T : class
 		{
-			var value = GetComponents<T>().FirstOrDefault(predicate);
+			var value = GetComponentsOfType<T>().FirstOrDefault(predicate);
 
 			if (value == null)
 				throw new InvalidOperationException(
@@ -111,7 +106,10 @@ namespace Subterran
 		public void ForEach<T>(Action<T> func)
 			where T : class
 		{
-			foreach (var component in GetComponents<T>())
+			if(func == null)
+				throw new ArgumentNullException("func");
+
+			foreach (var component in GetComponentsOfType<T>())
 			{
 				func(component);
 			}

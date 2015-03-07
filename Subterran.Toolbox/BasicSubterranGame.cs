@@ -27,8 +27,8 @@ namespace Subterran.Toolbox
 			{
 				Loops =
 				{
-					new Loop(Update, 120),
-					new Loop(Render)
+					new GameLoop(Update, 120),
+					new GameLoop(Render)
 				}
 			};
 

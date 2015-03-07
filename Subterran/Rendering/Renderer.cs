@@ -3,7 +3,6 @@ using System.Drawing;
 using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
-using Subterran.Rendering.Components;
 
 namespace Subterran.Rendering
 {
@@ -89,7 +88,7 @@ namespace Subterran.Rendering
 			// Add all the entities we're interested in to the list
 			data.Renderables.AddRange(
 				entity
-					.GetComponents<IRenderable>()
+					.GetComponentsOfType<IRenderable>()
 					.Select(c => new RenderableData
 					{
 						Matrix = previousMatrix,
@@ -98,7 +97,7 @@ namespace Subterran.Rendering
 				);
 			data.Cameras.AddRange(
 				entity
-					.GetComponents<CameraComponent>()
+					.GetComponentsOfType<CameraComponent>()
 					.Select(c => new CameraData
 					{
 						Matrix = previousMatrix,

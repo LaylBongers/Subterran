@@ -2,18 +2,18 @@
 
 namespace Subterran
 {
-	public sealed class Loop
+	public sealed class GameLoop
 	{
 		private readonly Action<TimeSpan> _callback;
 		private TimeSpan _accumulator;
 
-		public Loop(Action<TimeSpan> callback)
+		public GameLoop(Action<TimeSpan> callback)
 		{
 			_callback = callback;
 			MaximumTicksPerExecution = 8;
 		}
 
-		public Loop(Action<TimeSpan> callback, int rate)
+		public GameLoop(Action<TimeSpan> callback, int rate)
 			: this(callback)
 		{
 			_callback = callback;

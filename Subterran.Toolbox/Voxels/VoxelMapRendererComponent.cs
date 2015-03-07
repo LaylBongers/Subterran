@@ -1,5 +1,5 @@
 ﻿using System;
-using Subterran.Rendering.Components;
+using Subterran.Rendering;
 
 namespace Subterran.Toolbox.Voxels
 {
@@ -25,7 +25,7 @@ namespace Subterran.Toolbox.Voxels
 		public void Initialize()
 		{
 			_meshIsOutdated = true;
-			_meshRenderer = Entity.RequireComponent<MeshRendererComponent<TVertexType>>();
+			_meshRenderer = Entity.RequireComponentOfType<MeshRendererComponent<TVertexType>>();
 			_meshRenderer.StartedRender += StartedRender;
 		}
 

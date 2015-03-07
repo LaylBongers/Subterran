@@ -17,8 +17,8 @@ namespace VoxelWorld
 
 		public void Initialize()
 		{
-			_rigidbody = Entity.RequireComponent<RigidbodyComponent>();
-			_jumpSensor = Entity.RequireComponent<SensorComponent>(s => s.Name == "JumpSensor");
+			_rigidbody = Entity.RequireComponentOfType<RigidbodyComponent>();
+			_jumpSensor = Entity.RequireComponentOfType<SensorComponent>(s => s.Name == "JumpSensor");
 		}
 
 		public void Update(TimeSpan elapsed)

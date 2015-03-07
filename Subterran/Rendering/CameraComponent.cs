@@ -1,6 +1,6 @@
 ﻿using System.Drawing;
 
-namespace Subterran.Rendering.Components
+namespace Subterran.Rendering
 {
 	public sealed class CameraComponent : EntityComponent
 	{

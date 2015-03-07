@@ -1,5 +1,4 @@
 ﻿using Subterran.Rendering;
-using Subterran.Rendering.Components;
 using Subterran.Toolbox.Components;
 using Subterran.Toolbox.Materials;
 
