@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Diagnostics;
 
 namespace Subterran.Toolbox
 {
@@ -20,7 +19,7 @@ namespace Subterran.Toolbox
 			// Make sure the developer knows if we're running slow
 			if (_condition() && _messageTimer == TimeSpan.Zero)
 			{
-				Trace.TraceInformation(_warningBuilder());
+				StLogging.Info(_warningBuilder());
 				_messageTimer = TimeSpan.FromSeconds(5);
 			}
 

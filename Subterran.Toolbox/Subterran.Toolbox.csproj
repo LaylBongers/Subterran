@@ -45,7 +45,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BasicComponents.cs" />
-    <Compile Include="BasicEngine.cs" />
     <Compile Include="BasicEntities.cs" />
     <Compile Include="BasicMaterials.cs" />
     <Compile Include="BasicShaders.cs" />
@@ -85,14 +84,6 @@
     <Compile Include="Voxels\VoxelVertex.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Subterran.Input\Subterran.Input.csproj">
-      <Project>{2d8d561a-ffaa-4588-8b61-f4b236c07c83}</Project>
-      <Name>Subterran.Input</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\Subterran.Rendering\Subterran.Rendering.csproj">
-      <Project>{54554f92-d476-4643-be25-a0dc6352adab}</Project>
-      <Name>Subterran.Rendering</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Subterran\Subterran.csproj">
       <Project>{ca6493f3-a13c-4dff-b31d-e2d96148211f}</Project>
       <Name>Subterran</Name>

@@ -9,14 +9,14 @@ namespace Subterran.Toolbox
 		{
 			return new PerformanceTracer(
 				() => loopManager.Loops.Any(l => l.IsRunningSlow),
-				() => "The game is running slow!");
+				() => "The game is running slow.");
 		}
 
 		public static PerformanceTracer CreateLoopSkippingTracer(LoopManager loopManager)
 		{
 			return new PerformanceTracer(
 				() => loopManager.Loops.Any(l => l.IsSkippingTime),
-				() => "The game is skipping frame time!");
+				() => "The game is skipping frame time.");
 		}
 
 		public static PerformanceTracer CreateGcTimeTracer()
@@ -32,7 +32,7 @@ namespace Subterran.Toolbox
 					value = gcTimeCounter.NextValue();
 					return value > 10;
 				},
-				() => "The game has spent a lot of time in garbage collection! (" + value + "%)");
+				() => "The game has spent a lot of time in garbage collection. (" + value + "%)");
 		}
 	}
 }

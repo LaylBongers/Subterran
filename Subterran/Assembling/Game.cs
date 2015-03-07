@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Newtonsoft.Json;
 
 namespace Subterran.Assembling
@@ -8,14 +7,10 @@ namespace Subterran.Assembling
 	public class Game : Disposable
 	{
 		private readonly Dictionary<string, IAssetSource> _assetSources;
-		private readonly Type _engineType;
 
 		public Game(GameInfo info)
 		{
 			_assetSources = new Dictionary<string, IAssetSource>();
-
-			_engineType = info.EngineType;
-			Engine = CreateEngine(this, info);
 		}
 
 		public object Engine { get; set; }
@@ -29,7 +24,7 @@ namespace Subterran.Assembling
 		{
 			// TODO: Move assets to a separate Assets class
 
-			// Smokecheck
+			// Smoke check
 			if (string.IsNullOrEmpty(path))
 				throw new ArgumentNullException(path);
 			if (path[0] != '@')
@@ -58,15 +53,7 @@ namespace Subterran.Assembling
 
 		public void Run()
 		{
-			// Find the entry point of the engine
-			var entryPoint = _engineType.GetMethods().First(EngineHelpers.IsValidEntryPoint);
-			entryPoint.Invoke(Engine, new object[] {});
-		}
-
-		private static object CreateEngine(Game game, GameInfo info)
-		{
-			var constructor = info.EngineType.GetConstructors().First(EngineHelpers.IsValidConstructor);
-			return constructor.Invoke(new object[] {game, info.EngineParameters});
+			throw new NotImplementedException();
 		}
 	}
 }

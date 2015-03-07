@@ -1,5 +1,4 @@
-﻿using System.Diagnostics;
-using OpenTK;
+﻿using OpenTK;
 using OpenTK.Graphics.OpenGL4;
 
 namespace Subterran.Rendering
@@ -19,7 +18,7 @@ namespace Subterran.Rendering
 
 			ShaderUtils.DetectErrors(_program);
 
-			Trace.TraceInformation("Created new shader program {0}!", _program);
+			StLogging.Info("Created new shader program {0}.", _program);
 		}
 
 		public void Use()

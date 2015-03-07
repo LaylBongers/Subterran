@@ -2,7 +2,6 @@
 using System.Collections.ObjectModel;
 using System.Drawing;
 using OpenTK.Input;
-using Subterran.Input;
 using Subterran.Rendering;
 
 namespace Subterran.Toolbox
@@ -18,7 +17,6 @@ namespace Subterran.Toolbox
 			Window.Closing += (s, e) => _loopManager.Stop();
 
 			// Set up our engine's modules
-			Input = new InputManager();
 			Renderer = new Renderer(Window);
 
 			// Set up the game world
@@ -39,7 +37,6 @@ namespace Subterran.Toolbox
 		}
 
 		public Window Window { get; private set; }
-		public InputManager Input { get; private set; }
 		public Renderer Renderer { get; private set; }
 		public Entity World { get; set; }
 		public Collection<PerformanceTracer> PerformanceTracers { get; private set; }
@@ -87,7 +84,6 @@ namespace Subterran.Toolbox
 
 			// Update our window and process any given input
 			Window.ProcessEvents();
-			Input.Update();
 
 			// Close the game on specific key presses
 			if (IsCloseShortcutDown())

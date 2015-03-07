@@ -75,10 +75,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Subterran.Rendering\Subterran.Rendering.csproj">
-      <Project>{54554f92-d476-4643-be25-a0dc6352adab}</Project>
-      <Name>Subterran.Rendering</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Subterran.Toolbox\Subterran.Toolbox.csproj">
       <Project>{fd41c4ed-9387-48d1-bf6f-bb1347dfa10c}</Project>
       <Name>Subterran.Toolbox</Name>

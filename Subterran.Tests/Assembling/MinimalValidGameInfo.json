@@ -1,6 +1,4 @@
 ﻿{
     "Name": "",
-    "EngineType": "Subterran.Tests.Assembling.ValidEngine",
-    "EngineParameters": {
-    }
+    "StartUi": ""
 }

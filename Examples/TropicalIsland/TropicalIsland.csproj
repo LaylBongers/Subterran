@@ -64,14 +64,6 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Subterran.Input\Subterran.Input.csproj">
-      <Project>{2d8d561a-ffaa-4588-8b61-f4b236c07c83}</Project>
-      <Name>Subterran.Input</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\Subterran.Rendering\Subterran.Rendering.csproj">
-      <Project>{54554f92-d476-4643-be25-a0dc6352adab}</Project>
-      <Name>Subterran.Rendering</Name>
-    </ProjectReference>
     <ProjectReference Include="..\..\Subterran.Toolbox\Subterran.Toolbox.csproj">
       <Project>{fd41c4ed-9387-48d1-bf6f-bb1347dfa10c}</Project>
       <Name>Subterran.Toolbox</Name>

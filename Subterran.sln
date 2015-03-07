@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.31101.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.22609.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran", "Subterran\Subterran.csproj", "{CA6493F3-A13C-4DFF-B31D-E2D96148211F}"
 EndProject
@@ -13,13 +13,11 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Tests", "Subterra
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Toolbox", "Subterran.Toolbox\Subterran.Toolbox.csproj", "{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Rendering", "Subterran.Rendering\Subterran.Rendering.csproj", "{54554F92-D476-4643-BE25-A0DC6352ADAB}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Subterran.Input", "Subterran.Input\Subterran.Input.csproj", "{2D8D561A-FFAA-4588-8B61-F4B236C07C83}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VoxelWorld", "Examples\VoxelWorld\VoxelWorld.csproj", "{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JsonGame", "Examples\JsonGame\JsonGame.csproj", "{98D60E85-477C-45C0-8744-80921C2DD2DF}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Editor", "Editor", "{9EF848F7-3C2C-457E-B8E6-FA5E54C8E6E5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,14 +41,6 @@ Global
 		{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FD41C4ED-9387-48D1-BF6F-BB1347DFA10C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{54554F92-D476-4643-BE25-A0DC6352ADAB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{54554F92-D476-4643-BE25-A0DC6352ADAB}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{54554F92-D476-4643-BE25-A0DC6352ADAB}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{54554F92-D476-4643-BE25-A0DC6352ADAB}.Release|Any CPU.Build.0 = Release|Any CPU
-		{2D8D561A-FFAA-4588-8B61-F4B236C07C83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2D8D561A-FFAA-4588-8B61-F4B236C07C83}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{2D8D561A-FFAA-4588-8B61-F4B236C07C83}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2D8D561A-FFAA-4588-8B61-F4B236C07C83}.Release|Any CPU.Build.0 = Release|Any CPU
 		{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A20FFE5B-16E5-44C0-88CD-9D3AA7F98391}.Release|Any CPU.ActiveCfg = Release|Any CPU
