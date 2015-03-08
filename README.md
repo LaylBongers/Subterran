@@ -1,4 +1,4 @@
-Subterran [![NuGet](http://img.shields.io/nuget/v/Subterran.Toolbox.svg)](https://www.nuget.org/packages/Subterran.Toolbox/) [![Build status](https://img.shields.io/appveyor/ci/LaylConway/Subterran.svg)](https://ci.appveyor.com/project/LaylConway/subterran)
+Subterran [![NuGet](http://img.shields.io/nuget/v/Subterran.Toolbox.svg)](https://www.nuget.org/packages/Subterran.Toolbox/) [![Build status](https://img.shields.io/appveyor/ci/LaylConway/Subterran.svg)](https://ci.appveyor.com/project/LaylConway/subterran) [![Coverage Status](https://coveralls.io/repos/LaylConway/Subterran/badge.svg?branch=develop)](https://coveralls.io/r/LaylConway/Subterran?branch=develop)
 ======
 
 Subterran is an open source 3D game engine written in C#.
