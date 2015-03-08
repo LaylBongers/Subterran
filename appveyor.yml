@@ -30,6 +30,7 @@ before_build:
 
 build:
   verbosity: minimal
+  project: Subterran.sln
   publish_nuget: true
 # If the symbol server dies, disable this so nuget updates can go through
   publish_nuget_symbols: true
