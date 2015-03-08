@@ -51,7 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AssetManager.cs" />
+    <Compile Include="Assets\AssetService.cs" />
     <Compile Include="Assets\DirectoryAssetSource.cs" />
     <Compile Include="Assets\IAssetSource.cs" />
     <Compile Include="Assets\AssetPath.cs" />

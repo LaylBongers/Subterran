@@ -4,7 +4,7 @@ using Xunit;
 
 namespace Subterran.Tests
 {
-	public class LoopTests
+	public class GameLoopTests
 	{
 		[Fact]
 		public void Constructor_NoExplicitRate_ExecutesTickOnce()

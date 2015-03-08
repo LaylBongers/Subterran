@@ -69,12 +69,12 @@
   <ItemGroup>
     <Compile Include="Assets\AssetUriTests.cs" />
     <Compile Include="GameInfoTests.cs" />
-    <Compile Include="Assets\AssetManagerTests.cs" />
+    <Compile Include="Assets\AssetServiceTests.cs" />
     <Compile Include="DisposableTests.cs" />
     <Compile Include="EntityComponentTests.cs" />
     <Compile Include="EntityTests.cs" />
     <Compile Include="LoopManagerTests.cs" />
-    <Compile Include="LoopTests.cs" />
+    <Compile Include="GameLoopTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StMathTests.cs" />
     <Compile Include="Toolbox\SimplePhysics\PhysicsWorldComponentTests.cs" />

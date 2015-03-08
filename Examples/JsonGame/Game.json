@@ -6,12 +6,12 @@
 			"Configuration": "Assets.json"
 		},
 		{
-			"ServiceType": "Subterran.GameLoopService",
+			"ServiceType": "Subterran.Toolbox.BasicGameLoopService",
 			"Configuration": null
-		},
-		{
-			"ServiceType": "Subterran.BootstrapperService",
-			"Configuration": "Bootstrapper.json"
 		}
-	]
+	],
+	"Bootstrapper": {
+		"BootstrapperType": "Subterran.Toolbox.BasicBootstrapperService",
+		"Configuration": "Bootstrapper.json"
+	}
 }
