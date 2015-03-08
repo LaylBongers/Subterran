@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Subterran.Assembling
+namespace Subterran.Assets
 {
 	public class DirectoryAssetSource : IAssetSource
 	{

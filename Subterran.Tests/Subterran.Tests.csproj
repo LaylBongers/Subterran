@@ -67,8 +67,9 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assembling\GameInfoTests.cs" />
-    <Compile Include="Assembling\GameTests.cs" />
+    <Compile Include="Assets\AssetUriTests.cs" />
+    <Compile Include="GameInfoTests.cs" />
+    <Compile Include="Assets\AssetManagerTests.cs" />
     <Compile Include="DisposableTests.cs" />
     <Compile Include="EntityComponentTests.cs" />
     <Compile Include="EntityTests.cs" />
@@ -79,9 +80,6 @@
     <Compile Include="Toolbox\SimplePhysics\PhysicsWorldComponentTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Assembling\MinimalValidGameInfo.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>

@@ -1,5 +1,5 @@
 ﻿using System.IO;
-using Subterran.Assembling;
+using Subterran;
 
 namespace JsonGame
 {
@@ -13,9 +13,9 @@ namespace JsonGame
 			var gameInfo = GameInfo.FromJson(File.ReadAllText("./Game.json"));
 
 			// Create and run our actual game
-			using (var game = new Game(gameInfo))
+			using (var game = new GameInstance(gameInfo))
 			{
-				game.Run();
+				game.AwaitStop();
 			}
 		}
 	}

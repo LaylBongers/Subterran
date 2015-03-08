@@ -1,4 +1,17 @@
 ﻿{
 	"Name": "Json Game Example",
-	"StartUi": "@GameRoot/MainUi.json"
+	"Services": [
+		{
+			"ServiceType": "Subterran.Assets.AssetService",
+			"Configuration": "Assets.json"
+		},
+		{
+			"ServiceType": "Subterran.GameLoopService",
+			"Configuration": null
+		},
+		{
+			"ServiceType": "Subterran.BootstrapperService",
+			"Configuration": "Bootstrapper.json"
+		}
+	]
 }

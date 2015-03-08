@@ -1,4 +1,4 @@
-﻿namespace Subterran.Assembling
+﻿namespace Subterran.Assets
 {
 	public interface IAssetSource
 	{

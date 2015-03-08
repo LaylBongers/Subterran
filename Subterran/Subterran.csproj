@@ -21,6 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <LangVersion>default</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>none</DebugType>
@@ -50,13 +51,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assembling\DirectoryAssetSource.cs" />
-    <Compile Include="Assembling\IAssetSource.cs" />
+    <Compile Include="Assets\AssetManager.cs" />
+    <Compile Include="Assets\DirectoryAssetSource.cs" />
+    <Compile Include="Assets\IAssetSource.cs" />
+    <Compile Include="Assets\AssetPath.cs" />
+    <Compile Include="Assets\AssetPathConverter.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityComponent.cs" />
-    <Compile Include="Assembling\Game.cs" />
-    <Compile Include="Assembling\GameInfo.cs" />
+    <Compile Include="GameInstance.cs" />
+    <Compile Include="GameInfo.cs" />
     <Compile Include="ExceptionMessages.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -78,6 +82,7 @@
     <Compile Include="Rendering\ShaderUtils.cs" />
     <Compile Include="Rendering\Texture.cs" />
     <Compile Include="CollectionExtensions.cs" />
+    <Compile Include="ServiceInfo.cs" />
     <Compile Include="StLogging.cs" />
     <Compile Include="StVector.cs" />
     <Compile Include="TimeSpanExtensions.cs" />

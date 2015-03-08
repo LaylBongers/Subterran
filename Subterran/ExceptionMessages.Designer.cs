@@ -61,7 +61,25 @@ namespace Subterran {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shader program {0} does not contain \&quot;{1}\&quot; uniform!.
+        ///   Looks up a localized string similar to Type &quot;{0}&quot; is ambiguous..
+        /// </summary>
+        internal static string GameInfo_TypeAmbiguous {
+            get {
+                return ResourceManager.GetString("GameInfo_TypeAmbiguous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type &quot;{0}&quot; could not be found..
+        /// </summary>
+        internal static string GameInfo_TypeNotFound {
+            get {
+                return ResourceManager.GetString("GameInfo_TypeNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Shader program {0} does not contain &quot;{1}&quot; uniform..
         /// </summary>
         internal static string ShaderUtils_ProgramDoesNotContainUniform {
             get {
@@ -70,7 +88,7 @@ namespace Subterran {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shader program {0} failed to link!.
+        ///   Looks up a localized string similar to Shader program {0} failed to link..
         /// </summary>
         internal static string ShaderUtils_ProgramFailedLinking {
             get {
@@ -88,7 +106,7 @@ namespace Subterran {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Shader {0} failed to compile!.
+        ///   Looks up a localized string similar to Shader {0} failed to compile..
         /// </summary>
         internal static string ShaderUtils_ShaderFailedCompile {
             get {

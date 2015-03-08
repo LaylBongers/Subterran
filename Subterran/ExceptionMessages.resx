@@ -117,16 +117,22 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="GameInfo_TypeAmbiguous" xml:space="preserve">
+    <value>Type "{0}" is ambiguous.</value>
+  </data>
+  <data name="GameInfo_TypeNotFound" xml:space="preserve">
+    <value>Type "{0}" could not be found.</value>
+  </data>
   <data name="ShaderUtils_ProgramDoesNotContainUniform" xml:space="preserve">
-    <value>Shader program {0} does not contain \"{1}\" uniform!</value>
+    <value>Shader program {0} does not contain "{1}" uniform.</value>
   </data>
   <data name="ShaderUtils_ProgramFailedLinking" xml:space="preserve">
-    <value>Shader program {0} failed to link!</value>
+    <value>Shader program {0} failed to link.</value>
   </data>
   <data name="ShaderUtils_ProgramWithLog" xml:space="preserve">
     <value>Shader program {0} compiled with log:</value>
   </data>
   <data name="ShaderUtils_ShaderFailedCompile" xml:space="preserve">
-    <value>Shader {0} failed to compile!</value>
+    <value>Shader {0} failed to compile.</value>
   </data>
 </root>

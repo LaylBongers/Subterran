@@ -1,0 +1,9 @@
+﻿{
+	"Sources": [
+		{
+			"Name": "Assets",
+			"Type": "Assets.DirectoryAssetSource",
+			"Parameter": "Assets"
+		}
+	]
+}
