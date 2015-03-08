@@ -1,10 +1,13 @@
+# We're using C# 6.0, so we need to adjust the platform
 os: Visual Studio 2015 CTP 6
 
+# The path also needs to be set correctly so we get the correct tools
 install:
   - set PATH=C:\Program Files (x86)\MSBuild\14.0\Bin;%PATH%
 
 configuration: Release
 
+# Rewrites the Verison on the DLLs
 version: 1.0.{build}
 assembly_info:
   patch: true
@@ -12,6 +15,10 @@ assembly_info:
   assembly_version: "1.0.{build}"
   assembly_file_version: "{version}"
   assembly_informational_version: "{version}"
+
+environment:
+  COVERALLS_REPO_TOKEN:
+    secure: ZffVSrlIdZNrnQf+k4uej4/5pMeraSY0ctOxHMc7eUyTXGWq5wVQEH6xOI8LcbeD
 
 nuget:
   account_feed: true
@@ -23,9 +30,14 @@ before_build:
 
 build:
   verbosity: minimal
-  publish_nuget: true             # package projects with .nuspec files and push to artifacts
+  publish_nuget: true
 # If the symbol server dies, disable this so nuget updates can go through
-  publish_nuget_symbols: true     # generate and publish NuGet symbol packages
+  publish_nuget_symbols: true
+
+# This is for publishing to coveralls.io
+after_test:
+  - packages\OpenCover.4.5.3723\OpenCover.Console.exe -register:user -target:xunit.console.exe "-targetargs:""Subterran.Tests\bin\$env:CONFIGURATION\Subterran.Tests.dll"" /noshadow /appveyor" -filter:"+[Subterran*]*" -output:coverage.xml
+  - packages\coveralls.io.1.2.5-beta\tools\coveralls.net.exe --opencover coverage.xml
 
 artifacts:
   # Subterran.Toolbox contains all the Subterran libraries in the output

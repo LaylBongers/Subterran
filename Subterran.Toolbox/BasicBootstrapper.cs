@@ -1,6 +1,6 @@
 ﻿namespace Subterran.Toolbox
 {
-	public class BasicBootstrapperService
+	public class BasicBootstrapper
 	{
 	}
 }

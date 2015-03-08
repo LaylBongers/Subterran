@@ -7,6 +7,7 @@ namespace Subterran.Tests.Assets
 {
 	[Trait("Type", "Unit")]
 	[Trait("Namespace", "Subterran.Assets")]
+	[Trait("Class", "Subterran.Assets.AssetService")]
 	public class AssetServiceTests
 	{
 		[Fact]

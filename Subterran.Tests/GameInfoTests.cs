@@ -5,6 +5,7 @@ namespace Subterran.Tests
 {
 	[Trait("Type", "Unit")]
 	[Trait("Namespace", "Subterran")]
+	[Trait("Class", "Subterran.GameInfo")]
 	public class GameInfoTests
 	{
 		[Fact]

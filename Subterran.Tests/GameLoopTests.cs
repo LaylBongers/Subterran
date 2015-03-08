@@ -4,6 +4,9 @@ using Xunit;
 
 namespace Subterran.Tests
 {
+	[Trait("Type", "Unit")]
+	[Trait("Namespace", "Subterran")]
+	[Trait("Class", "Subterran.GameLoop")]
 	public class GameLoopTests
 	{
 		[Fact]

@@ -2,6 +2,9 @@
 
 namespace Subterran.Tests
 {
+	[Trait("Type", "Unit")]
+	[Trait("Namespace", "Subterran")]
+	[Trait("Class", "Subterran.Disposable")]
 	public class DisposableTests
 	{
 		[Fact]

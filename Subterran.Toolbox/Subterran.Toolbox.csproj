@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BasicBootstrapperService.cs" />
+    <Compile Include="BasicBootstrapper.cs" />
     <Compile Include="BasicComponents.cs" />
     <Compile Include="BasicEntities.cs" />
     <Compile Include="BasicGameLoopService.cs" />

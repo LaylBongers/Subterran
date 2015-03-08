@@ -73,6 +73,7 @@
     <Compile Include="DisposableTests.cs" />
     <Compile Include="EntityComponentTests.cs" />
     <Compile Include="EntityTests.cs" />
+    <Compile Include="GameInstanceTests.cs" />
     <Compile Include="LoopManagerTests.cs" />
     <Compile Include="GameLoopTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

@@ -11,7 +11,7 @@
 		}
 	],
 	"Bootstrapper": {
-		"BootstrapperType": "Subterran.Toolbox.BasicBootstrapperService",
+		"BootstrapperType": "Subterran.Toolbox.BasicBootstrapper",
 		"Configuration": "Bootstrapper.json"
 	}
 }
