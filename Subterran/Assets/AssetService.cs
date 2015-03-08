@@ -4,10 +4,10 @@ using Newtonsoft.Json;
 
 namespace Subterran.Assets
 {
-	public class AssetService
+	public sealed class AssetService
 	{
 		private readonly Dictionary<string, IAssetSource> _assetSources = new Dictionary<string, IAssetSource>();
-
+		
 		public void AddSource(string name, IAssetSource source)
 		{
 			_assetSources.Add(name, source);
@@ -20,7 +20,7 @@ namespace Subterran.Assets
 
 		public T GetAsset<T>(AssetPath path)
 		{
-			if(path == null)
+			if (path == null)
 				throw new ArgumentNullException("path");
 
 			// Check if we've got an asset source for this prefix

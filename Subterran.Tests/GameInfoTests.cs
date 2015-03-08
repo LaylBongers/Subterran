@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using System;
+using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace Subterran.Tests
@@ -27,7 +28,7 @@ namespace Subterran.Tests
 		}
 
 		[Fact]
-		public void FromJson_WithServices_Deserializes()
+		public void FromJson_WithService_Deserializes()
 		{
 			// Arrange
 			var json = new JObject
@@ -51,10 +52,10 @@ namespace Subterran.Tests
 			Assert.Equal(1, services.Count);
 			var service = services[0];
 			Assert.Equal(typeof(FakeService), service.ServiceType);
-			Assert.Equal("FakeFile.json", service.Configuration);
+			Assert.Equal("FakeFile.json", service.Configuration.Path);
 		}
 
-		private class FakeService
+		private sealed class FakeService
 		{
 		}
 	}

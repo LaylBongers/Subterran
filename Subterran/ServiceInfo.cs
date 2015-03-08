@@ -5,6 +5,6 @@ namespace Subterran
 	public class ServiceInfo
 	{
 		public Type ServiceType { get; set; }
-		public string Configuration { get; set; }
+		public ServiceConfig Configuration { get; set; }
 	}
 }

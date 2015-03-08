@@ -33,7 +33,7 @@ namespace Subterran
 				var service = new ServiceInfo();
 
 				service.ServiceType = GetTypeFromName(item["ServiceType"].ToObject<string>());
-				service.Configuration = item["Configuration"].ToObject<string>();
+				service.Configuration = item["Configuration"].ToObject<ServiceConfig>();
 
 				value.Services.Add(service);
 			}
@@ -48,14 +48,19 @@ namespace Subterran
 				.ToList();
 
 			if (types.Count == 0)
-				throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture,
-					ExceptionMessages.GameInfo_TypeNotFound, typeName));
+				ThrowTypeError(ExceptionMessages.GameInfo_TypeNotFound, typeName);
 
 			if (types.Count > 1)
-				throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture,
-					ExceptionMessages.GameInfo_TypeAmbiguous, typeName));
+				ThrowTypeError(ExceptionMessages.GameInfo_TypeAmbiguous, typeName);
 
+			var type = types[0];
+			
 			return types[0];
+		}
+
+		private static void ThrowTypeError(string message, string typeName)
+		{
+			throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, message, typeName));
 		}
 	}
 }

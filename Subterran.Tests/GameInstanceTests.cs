@@ -1,4 +1,5 @@
-﻿using Xunit;
+﻿using System;
+using Xunit;
 
 namespace Subterran.Tests
 {
@@ -7,37 +8,48 @@ namespace Subterran.Tests
 	[Trait("Class", "Subterran.GameInstance")]
 	public class GameInstanceTests
 	{
-		[Fact(Skip="Working on making coveralls work.")]
-		public void Constructor_WithServices_StartsServices()
+		[Fact]
+		public void Run_WithServices_StartsAndStopsServices()
 		{
 			// Arrange
-			FakeService.Started = false;
+			StartingService.Started = false;
 			var info = new GameInfo
 			{
 				Services =
 				{
-					new ServiceInfo {ServiceType = typeof (FakeService)}
+					new ServiceInfo {ServiceType = typeof (StartingService)},
+					new ServiceInfo {ServiceType = typeof (StoppingService)}
 				}
 			};
 
 			// Act
 			var instance = new GameInstance(info);
+			instance.Run();
 
 			// Assert
-			Assert.True(FakeService.Started);
-
-			// Clean
-			instance.AwaitStop();
+			Assert.True(StartingService.Started, "Service was not started.");
+			Assert.True(StoppingService.Stopped, "Service was not stopped.");
 		}
 
-		private class FakeService
+		private sealed class StartingService
 		{
 			// Don't have to worry about parallelism here because xUnit runs all tests in a class in serial
 			public static bool Started { get; set; }
 
-			public void Start()
+			public StartingService()
 			{
 				Started = true;
+			}
+		}
+
+		private sealed class StoppingService : IDisposable
+		{
+			// Don't have to worry about parallelism here because xUnit runs all tests in a class in serial
+			public static bool Stopped { get; set; }
+			
+			public void Dispose()
+			{
+				Stopped = true;
 			}
 		}
 	}

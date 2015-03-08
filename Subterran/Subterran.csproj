@@ -56,7 +56,6 @@
     <Compile Include="Assets\DirectoryAssetSource.cs" />
     <Compile Include="Assets\IAssetSource.cs" />
     <Compile Include="Assets\AssetPath.cs" />
-    <Compile Include="Assets\AssetPathConverter.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityComponent.cs" />
@@ -83,6 +82,7 @@
     <Compile Include="Rendering\ShaderUtils.cs" />
     <Compile Include="Rendering\Texture.cs" />
     <Compile Include="CollectionExtensions.cs" />
+    <Compile Include="ServiceConfig.cs" />
     <Compile Include="ServiceInfo.cs" />
     <Compile Include="StLogging.cs" />
     <Compile Include="StVector.cs" />

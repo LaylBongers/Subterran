@@ -1,21 +1,32 @@
 ﻿using System;
 using Newtonsoft.Json;
 
-namespace Subterran.Assets
+namespace Subterran
 {
-	class AssetPathConverter : JsonConverter
+	[JsonConverter(typeof (ServiceConfigConverter))]
+	public class ServiceConfig
+	{
+		public ServiceConfig(string path)
+		{
+			Path = path;
+		}
+
+		public string Path { get; set; }
+	}
+
+	internal class ServiceConfigConverter : JsonConverter
 	{
 		public override bool CanConvert(Type objectType)
 		{
-			return typeof(AssetPath).IsAssignableFrom(objectType);
+			return typeof (ServiceConfig).IsAssignableFrom(objectType);
 		}
 
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
 		{
-			if(reader == null)
+			if (reader == null)
 				throw new ArgumentNullException("reader");
 
-			return new AssetPath((string)reader.Value);
+			return new ServiceConfig((string) reader.Value);
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -25,8 +36,8 @@ namespace Subterran.Assets
 			if (value == null)
 				throw new ArgumentNullException("value");
 
-			var strongValue = (AssetPath)value;
-			writer.WriteValue(strongValue.FullPath);
+			var strongValue = (ServiceConfig) value;
+			writer.WriteValue(strongValue.Path);
 		}
 	}
 }
