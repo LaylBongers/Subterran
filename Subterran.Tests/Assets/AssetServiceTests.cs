@@ -7,7 +7,7 @@ namespace Subterran.Tests.Assets
 {
 	[Trait("Type", "Unit")]
 	[Trait("Namespace", "Subterran.Assets")]
-	[Trait("Class", "Subterran.Assets.AssetService")]
+	[Trait("Class", "Subterran.Assets.StandardAssetService")]
 	public class AssetServiceTests
 	{
 		[Fact]
@@ -18,7 +18,7 @@ namespace Subterran.Tests.Assets
 			const string expectedValue = "blah";
 			var json = new JObject {{expectedKey, expectedValue}};
 
-			var assetManager = new AssetService();
+			var assetManager = new StandardAssetService();
 			assetManager.AddSource("Fake", new FakeAssetSource(json.ToString()));
 
 			// Act

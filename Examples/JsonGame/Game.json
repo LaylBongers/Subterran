@@ -2,16 +2,16 @@
 	"Name": "Json Game Example",
 	"Services": [
 		{
-			"ServiceType": "Subterran.Assets.AssetService",
+			"ServiceType": "Subterran.Assets.StandardAssetService",
 			"Configuration": "Assets.json"
 		},
 		{
-			"ServiceType": "Subterran.Toolbox.BasicGameLoopService",
+			"ServiceType": "Subterran.Toolbox.StandardGameLoopService",
 			"Configuration": null
 		}
 	],
 	"Bootstrapper": {
-		"BootstrapperType": "Subterran.Toolbox.BasicBootstrapper",
+		"BootstrapperType": "Subterran.Toolbox.StandardBootstrapper",
 		"Configuration": "Bootstrapper.json"
 	}
 }

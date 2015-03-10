@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 
 namespace Subterran.Assets
 {
-	public sealed class AssetService
+	public sealed class StandardAssetService : IAssetService
 	{
 		private readonly Dictionary<string, IAssetSource> _assetSources = new Dictionary<string, IAssetSource>();
 		

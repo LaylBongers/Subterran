@@ -52,7 +52,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AssetService.cs" />
+    <Compile Include="Assets\IAssetService.cs" />
+    <Compile Include="Assets\StandardAssetService.cs" />
     <Compile Include="Assets\DirectoryAssetSource.cs" />
     <Compile Include="Assets\IAssetSource.cs" />
     <Compile Include="Assets\AssetPath.cs" />
@@ -84,7 +85,9 @@
     <Compile Include="CollectionExtensions.cs" />
     <Compile Include="ServiceConfig.cs" />
     <Compile Include="ServiceInfo.cs" />
+    <Compile Include="StLinq.cs" />
     <Compile Include="StLogging.cs" />
+    <Compile Include="StContract.cs" />
     <Compile Include="StVector.cs" />
     <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="StMath.cs" />
@@ -109,6 +112,7 @@
       <LastGenOutput>ExceptionMessages.Designer.cs</LastGenOutput>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

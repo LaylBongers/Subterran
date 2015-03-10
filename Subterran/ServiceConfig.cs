@@ -11,7 +11,7 @@ namespace Subterran
 			Path = path;
 		}
 
-		public string Path { get; set; }
+		public string Path { get; }
 	}
 
 	internal class ServiceConfigConverter : JsonConverter

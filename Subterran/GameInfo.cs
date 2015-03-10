@@ -6,10 +6,25 @@ using Newtonsoft.Json.Linq;
 
 namespace Subterran
 {
-	public class GameInfo
+	/// <summary>
+	///     Represents info about a Subterran game.
+	/// </summary>
+	public class GameInfo : ICloneable
 	{
 		public string Name { get; set; }
 		public Collection<ServiceInfo> Services { get; } = new Collection<ServiceInfo>();
+
+		public object Clone()
+		{
+			var value = new GameInfo();
+
+			value.Name = Name; // strings are immutable, no need to clone
+			Services.Select(s => (ServiceInfo) s.Clone()).AddTo(value.Services);
+
+			return value;
+		}
+
+		#region Json Parsing
 
 		public static GameInfo FromJson(string json)
 		{
@@ -52,8 +67,6 @@ namespace Subterran
 
 			if (types.Count > 1)
 				ThrowTypeError(ExceptionMessages.GameInfo_TypeAmbiguous, typeName);
-
-			var type = types[0];
 			
 			return types[0];
 		}
@@ -62,5 +75,7 @@ namespace Subterran
 		{
 			throw new InvalidOperationException(string.Format(CultureInfo.InvariantCulture, message, typeName));
 		}
+
+		#endregion
 	}
 }
