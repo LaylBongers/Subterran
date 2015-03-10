@@ -2,7 +2,7 @@
 using OpenTK;
 using Subterran.Rendering;
 
-namespace Subterran.Toolbox.Components
+namespace Subterran.Toolbox
 {
 	public class FpsCounterComponent : EntityComponent, IUpdatable, IRenderable
 	{

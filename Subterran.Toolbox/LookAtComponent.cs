@@ -1,7 +1,7 @@
 ﻿using System;
 using OpenTK;
 
-namespace Subterran.Toolbox.Components
+namespace Subterran.Toolbox
 {
 	public class LookAtComponent : EntityComponent, IUpdatable
 	{

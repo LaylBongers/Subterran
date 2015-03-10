@@ -26,6 +26,9 @@ namespace Subterran
 
 		public Collection<object> Services { get; } = new Collection<object>();
 
+		/// <summary>
+		///     Runs this instance of the Subterran game engine.
+		/// </summary>
 		public void Run()
 		{
 			StartServices();
@@ -41,18 +44,7 @@ namespace Subterran
 			// Actually construct all the services
 			foreach (var constructor in sorted)
 			{
-				// Get all the requested parameters
-				var reqParams = constructor.GetParameters();
-
-				// Find a matching service for each parameter
-				var resolvedParams = new List<object>();
-				foreach (var reqParam in reqParams)
-				{
-					// Add the first service matching what's requested to the list of parameters
-					resolvedParams.Add(Services.First(s => reqParam.ParameterType.IsInstanceOfType(s)));
-				}
-				
-				Services.Add(constructor.Invoke(resolvedParams.ToArray()));
+				Services.Add(ConstructUsingDependencies(constructor, Services.ToList()));
 			}
 		}
 
@@ -84,7 +76,7 @@ namespace Subterran
 			return serviceConstructors;
 		}
 
-		private List<ConstructorInfo> SortServiceConstructors(List<ConstructorInfo> unsorted)
+		private static List<ConstructorInfo> SortServiceConstructors(List<ConstructorInfo> unsorted)
 		{
 			// Sort the constructors so dependencies can be resolved
 			var sorted = new List<ConstructorInfo>();
@@ -92,52 +84,72 @@ namespace Subterran
 			while (unsorted.Count != 0)
 			{
 				var constructor = unsorted[itemNumber];
-				var reqParameters = constructor.GetParameters();
+				var available = sorted.Select(c => c.DeclaringType).ToList();
 
-				// If there's no parameters, there's no dependencies to resolve
-				if (reqParameters.Length == 0)
-					goto DependenciesResolved;
-
-				// Go through all parameters
-				foreach (var reqParam in reqParameters)
+				if (AreDependenciesAvailable(constructor, available))
 				{
-					var requestedType = reqParam.ParameterType;
+					// All dependencies of this one are resolved, we can add it to the sorted list
+					sorted.Add(constructor);
+					unsorted.Remove(constructor);
 
-					// If this one's in the list of already sorted, it's fine
-					if (sorted.Any(c => requestedType.IsAssignableFrom(c.DeclaringType)))
-						continue;
-
-					// it's not in the list, so we need to wait
-					goto DependenciesUnresolved;
+					// Go back to the start for a new pass of checks to see if there's anything we can construct now
+					itemNumber = 0;
 				}
+				else
+				{
+					// It's not yet in the list of services, we can't construct it yet
+					// Let's try the next one instead then
+					itemNumber++;
 
-				// There were no problems with the dependencies found, so they're all resolved
-				goto DependenciesResolved;
-				
-				// ==== Unresolved ====
-				DependenciesUnresolved:
-				// It's not yet in the list of services, we can't construct it yet
-				// Let's try the next one instead then
-				itemNumber++;
-
-				// If there is no next one, there's a problem
-				// This means there's nothing in the list we can construct anymore
-				if (itemNumber >= unsorted.Count)
-					throw new InvalidOperationException("Can not resolve dependencies for " + constructor.DeclaringType);
-
-				continue;
-
-				// ==== Resolved ====
-				DependenciesResolved:
-				// All dependencies of this one are resolved, we can add it to the sorted list
-				sorted.Add(constructor);
-				unsorted.Remove(constructor);
-
-				// Go back to the start for a new pass of checks to see if there's anything we can construct now
-				itemNumber = 0;
+					// If there is no next one, there's a problem
+					// This means there's nothing in the list we can construct anymore
+					if (itemNumber >= unsorted.Count)
+						throw new InvalidOperationException("Can not resolve dependencies for " + constructor.DeclaringType);
+				}
 			}
 
 			return sorted;
+		}
+
+		private static bool AreDependenciesAvailable(ConstructorInfo constructor, List<Type> availableTypes)
+		{
+			var reqParameters = constructor.GetParameters();
+
+			// If there's no parameters, there's no dependencies to resolve
+			if (reqParameters.Length == 0)
+				return true;
+
+			// Go through all parameters
+			foreach (var reqParam in reqParameters)
+			{
+				var requestedType = reqParam.ParameterType;
+
+				// Check if the requested time is available
+				if (availableTypes.Any(c => requestedType.IsAssignableFrom(c)))
+					continue;
+
+				// It's not in the list of available parameters, so dependencies are not available
+				return false;
+			}
+
+			// No unavailable dependencies were found
+			return true;
+		}
+
+		private static object ConstructUsingDependencies(ConstructorInfo constructor, List<object> availableDependencies)
+		{
+			// Get all the requested parameters
+			var reqParams = constructor.GetParameters();
+
+			// Find a matching service for each parameter
+			var resolvedParams = new List<object>();
+			foreach (var reqParam in reqParams)
+			{
+				// Add the first service matching what's requested to the list of parameters
+				resolvedParams.Add(availableDependencies.First(s => reqParam.ParameterType.IsInstanceOfType(s)));
+			}
+
+			return constructor.Invoke(resolvedParams.ToArray());
 		}
 	}
 }

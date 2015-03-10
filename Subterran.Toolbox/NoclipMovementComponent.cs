@@ -2,7 +2,7 @@
 using OpenTK;
 using OpenTK.Input;
 
-namespace Subterran.Toolbox.Components
+namespace Subterran.Toolbox
 {
 	public class NoclipMovementComponent : EntityComponent, IInitializable, IUpdatable
 	{
@@ -11,15 +11,11 @@ namespace Subterran.Toolbox.Components
 
 		public NoclipMovementComponent(Window window)
 		{
-			// Default values, once C# 6.0 rolls around we can do this inline
-			Speed = 5.0f;
-			FastSpeed = 10.0f;
-
 			_window = window;
 		}
 
-		public float Speed { get; set; }
-		public float FastSpeed { get; set; }
+		public float Speed { get; set; } = 5.0f;
+		public float FastSpeed { get; set; } = 10.0f;
 
 		public void Initialize()
 		{
@@ -55,7 +51,7 @@ namespace Subterran.Toolbox.Components
 			_previousPosition = new Vector2(state.X, state.Y);
 
 			// Update the rotation of the entity based on the difference in mouse position
-			var rotation = Entity.Transform.Rotation.Xy + (-deltaPosition.Yx * 0.0015f);
+			var rotation = Entity.Transform.Rotation.Xy + (-deltaPosition.Yx*0.0015f);
 			Entity.Transform.Rotation = new Vector3(
 				MathHelper.Clamp(rotation.X, -StMath.Tau*0.25f, StMath.Tau*0.25f),
 				rotation.Y, 0);

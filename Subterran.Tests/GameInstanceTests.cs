@@ -34,7 +34,7 @@ namespace Subterran.Tests
 		}
 
 		[Fact]
-		public void Run_WithServices_GetsDependency()
+		public void Run_WithServiceThatNeedsGivenDependency_GetsDependency()
 		{
 			// Arrange
 			DependentService.GotService = false;
@@ -55,6 +55,22 @@ namespace Subterran.Tests
 			Assert.True(DependentService.GotService);
 		}
 
+		public void Run_WithServiceThatNeedsMissingDependency_ThrowsException()
+		{
+			// Arrange
+			var info = new GameInfo
+			{
+				Services =
+				{
+					new ServiceInfo {ServiceType = typeof (DependentService)}
+				}
+			};
+			var instance = new GameInstance(info);
+
+			// Act & Assert
+			Assert.Throws<InvalidOperationException>(() => instance.Run());
+		}
+		
 		private sealed class StartingService
 		{
 			public StartingService()

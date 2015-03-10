@@ -2,7 +2,6 @@
 using Subterran;
 using Subterran.Rendering;
 using Subterran.Toolbox;
-using Subterran.Toolbox.Components;
 using Subterran.Toolbox.Materials;
 using Subterran.Toolbox.SimplePhysics;
 using Subterran.Toolbox.Voxels;
