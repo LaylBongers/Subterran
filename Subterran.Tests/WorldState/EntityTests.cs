@@ -5,6 +5,9 @@ using Xunit;
 
 namespace Subterran.Tests.WorldState
 {
+	[Trait("Type", "Unit")]
+	[Trait("Namespace", "Subterran.WorldState")]
+	[Trait("Class", "Subterran.WorldState.EntityTests")]
 	public class EntityTests
 	{
 		[Fact]

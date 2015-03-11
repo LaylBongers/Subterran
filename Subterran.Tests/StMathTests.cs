@@ -3,6 +3,9 @@ using Xunit;
 
 namespace Subterran.Tests
 {
+	[Trait("Type", "Unit")]
+	[Trait("Namespace", "Subterran")]
+	[Trait("Class", "Subterran.StMathTests")]
 	public class StMathTests
 	{
 		[Fact]

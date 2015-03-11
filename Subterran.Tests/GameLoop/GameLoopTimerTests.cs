@@ -6,8 +6,8 @@ using Xunit;
 namespace Subterran.Tests.GameLoop
 {
 	[Trait("Type", "Unit")]
-	[Trait("Namespace", "Subterran")]
-	[Trait("Class", "Subterran.GameLoopTimer")]
+	[Trait("Namespace", "Subterran.GameLoop")]
+	[Trait("Class", "Subterran.GameLoop.GameLoopTimer")]
 	public class GameLoopTimerTests
 	{
 		[Fact]

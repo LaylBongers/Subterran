@@ -22,7 +22,9 @@ namespace Subterran
 		{
 			StContract.ArgumentNotNull(info, "info");
 
+			Name = info.Name;
 			Services = new ReadOnlyCollection<object>(_services);
+
 			_info = (GameInfo) info.Clone();
 		}
 
@@ -31,17 +33,24 @@ namespace Subterran
 		/// </summary>
 		public ReadOnlyCollection<object> Services { get; }
 
+		public string Name { get; }
+
 		/// <summary>
 		///     Runs this instance of the Subterran game engine.
 		/// </summary>
 		public void Run()
 		{
 			StartServices();
-			
-			var gameLoop = (IGameLoop) ConstructUsingDependencies(_info.GameLoopType, Services);
+
+			var gameLoop = (IGameLoop) ConstructUsingDependencies(_info.GameLoopType, CreateDependenciesList());
 			gameLoop.Run();
 
 			StopServices();
+		}
+
+		public List<object> CreateDependenciesList()
+		{
+			return _services.Concat(new[] {this}).ToList();
 		}
 
 		private void StartServices()
@@ -52,7 +61,7 @@ namespace Subterran
 			// Actually construct all the services
 			foreach (var constructor in sorted)
 			{
-				_services.Add(ConstructUsingDependencies(constructor, _services));
+				_services.Add(ConstructUsingDependencies(constructor, CreateDependenciesList()));
 			}
 		}
 
