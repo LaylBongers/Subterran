@@ -14,7 +14,7 @@ namespace Subterran
 		/// </summary>
 		public bool IsRunning { get; private set; }
 
-		public Collection<GameLoop> Loops { get; } = new Collection<GameLoop>();
+		public Collection<GameLoopTimer> Loops { get; } = new Collection<GameLoopTimer>();
 
 		public void Run()
 		{

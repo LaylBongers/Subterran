@@ -20,6 +20,10 @@ namespace Subterran.Tests
 				{
 					new ServiceInfo {ServiceType = typeof (StartingService)},
 					new ServiceInfo {ServiceType = typeof (StoppingService)}
+				},
+				Bootstrapper = new BootstrapperInfo
+				{
+					BootstrapperType = typeof(RunningBootstrapper)
 				}
 			};
 
@@ -44,6 +48,10 @@ namespace Subterran.Tests
 				{
 					new ServiceInfo {ServiceType = typeof (DependentService)},
 					new ServiceInfo {ServiceType = typeof (DependencyService)}
+				},
+				Bootstrapper = new BootstrapperInfo
+				{
+					BootstrapperType = typeof(RunningBootstrapper)
 				}
 			};
 			var instance = new GameInstance(info);
@@ -55,6 +63,7 @@ namespace Subterran.Tests
 			Assert.True(DependentService.GotService);
 		}
 
+		[Fact]
 		public void Run_WithServiceThatNeedsMissingDependency_ThrowsException()
 		{
 			// Arrange
@@ -63,6 +72,10 @@ namespace Subterran.Tests
 				Services =
 				{
 					new ServiceInfo {ServiceType = typeof (DependentService)}
+				},
+				Bootstrapper = new BootstrapperInfo
+				{
+					BootstrapperType = typeof(RunningBootstrapper)
 				}
 			};
 			var instance = new GameInstance(info);
@@ -70,7 +83,25 @@ namespace Subterran.Tests
 			// Act & Assert
 			Assert.Throws<InvalidOperationException>(() => instance.Run());
 		}
-		
+
+		[Fact]
+		public void Run_WithBootstrapper_RunsBootstrapper()
+		{
+			// Arrange
+			RunningBootstrapper.Ran = false;
+			var info = new GameInfo
+			{
+				Bootstrapper = new BootstrapperInfo {BootstrapperType = typeof (RunningBootstrapper)}
+			};
+			var instance = new GameInstance(info);
+
+			// Act
+			instance.Run();
+
+			// Assert
+			Assert.True(RunningBootstrapper.Ran);
+		}
+
 		private sealed class StartingService
 		{
 			public StartingService()
@@ -93,9 +124,13 @@ namespace Subterran.Tests
 			}
 		}
 
+		private interface IDependencyService
+		{
+		}
+
 		private sealed class DependentService
 		{
-			public DependentService(DependencyService service)
+			public DependentService(IDependencyService service)
 			{
 				if (service != null)
 					GotService = true;
@@ -104,8 +139,18 @@ namespace Subterran.Tests
 			public static bool GotService { get; set; }
 		}
 
-		private sealed class DependencyService
+		private sealed class DependencyService : IDependencyService
 		{
+		}
+
+		private sealed class RunningBootstrapper : IBootstrapper
+		{
+			public static bool Ran { get; set; }
+
+			public void Run()
+			{
+				Ran = true;
+			}
 		}
 	}
 }

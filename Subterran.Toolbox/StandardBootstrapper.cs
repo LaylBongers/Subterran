@@ -1,6 +1,9 @@
 ﻿namespace Subterran.Toolbox
 {
-	public class StandardBootstrapper
+	public class StandardBootstrapper : IBootstrapper
 	{
+		public void Run()
+		{
+		}
 	}
 }

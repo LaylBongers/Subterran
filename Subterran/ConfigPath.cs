@@ -3,10 +3,10 @@ using Newtonsoft.Json;
 
 namespace Subterran
 {
-	[JsonConverter(typeof (ServiceConfigConverter))]
-	public class ServiceConfig
+	[JsonConverter(typeof (ConfigPathConverter))]
+	public class ConfigPath
 	{
-		public ServiceConfig(string path)
+		public ConfigPath(string path)
 		{
 			Path = path;
 		}
@@ -14,11 +14,11 @@ namespace Subterran
 		public string Path { get; }
 	}
 
-	internal class ServiceConfigConverter : JsonConverter
+	internal class ConfigPathConverter : JsonConverter
 	{
 		public override bool CanConvert(Type objectType)
 		{
-			return typeof (ServiceConfig).IsAssignableFrom(objectType);
+			return typeof (ConfigPath).IsAssignableFrom(objectType);
 		}
 
 		public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
@@ -26,7 +26,7 @@ namespace Subterran
 			if (reader == null)
 				throw new ArgumentNullException("reader");
 
-			return new ServiceConfig((string) reader.Value);
+			return new ConfigPath((string) reader.Value);
 		}
 
 		public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
@@ -36,7 +36,7 @@ namespace Subterran
 			if (value == null)
 				throw new ArgumentNullException("value");
 
-			var strongValue = (ServiceConfig) value;
+			var strongValue = (ConfigPath) value;
 			writer.WriteValue(strongValue.Path);
 		}
 	}

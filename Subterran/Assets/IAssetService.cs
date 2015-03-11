@@ -1,6 +1,6 @@
 ﻿namespace Subterran.Assets
 {
-	internal interface IAssetService
+	public interface IAssetService
 	{
 		void AddSource(string name, IAssetSource source);
 		T GetAsset<T>(string path);

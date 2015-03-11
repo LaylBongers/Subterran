@@ -1,5 +1,4 @@
-﻿using System;
-using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json.Linq;
 using Xunit;
 
 namespace Subterran.Tests
@@ -17,7 +16,12 @@ namespace Subterran.Tests
 			var json = new JObject
 			{
 				["Name"] = expectedName,
-				["Services"] = new JArray()
+				["Services"] = new JArray(),
+				["Bootstrapper"] = new JObject
+				{
+					["BootstrapperType"] = typeof (FakeBootstrapper).FullName,
+					["Configuration"] = "Bootstrapper.json"
+				}
 			};
 
 			// Act
@@ -25,6 +29,9 @@ namespace Subterran.Tests
 
 			// Assert
 			Assert.Equal(expectedName, info.Name);
+			Assert.NotNull(info.Bootstrapper);
+			Assert.Equal(typeof (FakeBootstrapper), info.Bootstrapper.BootstrapperType);
+			Assert.Equal("Bootstrapper.json", info.Bootstrapper.Configuration.Path);
 		}
 
 		[Fact]
@@ -34,6 +41,11 @@ namespace Subterran.Tests
 			var json = new JObject
 			{
 				["Name"] = "Irrelevant",
+				["Bootstrapper"] = new JObject
+				{
+					["BootstrapperType"] = typeof (FakeBootstrapper).FullName,
+					["Configuration"] = "Bootstrapper.json"
+				},
 				["Services"] = new JArray
 				{
 					new JObject
@@ -51,11 +63,15 @@ namespace Subterran.Tests
 			// Assert
 			Assert.Equal(1, services.Count);
 			var service = services[0];
-			Assert.Equal(typeof(FakeService), service.ServiceType);
+			Assert.Equal(typeof (FakeService), service.ServiceType);
 			Assert.Equal("FakeFile.json", service.Configuration.Path);
 		}
 
 		private sealed class FakeService
+		{
+		}
+
+		private sealed class FakeBootstrapper
 		{
 		}
 	}

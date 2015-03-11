@@ -57,6 +57,7 @@
     <Compile Include="Assets\DirectoryAssetSource.cs" />
     <Compile Include="Assets\IAssetSource.cs" />
     <Compile Include="Assets\AssetPath.cs" />
+    <Compile Include="BootstrapperInfo.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityComponent.cs" />
@@ -67,9 +68,10 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ExceptionMessages.resx</DependentUpon>
     </Compile>
+    <Compile Include="IBootstrapper.cs" />
     <Compile Include="IInitializable.cs" />
     <Compile Include="LoopManager.cs" />
-    <Compile Include="GameLoop.cs" />
+    <Compile Include="GameLoopTimer.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RandomExtensions.cs" />
     <Compile Include="Rendering\CameraComponent.cs" />
@@ -83,15 +85,17 @@
     <Compile Include="Rendering\ShaderUtils.cs" />
     <Compile Include="Rendering\Texture.cs" />
     <Compile Include="CollectionExtensions.cs" />
-    <Compile Include="ServiceConfig.cs" />
+    <Compile Include="ConfigPath.cs" />
     <Compile Include="ServiceInfo.cs" />
     <Compile Include="StLinq.cs" />
     <Compile Include="StLogging.cs" />
     <Compile Include="StContract.cs" />
+    <Compile Include="StReflection.cs" />
     <Compile Include="StVector.cs" />
     <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="StMath.cs" />
     <Compile Include="Transform.cs" />
+    <Compile Include="TypeConverter.cs" />
     <Compile Include="Vector3i.cs" />
     <Compile Include="VectorExtensions.cs" />
     <Compile Include="Window.cs" />

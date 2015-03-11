@@ -61,24 +61,6 @@ namespace Subterran {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type &quot;{0}&quot; is ambiguous..
-        /// </summary>
-        internal static string GameInfo_TypeAmbiguous {
-            get {
-                return ResourceManager.GetString("GameInfo_TypeAmbiguous", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Type &quot;{0}&quot; could not be found..
-        /// </summary>
-        internal static string GameInfo_TypeNotFound {
-            get {
-                return ResourceManager.GetString("GameInfo_TypeNotFound", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Shader program {0} does not contain &quot;{1}&quot; uniform..
         /// </summary>
         internal static string ShaderUtils_ProgramDoesNotContainUniform {
@@ -111,6 +93,24 @@ namespace Subterran {
         internal static string ShaderUtils_ShaderFailedCompile {
             get {
                 return ResourceManager.GetString("ShaderUtils_ShaderFailedCompile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type &quot;{0}&quot; is ambiguous..
+        /// </summary>
+        internal static string StReflection_TypeAmbiguous {
+            get {
+                return ResourceManager.GetString("StReflection_TypeAmbiguous", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Type &quot;{0}&quot; could not be found..
+        /// </summary>
+        internal static string StReflection_TypeNotFound {
+            get {
+                return ResourceManager.GetString("StReflection_TypeNotFound", resourceCulture);
             }
         }
     }

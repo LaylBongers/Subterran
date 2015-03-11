@@ -12,6 +12,7 @@ namespace Subterran
 	public class GameInstance
 	{
 		private readonly GameInfo _info;
+		private readonly Collection<object> _services = new Collection<object>();
 
 		/// <summary>
 		///     Initializes a new Subterran game engine instance using the provided game info.
@@ -21,10 +22,14 @@ namespace Subterran
 		{
 			StContract.ArgumentNotNull(info, "info");
 
+			Services = new ReadOnlyCollection<object>(_services);
 			_info = (GameInfo) info.Clone();
 		}
 
-		public Collection<object> Services { get; } = new Collection<object>();
+		/// <summary>
+		///     Gets the collection of services actively in use by this instance.
+		/// </summary>
+		public ReadOnlyCollection<object> Services { get; }
 
 		/// <summary>
 		///     Runs this instance of the Subterran game engine.
@@ -32,6 +37,9 @@ namespace Subterran
 		public void Run()
 		{
 			StartServices();
+			
+			var bootstrapper = (IBootstrapper) ConstructUsingDependencies(_info.Bootstrapper.BootstrapperType, Services);
+			bootstrapper.Run();
 
 			StopServices();
 		}
@@ -44,7 +52,7 @@ namespace Subterran
 			// Actually construct all the services
 			foreach (var constructor in sorted)
 			{
-				Services.Add(ConstructUsingDependencies(constructor, Services.ToList()));
+				_services.Add(ConstructUsingDependencies(constructor, _services));
 			}
 		}
 
@@ -63,17 +71,22 @@ namespace Subterran
 			var serviceConstructors = new List<ConstructorInfo>();
 			foreach (var serviceInfo in _info.Services)
 			{
-				var constructors = serviceInfo.ServiceType.GetConstructors();
-
-				if (constructors.Length == 0)
-					throw new InvalidOperationException("Unable to find any constructors in " + serviceInfo.ServiceType);
-				if (constructors.Length > 1)
-					throw new InvalidOperationException("More than one constructor found in " + serviceInfo.ServiceType);
-
-				serviceConstructors.Add(constructors[0]);
+				serviceConstructors.Add(GetConstructorForType(serviceInfo.ServiceType));
 			}
 
 			return serviceConstructors;
+		}
+
+		private static ConstructorInfo GetConstructorForType(Type type)
+		{
+			var constructors = type.GetConstructors();
+
+			if (constructors.Length == 0)
+				throw new InvalidOperationException("Unable to find any constructors in " + type);
+			if (constructors.Length > 1)
+				throw new InvalidOperationException("More than one constructor found in " + type);
+
+			return constructors[0];
 		}
 
 		private static List<ConstructorInfo> SortServiceConstructors(List<ConstructorInfo> unsorted)
@@ -136,7 +149,13 @@ namespace Subterran
 			return true;
 		}
 
-		private static object ConstructUsingDependencies(ConstructorInfo constructor, List<object> availableDependencies)
+		private static object ConstructUsingDependencies(Type type, IList<object> availableDependencies)
+		{
+			var constructor = GetConstructorForType(type);
+			return ConstructUsingDependencies(constructor, availableDependencies);
+		}
+
+		private static object ConstructUsingDependencies(ConstructorInfo constructor, IList<object> availableDependencies)
 		{
 			// Get all the requested parameters
 			var reqParams = constructor.GetParameters();

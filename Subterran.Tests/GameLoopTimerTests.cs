@@ -6,15 +6,15 @@ namespace Subterran.Tests
 {
 	[Trait("Type", "Unit")]
 	[Trait("Namespace", "Subterran")]
-	[Trait("Class", "Subterran.GameLoop")]
-	public class GameLoopTests
+	[Trait("Class", "Subterran.GameLoopTimer")]
+	public class GameLoopTimerTests
 	{
 		[Fact]
 		public void Constructor_NoExplicitRate_ExecutesTickOnce()
 		{
 			// Arrange
 			var func = Substitute.For<Action>();
-			var loop = new GameLoop(_ => func());
+			var loop = new GameLoopTimer(_ => func());
 
 			// Act
 			loop.ExecuteTicks(TimeSpan.FromSeconds(1));
@@ -30,7 +30,7 @@ namespace Subterran.Tests
 			var func = Substitute.For<Action>();
 
 			// Act
-			var loop = new GameLoop(_ => func(), 2);
+			var loop = new GameLoopTimer(_ => func(), 2);
 
 			// Assert
 			loop.ExecuteTicks(TimeSpan.FromSeconds(1));
@@ -42,7 +42,7 @@ namespace Subterran.Tests
 		{
 			// Arrange
 			var func = Substitute.For<Action<TimeSpan>>();
-			var loop = new GameLoop(func, 4) {MaximumTicksPerExecution = 4};
+			var loop = new GameLoopTimer(func, 4) {MaximumTicksPerExecution = 4};
 
 			// Act
 			loop.ExecuteTicks(TimeSpan.FromSeconds(2));
@@ -56,7 +56,7 @@ namespace Subterran.Tests
 		{
 			// Arrange
 			var func = Substitute.For<Action>();
-			var loop = new GameLoop(_ => func(), 4) {MaximumTicksPerExecution = 4};
+			var loop = new GameLoopTimer(_ => func(), 4) {MaximumTicksPerExecution = 4};
 
 			// Act
 			loop.ExecuteTicks(TimeSpan.FromSeconds(2));
