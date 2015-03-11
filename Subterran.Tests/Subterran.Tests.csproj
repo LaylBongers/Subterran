@@ -71,11 +71,11 @@
     <Compile Include="GameInfoTests.cs" />
     <Compile Include="Assets\AssetServiceTests.cs" />
     <Compile Include="DisposableTests.cs" />
-    <Compile Include="EntityComponentTests.cs" />
-    <Compile Include="EntityTests.cs" />
+    <Compile Include="WorldState\EntityComponentTests.cs" />
+    <Compile Include="WorldState\EntityTests.cs" />
     <Compile Include="GameInstanceTests.cs" />
-    <Compile Include="LoopManagerTests.cs" />
-    <Compile Include="GameLoopTimerTests.cs" />
+    <Compile Include="GameLoop\LoopManagerTests.cs" />
+    <Compile Include="GameLoop\GameLoopTimerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StMathTests.cs" />
     <Compile Include="Toolbox\SimplePhysics\PhysicsWorldComponentTests.cs" />

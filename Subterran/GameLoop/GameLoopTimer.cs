@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Subterran
+namespace Subterran.GameLoop
 {
 	public sealed class GameLoopTimer
 	{

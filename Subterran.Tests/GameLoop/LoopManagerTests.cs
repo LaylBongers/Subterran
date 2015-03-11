@@ -1,7 +1,8 @@
 ﻿using System;
+using Subterran.GameLoop;
 using Xunit;
 
-namespace Subterran.Tests
+namespace Subterran.Tests.GameLoop
 {
 	public class LoopManagerTests
 	{

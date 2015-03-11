@@ -3,7 +3,7 @@ using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.Linq;
 
-namespace Subterran
+namespace Subterran.GameLoop
 {
 	public sealed class LoopManager
 	{

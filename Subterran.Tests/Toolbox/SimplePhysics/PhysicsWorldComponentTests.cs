@@ -1,6 +1,7 @@
 ﻿using System;
 using OpenTK;
 using Subterran.Toolbox.SimplePhysics;
+using Subterran.WorldState;
 using Xunit;
 
 namespace Subterran.Tests.Toolbox.SimplePhysics

@@ -1,8 +1,9 @@
 ﻿using System;
 using NSubstitute;
+using Subterran.GameLoop;
 using Xunit;
 
-namespace Subterran.Tests
+namespace Subterran.Tests.GameLoop
 {
 	[Trait("Type", "Unit")]
 	[Trait("Namespace", "Subterran")]

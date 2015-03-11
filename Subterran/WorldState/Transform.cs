@@ -1,6 +1,6 @@
 ﻿using OpenTK;
 
-namespace Subterran
+namespace Subterran.WorldState
 {
 	public sealed class Transform
 	{

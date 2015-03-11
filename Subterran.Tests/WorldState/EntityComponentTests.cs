@@ -1,7 +1,8 @@
 ﻿using NSubstitute;
+using Subterran.WorldState;
 using Xunit;
 
-namespace Subterran.Tests
+namespace Subterran.Tests.WorldState
 {
 	public class EntityComponentTests
 	{

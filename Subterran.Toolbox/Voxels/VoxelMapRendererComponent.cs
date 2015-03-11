@@ -1,5 +1,6 @@
 ﻿using System;
 using Subterran.Rendering;
+using Subterran.WorldState;
 
 namespace Subterran.Toolbox.Voxels
 {

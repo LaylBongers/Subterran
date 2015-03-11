@@ -1,4 +1,4 @@
-﻿namespace Subterran
+﻿namespace Subterran.WorldState
 {
 	public interface IInitializable
 	{

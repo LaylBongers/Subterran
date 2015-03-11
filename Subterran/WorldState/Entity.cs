@@ -6,7 +6,7 @@ using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 
-namespace Subterran
+namespace Subterran.WorldState
 {
 	[DebuggerDisplay("{DebuggerDisplay,nq}")]
 	public sealed class Entity

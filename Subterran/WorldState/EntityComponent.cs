@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Subterran
+namespace Subterran.WorldState
 {
 	public abstract class EntityComponent
 	{

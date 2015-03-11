@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using OpenTK;
 using OpenTK.Graphics.OpenGL4;
+using Subterran.WorldState;
 
 namespace Subterran.Rendering
 {
