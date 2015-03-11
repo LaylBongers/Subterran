@@ -21,10 +21,7 @@ namespace Subterran.Tests
 					new ServiceInfo {ServiceType = typeof (StartingService)},
 					new ServiceInfo {ServiceType = typeof (StoppingService)}
 				},
-				Bootstrapper = new BootstrapperInfo
-				{
-					BootstrapperType = typeof(RunningBootstrapper)
-				}
+				GameLoopType = typeof(RunningGameLoop)
 			};
 
 			var instance = new GameInstance(info);
@@ -49,10 +46,7 @@ namespace Subterran.Tests
 					new ServiceInfo {ServiceType = typeof (DependentService)},
 					new ServiceInfo {ServiceType = typeof (DependencyService)}
 				},
-				Bootstrapper = new BootstrapperInfo
-				{
-					BootstrapperType = typeof(RunningBootstrapper)
-				}
+				GameLoopType = typeof(RunningGameLoop)
 			};
 			var instance = new GameInstance(info);
 
@@ -73,10 +67,7 @@ namespace Subterran.Tests
 				{
 					new ServiceInfo {ServiceType = typeof (DependentService)}
 				},
-				Bootstrapper = new BootstrapperInfo
-				{
-					BootstrapperType = typeof(RunningBootstrapper)
-				}
+				GameLoopType = typeof(RunningGameLoop)
 			};
 			var instance = new GameInstance(info);
 
@@ -85,13 +76,13 @@ namespace Subterran.Tests
 		}
 
 		[Fact]
-		public void Run_WithBootstrapper_RunsBootstrapper()
+		public void Run_WithBootstrapper_RunsGameLoop()
 		{
 			// Arrange
-			RunningBootstrapper.Ran = false;
+			RunningGameLoop.Ran = false;
 			var info = new GameInfo
 			{
-				Bootstrapper = new BootstrapperInfo {BootstrapperType = typeof (RunningBootstrapper)}
+				GameLoopType = typeof(RunningGameLoop)
 			};
 			var instance = new GameInstance(info);
 
@@ -99,7 +90,7 @@ namespace Subterran.Tests
 			instance.Run();
 
 			// Assert
-			Assert.True(RunningBootstrapper.Ran);
+			Assert.True(RunningGameLoop.Ran);
 		}
 
 		private sealed class StartingService
@@ -143,7 +134,7 @@ namespace Subterran.Tests
 		{
 		}
 
-		private sealed class RunningBootstrapper : IBootstrapper
+		private sealed class RunningGameLoop : IGameLoop
 		{
 			public static bool Ran { get; set; }
 

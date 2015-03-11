@@ -12,7 +12,9 @@ namespace Subterran
 	{
 		public string Name { get; set; }
 		public Collection<ServiceInfo> Services { get; } = new Collection<ServiceInfo>();
-		public BootstrapperInfo Bootstrapper { get; set; }
+
+		[JsonConverter(typeof (TypeConverter))]
+		public Type GameLoopType { get; set; }
 
 		public object Clone()
 		{
@@ -20,11 +22,11 @@ namespace Subterran
 
 			value.Name = Name; // strings are immutable, no need to clone
 			Services.Select(s => (ServiceInfo) s.Clone()).AddTo(value.Services);
-			value.Bootstrapper = (BootstrapperInfo) Bootstrapper?.Clone();
+			value.GameLoopType = GameLoopType;
 
 			return value;
 		}
-		
+
 		public static GameInfo FromJson(string json)
 		{
 			return JsonConvert.DeserializeObject<GameInfo>(json);

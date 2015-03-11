@@ -1,6 +1,6 @@
 ﻿namespace Subterran
 {
-	public interface IBootstrapper
+	public interface IGameLoop
 	{
 		void Run();
 	}

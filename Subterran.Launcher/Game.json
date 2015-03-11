@@ -1,0 +1,14 @@
+﻿﻿ {
+	"Name": "Launcher Sample",
+	"Services": [
+		{
+			"ServiceType": "Subterran.Assets.StandardAssetService",
+			"Configuration": "Assets.json"
+		},
+		{
+			"ServiceType": "Subterran.WorldState.StandardWorldStateService",
+			"Configuration": "World.json"
+		}
+	],
+	"GameLoopType": "Subterran.GameLoop.ClientGameLoop"
+}

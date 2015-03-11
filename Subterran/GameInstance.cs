@@ -38,8 +38,8 @@ namespace Subterran
 		{
 			StartServices();
 			
-			var bootstrapper = (IBootstrapper) ConstructUsingDependencies(_info.Bootstrapper.BootstrapperType, Services);
-			bootstrapper.Run();
+			var gameLoop = (IGameLoop) ConstructUsingDependencies(_info.GameLoopType, Services);
+			gameLoop.Run();
 
 			StopServices();
 		}

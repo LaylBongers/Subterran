@@ -68,7 +68,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ExceptionMessages.resx</DependentUpon>
     </Compile>
-    <Compile Include="IBootstrapper.cs" />
+    <Compile Include="IGameLoop.cs" />
     <Compile Include="IInitializable.cs" />
     <Compile Include="LoopManager.cs" />
     <Compile Include="GameLoopTimer.cs" />

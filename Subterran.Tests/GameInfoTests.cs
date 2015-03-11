@@ -17,11 +17,7 @@ namespace Subterran.Tests
 			{
 				["Name"] = expectedName,
 				["Services"] = new JArray(),
-				["Bootstrapper"] = new JObject
-				{
-					["BootstrapperType"] = typeof (FakeBootstrapper).FullName,
-					["Configuration"] = "Bootstrapper.json"
-				}
+				["GameLoopType"] = typeof (FakeGameLoop).FullName
 			};
 
 			// Act
@@ -29,9 +25,7 @@ namespace Subterran.Tests
 
 			// Assert
 			Assert.Equal(expectedName, info.Name);
-			Assert.NotNull(info.Bootstrapper);
-			Assert.Equal(typeof (FakeBootstrapper), info.Bootstrapper.BootstrapperType);
-			Assert.Equal("Bootstrapper.json", info.Bootstrapper.Configuration.Path);
+			Assert.Equal(typeof (FakeGameLoop), info.GameLoopType);
 		}
 
 		[Fact]
@@ -41,11 +35,6 @@ namespace Subterran.Tests
 			var json = new JObject
 			{
 				["Name"] = "Irrelevant",
-				["Bootstrapper"] = new JObject
-				{
-					["BootstrapperType"] = typeof (FakeBootstrapper).FullName,
-					["Configuration"] = "Bootstrapper.json"
-				},
 				["Services"] = new JArray
 				{
 					new JObject
@@ -71,7 +60,7 @@ namespace Subterran.Tests
 		{
 		}
 
-		private sealed class FakeBootstrapper
+		private sealed class FakeGameLoop
 		{
 		}
 	}
