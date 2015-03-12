@@ -12,6 +12,9 @@
 		{
 			"ServiceType": "Subterran.StandardWindowService",
 			"Configuration": "Window.json"
+		},
+		{
+			"ServiceType": "Subterran.Input.StandardInputService"
 		}
 	],
 	"GameLoopType": "Subterran.GameLoop.ClientGameLoop"

@@ -58,6 +58,8 @@
     <Compile Include="Assets\IAssetSource.cs" />
     <Compile Include="Assets\AssetPath.cs" />
     <Compile Include="Disposable.cs" />
+    <Compile Include="Input\IInputService.cs" />
+    <Compile Include="Input\StandardInputService.cs" />
     <Compile Include="IWindowService.cs" />
     <Compile Include="WorldState\Entity.cs" />
     <Compile Include="WorldState\EntityComponent.cs" />
@@ -95,6 +97,7 @@
     <Compile Include="StVector.cs" />
     <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="StMath.cs" />
+    <Compile Include="WorldState\IWorldStateService.cs" />
     <Compile Include="WorldState\Transform.cs" />
     <Compile Include="TypeConverter.cs" />
     <Compile Include="Vector3i.cs" />
@@ -104,7 +107,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="Rendering\packages.config" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

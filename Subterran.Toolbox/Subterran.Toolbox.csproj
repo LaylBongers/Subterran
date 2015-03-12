@@ -45,7 +45,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="StandardBootstrapper.cs" />
     <Compile Include="BasicComponents.cs" />
     <Compile Include="BasicEntities.cs" />
     <Compile Include="BasicMaterials.cs" />
@@ -73,7 +72,6 @@
     <Compile Include="SimplePhysics\Ray.cs" />
     <Compile Include="SimplePhysics\RigidbodyComponent.cs" />
     <Compile Include="SimplePhysics\SensorComponent.cs" />
-    <Compile Include="StandardGameLoopService.cs" />
     <Compile Include="Voxels\ColoredVoxelMesher.cs" />
     <Compile Include="Voxels\TexturedVoxelType.cs" />
     <Compile Include="Voxels\TexturedVoxel.cs" />

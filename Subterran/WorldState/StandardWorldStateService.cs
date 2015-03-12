@@ -1,6 +1,6 @@
 ﻿namespace Subterran.WorldState
 {
-	public class StandardWorldStateService
+	public class StandardWorldStateService : IWorldStateService
 	{
 	}
 }

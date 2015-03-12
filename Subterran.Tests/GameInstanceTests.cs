@@ -21,7 +21,7 @@ namespace Subterran.Tests
 					new ServiceInfo {ServiceType = typeof (StartingService)},
 					new ServiceInfo {ServiceType = typeof (StoppingService)}
 				},
-				GameLoopType = typeof(RunningGameLoop)
+				GameLoopType = typeof (RunningGameLoop)
 			};
 
 			var instance = new GameInstance(info);
@@ -46,7 +46,7 @@ namespace Subterran.Tests
 					new ServiceInfo {ServiceType = typeof (DependentService)},
 					new ServiceInfo {ServiceType = typeof (DependencyService)}
 				},
-				GameLoopType = typeof(RunningGameLoop)
+				GameLoopType = typeof (RunningGameLoop)
 			};
 			var instance = new GameInstance(info);
 
@@ -67,7 +67,7 @@ namespace Subterran.Tests
 				{
 					new ServiceInfo {ServiceType = typeof (DependentService)}
 				},
-				GameLoopType = typeof(RunningGameLoop)
+				GameLoopType = typeof (RunningGameLoop)
 			};
 			var instance = new GameInstance(info);
 
@@ -82,7 +82,7 @@ namespace Subterran.Tests
 			RunningGameLoop.Ran = false;
 			var info = new GameInfo
 			{
-				GameLoopType = typeof(RunningGameLoop)
+				GameLoopType = typeof (RunningGameLoop)
 			};
 			var instance = new GameInstance(info);
 
@@ -137,10 +137,15 @@ namespace Subterran.Tests
 		private sealed class RunningGameLoop : IGameLoop
 		{
 			public static bool Ran { get; set; }
+			public event EventHandler Stopped;
 
 			public void Run()
 			{
 				Ran = true;
+			}
+
+			public void Stop()
+			{
 			}
 		}
 	}
