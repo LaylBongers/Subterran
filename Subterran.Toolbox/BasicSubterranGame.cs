@@ -14,7 +14,7 @@ namespace Subterran.Toolbox
 		public BasicSubterranGame()
 		{
 			// Set up our window
-			Window = new StandardWindowService() {Title = "Subterran"};
+			Window = new StandardWindowService {Title = "Subterran"};
 			Window.Closing += (s, e) => _loopManager.Stop();
 
 			// Set up our engine's modules
@@ -37,10 +37,10 @@ namespace Subterran.Toolbox
 			PerformanceTracers = CreatePerformanceTracers();
 		}
 
-		public StandardWindowService Window { get; private set; }
-		public Renderer Renderer { get; private set; }
+		public StandardWindowService Window { get; }
+		public Renderer Renderer { get; }
 		public Entity World { get; set; }
-		public Collection<PerformanceTracer> PerformanceTracers { get; private set; }
+		public Collection<PerformanceTracer> PerformanceTracers { get; }
 
 		private Collection<PerformanceTracer> CreatePerformanceTracers()
 		{

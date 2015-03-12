@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Subterran
 {
@@ -13,6 +15,23 @@ namespace Subterran
 			{
 				destination.Add(item);
 			}
+		}
+
+		public static IEnumerable<T> ConcatOne<T>(this IEnumerable<T> source, T value)
+		{
+			foreach (var srcValue in source)
+			{
+				yield return srcValue;
+			}
+
+			yield return value;
+		}
+
+		public static IEnumerable<T> ConcatOneIfNotDefault<T>(this IEnumerable<T> source, T value)
+		{
+			return value == null
+				? source
+				: source.ConcatOne(value);
 		}
 	}
 }

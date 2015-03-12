@@ -71,6 +71,7 @@
     <Compile Include="GameInfoTests.cs" />
     <Compile Include="Assets\AssetServiceTests.cs" />
     <Compile Include="DisposableTests.cs" />
+    <Compile Include="GameLoop\ClientGameLoopTests.cs" />
     <Compile Include="StReflectionTests.cs" />
     <Compile Include="WorldState\EntityComponentTests.cs" />
     <Compile Include="WorldState\EntityTests.cs" />

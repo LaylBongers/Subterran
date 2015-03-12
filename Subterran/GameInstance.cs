@@ -13,6 +13,7 @@ namespace Subterran
 	{
 		private readonly GameInfo _info;
 		private readonly Collection<object> _services = new Collection<object>();
+		private IGameLoop _gameLoop;
 
 		/// <summary>
 		///     Initializes a new Subterran game engine instance using the provided game info.
@@ -42,15 +43,19 @@ namespace Subterran
 		{
 			StartServices();
 
-			var gameLoop = (IGameLoop) ConstructUsingDependencies(_info.GameLoopType, CreateDependenciesList());
-			gameLoop.Run();
+			_gameLoop = (IGameLoop) ConstructUsingDependencies(_info.GameLoopType, CreateDependenciesList());
+			_gameLoop.Run();
+			_gameLoop = null;
 
 			StopServices();
 		}
 
-		public List<object> CreateDependenciesList()
+		private List<object> CreateDependenciesList()
 		{
-			return _services.Concat(new[] {this}).ToList();
+			return _services
+				.ConcatOne(this)
+				.ConcatOneIfNotDefault(_gameLoop)
+				.ToList();
 		}
 
 		private void StartServices()

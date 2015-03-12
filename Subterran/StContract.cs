@@ -6,10 +6,10 @@ namespace Subterran
 	internal static class StContract
 	{
 		[DebuggerHidden]
-		public static void ArgumentNotNull(object argument, string name)
+		public static void ArgumentNotNull(object param, string paramName)
 		{
-			if (argument == null)
-				throw new ArgumentNullException(name);
+			if (param == null)
+				throw new ArgumentNullException(paramName);
 		}
 	}
 }

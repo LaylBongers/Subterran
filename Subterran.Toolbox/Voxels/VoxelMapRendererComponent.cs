@@ -12,7 +12,7 @@ namespace Subterran.Toolbox.Voxels
 		private MeshRendererComponent<TVertexType> _meshRenderer;
 		private TVoxelType[,,] _voxels;
 		public Func<TVoxelType[,,], TVertexType[]> MeshGenerator { get; set; }
-
+		
 		public TVoxelType[,,] Voxels
 		{
 			get { return _voxels; }
