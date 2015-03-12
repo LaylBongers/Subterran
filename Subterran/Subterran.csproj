@@ -58,6 +58,7 @@
     <Compile Include="Assets\IAssetSource.cs" />
     <Compile Include="Assets\AssetPath.cs" />
     <Compile Include="Disposable.cs" />
+    <Compile Include="IWindowService.cs" />
     <Compile Include="WorldState\Entity.cs" />
     <Compile Include="WorldState\EntityComponent.cs" />
     <Compile Include="GameInstance.cs" />
@@ -98,7 +99,7 @@
     <Compile Include="TypeConverter.cs" />
     <Compile Include="Vector3i.cs" />
     <Compile Include="VectorExtensions.cs" />
-    <Compile Include="Window.cs" />
+    <Compile Include="StandardWindowService.cs" />
     <Compile Include="WorldState\StandardWorldStateService.cs" />
   </ItemGroup>
   <ItemGroup>

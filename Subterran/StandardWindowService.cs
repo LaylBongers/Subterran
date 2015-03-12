@@ -7,15 +7,17 @@ using OpenTK.Graphics;
 
 namespace Subterran
 {
-	public sealed class Window : Disposable
+	public sealed class StandardWindowService : Disposable, IWindowService
 	{
 		private readonly GameWindow _window;
 		private bool _clipCursor;
 
-		public Window(Size size)
+		public StandardWindowService()
 		{
 			try
 			{
+				var size = new Size(1280, 720);
+
 				// Do not use initialization list, it might throw an exception in the list and then it's not yet set
 				_window = new GameWindow(
 					size.Width, size.Height,

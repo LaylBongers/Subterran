@@ -23,7 +23,7 @@ namespace TropicalIsland
 			return game;
 		}
 
-		private static Entity CreateCameraEntity(Window window)
+		private static Entity CreateCameraEntity(StandardWindowService window)
 		{
 			return new Entity
 			{

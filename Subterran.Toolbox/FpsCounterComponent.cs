@@ -7,12 +7,12 @@ namespace Subterran.Toolbox
 {
 	public class FpsCounterComponent : EntityComponent, IUpdatable, IRenderable
 	{
-		private readonly Window _window;
+		private readonly StandardWindowService _window;
 		private int _lastSecond;
 		private int _renderAmount;
 		private int _updateAmount;
 
-		public FpsCounterComponent(Window window)
+		public FpsCounterComponent(StandardWindowService window)
 		{
 			_window = window;
 		}

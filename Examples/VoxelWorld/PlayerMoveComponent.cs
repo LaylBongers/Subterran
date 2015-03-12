@@ -10,12 +10,12 @@ namespace VoxelWorld
 {
 	internal class PlayerMoveComponent : EntityComponent, IInitializable, IUpdatable
 	{
-		private readonly Window _window;
+		private readonly StandardWindowService _window;
 		private SensorComponent _jumpSensor;
 		private Vector2 _previousPosition;
 		private RigidbodyComponent _rigidbody;
 
-		public PlayerMoveComponent(Window window)
+		public PlayerMoveComponent(StandardWindowService window)
 		{
 			// Default values
 			Speed = 5.0f;

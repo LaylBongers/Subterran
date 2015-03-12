@@ -173,8 +173,13 @@ namespace Subterran
 			var resolvedParams = new List<object>();
 			foreach (var reqParam in reqParams)
 			{
-				// Add the first service matching what's requested to the list of parameters
-				resolvedParams.Add(availableDependencies.First(s => reqParam.ParameterType.IsInstanceOfType(s)));
+				// Add the first dependency matching what's requested to the list of parameters
+				var availableParam = availableDependencies.FirstOrDefault(s => reqParam.ParameterType.IsInstanceOfType(s));
+
+				if(availableParam == null)
+					throw new InvalidOperationException("Unable to resolve dependency " + reqParam.ParameterType + ".");
+
+                resolvedParams.Add(availableParam);
 			}
 
 			return constructor.Invoke(resolvedParams.ToArray());

@@ -10,9 +10,9 @@ namespace Subterran.Rendering
 {
 	public sealed class Renderer
 	{
-		private readonly Window _targetWindow;
+		private readonly StandardWindowService _targetWindow;
 
-		public Renderer(Window targetWindow)
+		public Renderer(StandardWindowService targetWindow)
 		{
 			if(targetWindow == null)
 				throw new ArgumentNullException("targetWindow");

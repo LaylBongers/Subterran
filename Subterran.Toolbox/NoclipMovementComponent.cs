@@ -7,10 +7,10 @@ namespace Subterran.Toolbox
 {
 	public class NoclipMovementComponent : EntityComponent, IInitializable, IUpdatable
 	{
-		private readonly Window _window;
+		private readonly StandardWindowService _window;
 		private Vector2 _previousPosition;
 
-		public NoclipMovementComponent(Window window)
+		public NoclipMovementComponent(StandardWindowService window)
 		{
 			_window = window;
 		}

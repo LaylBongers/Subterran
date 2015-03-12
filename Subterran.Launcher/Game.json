@@ -8,6 +8,10 @@
 		{
 			"ServiceType": "Subterran.WorldState.StandardWorldStateService",
 			"Configuration": "World.json"
+		},
+		{
+			"ServiceType": "Subterran.StandardWindowService",
+			"Configuration": "Window.json"
 		}
 	],
 	"GameLoopType": "Subterran.GameLoop.ClientGameLoop"

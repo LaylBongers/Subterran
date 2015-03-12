@@ -1,18 +1,18 @@
 ﻿using System;
-using System.Drawing;
 using System.Threading;
 
 namespace Subterran.GameLoop
 {
 	public class ClientGameLoop : IGameLoop
 	{
-		private readonly Window _window;
+		private readonly IWindowService _window;
 		private bool _keepRunning;
 
-		public ClientGameLoop(GameInstance game)
+		public ClientGameLoop(GameInstance game, IWindowService window)
 		{
+			_window = window;
+
 			_keepRunning = true;
-			_window = new Window(new Size(1280, 720));
 			_window.Title = game.Name;
 			_window.Closing += OnWindowClosing;
 		}

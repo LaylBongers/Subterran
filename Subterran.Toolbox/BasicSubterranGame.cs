@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.ObjectModel;
-using System.Drawing;
 using OpenTK.Input;
 using Subterran.GameLoop;
 using Subterran.Rendering;
@@ -15,7 +14,7 @@ namespace Subterran.Toolbox
 		public BasicSubterranGame()
 		{
 			// Set up our window
-			Window = new Window(new Size(1280, 720)) {Title = "Subterran"};
+			Window = new StandardWindowService() {Title = "Subterran"};
 			Window.Closing += (s, e) => _loopManager.Stop();
 
 			// Set up our engine's modules
@@ -38,7 +37,7 @@ namespace Subterran.Toolbox
 			PerformanceTracers = CreatePerformanceTracers();
 		}
 
-		public Window Window { get; private set; }
+		public StandardWindowService Window { get; private set; }
 		public Renderer Renderer { get; private set; }
 		public Entity World { get; set; }
 		public Collection<PerformanceTracer> PerformanceTracers { get; private set; }

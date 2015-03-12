@@ -156,7 +156,7 @@ namespace VoxelWorld
 			};
 		}
 
-		private static Entity CreatePlayerEntity(Window window, Entity blockTargetReferenceEntity)
+		private static Entity CreatePlayerEntity(StandardWindowService window, Entity blockTargetReferenceEntity)
 		{
 			var cameraEntity = new Entity
 			{

@@ -21,7 +21,7 @@ namespace Subterran.Toolbox
 			};
 		}
 
-		public static Entity CreateNoclipCameraEntity(Window window)
+		public static Entity CreateNoclipCameraEntity(StandardWindowService window)
 		{
 			return new Entity
 			{
