@@ -18,8 +18,9 @@ namespace Subterran.Tests.GameLoop
 		{
 			// Arrange
 			var window = Substitute.For<IWindowService>();
-			var loop = new ClientGameLoop(new GameInstance(new GameInfo()), window,
-				Substitute.For<IWorldStateService>(), Substitute.For<IInputService>());
+
+			var loop = new ClientGameLoop(new GameInstance(new GameInfo()),
+				window, Substitute.For<IWorldStateService>(), Substitute.For<IInputService>());
 
 			// Act
 			loop.UpdateTick(TimeSpan.FromSeconds(0.1f));

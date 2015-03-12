@@ -7,6 +7,6 @@ namespace Subterran
 		event EventHandler Stopped;
 
 		void Run();
-		void Stop();
+		void StopRunning();
 	}
 }

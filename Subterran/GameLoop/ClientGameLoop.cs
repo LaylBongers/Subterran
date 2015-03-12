@@ -21,12 +21,12 @@ namespace Subterran.GameLoop
 			StContract.ArgumentNotNull(world, "world");
 
 			_window = window;
-			_window.Title = game.Name;
-			_window.Closing += OnWindowClosing;
-
 			_world = world;
 			_input = input;
-
+			
+			_window.Title = game.Name;
+			_window.Closing += OnWindowClosing;
+			
 			// Set up our game loops
 			_loopManager = new LoopManager
 			{
@@ -43,6 +43,9 @@ namespace Subterran.GameLoop
 		[SuppressMessage("Microsoft.Reliability", "CA2001:AvoidCallingProblematicMethods")]
 		public void Run()
 		{
+			// Everything's ready, set up the world
+			_world.LoadDefault();
+
 			// Force a full GC collect to avoid lingering stuff causing problems
 			// This was added after checking alternatives first and after profiling
 			// http://blogs.msdn.com/b/ricom/archive/2004/11/29/271829.aspx
@@ -54,7 +57,7 @@ namespace Subterran.GameLoop
 			_loopManager.Run();
 		}
 
-		public void Stop()
+		public void StopRunning()
 		{
 			_loopManager.Stop();
 			Stopped?.Invoke(this, EventArgs.Empty);
@@ -66,7 +69,7 @@ namespace Subterran.GameLoop
 
 			// Close the game on specific key presses
 			if (IsCloseShortcutDown())
-				Stop();
+				StopRunning();
 		}
 
 		public void RenderTick(TimeSpan elapsed)

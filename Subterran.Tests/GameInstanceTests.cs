@@ -137,14 +137,14 @@ namespace Subterran.Tests
 		private sealed class RunningGameLoop : IGameLoop
 		{
 			public static bool Ran { get; set; }
-			public event EventHandler Stopped;
+			public event EventHandler Stopped = (s, e) => { };
 
 			public void Run()
 			{
 				Ran = true;
 			}
 
-			public void Stop()
+			public void StopRunning()
 			{
 			}
 		}
