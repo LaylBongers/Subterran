@@ -6,6 +6,9 @@ using Xunit;
 
 namespace Subterran.Tests.Toolbox.SimplePhysics
 {
+	[Trait("Type", "Unit")]
+	[Trait("Namespace", "Subterran.Toolbox.SimplePhysics")]
+	[Trait("Class", "Subterran.Toolbox.SimplePhysics.PhysicsWorldComponent")]
 	public class PhysicsWorldComponentTests
 	{
 		[Fact]

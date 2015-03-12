@@ -19,9 +19,6 @@ namespace Subterran.GameLoop
 			_callback = callback;
 			TargetDelta = TimeSpan.FromSeconds(1.0/rate);
 			MaxDelta = TimeSpan.FromSeconds(TargetDelta.TotalSeconds*3);
-
-			// Always run on first tick
-			_accumulator = TargetDelta;
 		}
 
 		public TimeSpan MaxDelta { get; set; }
