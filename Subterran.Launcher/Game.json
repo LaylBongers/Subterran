@@ -1,21 +1,10 @@
 ﻿{
 	"Name": "Launcher Sample",
 	"Services": [
-		{
-			"ServiceType": "Subterran.Assets.StandardAssetService",
-			"Configuration": "Assets.json"
-		},
-		{
-			"ServiceType": "Subterran.WorldState.StandardWorldStateService",
-			"Configuration": "World.json"
-		},
-		{
-			"ServiceType": "Subterran.StandardWindowService",
-			"Configuration": "Window.json"
-		},
-		{
-			"ServiceType": "Subterran.Input.StandardInputService"
-		}
+		{ "ServiceType": "Subterran.Assets.StandardAssetService" },
+		{ "ServiceType": "Subterran.WorldState.StandardWorldStateService" },
+		{ "ServiceType": "Subterran.StandardWindowService" },
+		{ "ServiceType": "Subterran.Input.StandardInputService" }
 	],
 	"GameLoopType": "Subterran.GameLoop.ClientGameLoop"
 }

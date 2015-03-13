@@ -8,13 +8,23 @@ namespace Subterran.Tests
 	[Trait("Class", "Subterran.StMathTests")]
 	public class StMathTests
 	{
-		[Fact]
-		public void Min_NormalTimeSpans_ReturnsSmallest()
+		public static object[] SmallBigTimeSpans =
 		{
-			// Arrange
-			var small = TimeSpan.FromSeconds(1);
-			var big = TimeSpan.FromSeconds(2);
+			new object[] {TimeSpan.FromSeconds(1), TimeSpan.FromSeconds(2)},
+			new object[] {TimeSpan.FromSeconds(0.10), TimeSpan.FromSeconds(0.16)},
+			new object[] {TimeSpan.FromSeconds(4), TimeSpan.FromSeconds(9)},
+			new object[] {TimeSpan.FromSeconds(-2), TimeSpan.FromSeconds(-1)}
+		};
 
+		public static object[] SignedAddValues =
+		{
+			new object[] {5, 2, 7},
+			new object[] {-6, 2, -8}
+		};
+
+		[Theory, MemberData("SmallBigTimeSpans")]
+		public void Min_NormalTimeSpans_ReturnsSmallest(TimeSpan small, TimeSpan big)
+		{
 			// Act
 			var result1 = StMath.Min(small, big);
 			var result2 = StMath.Min(big, small);
@@ -24,13 +34,9 @@ namespace Subterran.Tests
 			Assert.Equal(small, result2);
 		}
 
-		[Fact]
-		public void Max_NormalTimeSpans_ReturnsBiggest()
+		[Theory, MemberData("SmallBigTimeSpans")]
+		public void Max_NormalTimeSpans_ReturnsBiggest(TimeSpan small, TimeSpan big)
 		{
-			// Arrange
-			var small = TimeSpan.FromSeconds(1);
-			var big = TimeSpan.FromSeconds(2);
-
 			// Act
 			var result1 = StMath.Max(small, big);
 			var result2 = StMath.Max(big, small);
@@ -45,7 +51,7 @@ namespace Subterran.Tests
 		{
 			// Arrange
 			const int value = 0xFF/2;
-			
+
 			// Act
 			var result = StMath.NormalizeColor(value);
 
@@ -53,25 +59,9 @@ namespace Subterran.Tests
 			Assert.Equal(0.50, result, 2);
 		}
 
-		[Fact]
-		public void SignedAdd_FiveAndTwo_ReturnsSeven()
+		[Theory, MemberData("SignedAddValues")]
+		public void SignedAdd_VariedData_AddsInSignDirection(int value, int addition, int expected)
 		{
-			// Arrange
-			const float value = 5, addition = 2, expected = 7;
-
-			// Act
-			var result = StMath.AddSigned(value, addition);
-
-			// Assert
-			Assert.Equal(expected, result, 5);
-		}
-
-		[Fact]
-		public void SignedAdd_MinusSixAndTwo_ReturnsMinusEight()
-		{
-			// Arrange
-			const float value = -6, addition = 2, expected = -8;
-
 			// Act
 			var result = StMath.AddSigned(value, addition);
 

@@ -88,7 +88,6 @@
     <Compile Include="Rendering\ShaderUtils.cs" />
     <Compile Include="Rendering\Texture.cs" />
     <Compile Include="CollectionExtensions.cs" />
-    <Compile Include="ConfigPath.cs" />
     <Compile Include="ServiceInfo.cs" />
     <Compile Include="StLinq.cs" />
     <Compile Include="StLogging.cs" />

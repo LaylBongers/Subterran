@@ -34,6 +34,9 @@ namespace Subterran
 		/// </summary>
 		public ReadOnlyCollection<object> Services { get; }
 
+		/// <summary>
+		///     Gets the name of the game.
+		/// </summary>
 		public string Name { get; }
 
 		/// <summary>
@@ -43,19 +46,18 @@ namespace Subterran
 		{
 			StartServices();
 
-			_gameLoop = (IGameLoop) ConstructUsingDependencies(_info.GameLoopType, CreateDependenciesList());
+			_gameLoop = (IGameLoop) ConstructUsingDependencies(_info.GameLoopType, CreateDependenciesList().ToList());
 			_gameLoop.Run();
 			_gameLoop = null;
 
 			StopServices();
 		}
 
-		private List<object> CreateDependenciesList()
+		private IEnumerable<object> CreateDependenciesList()
 		{
 			return _services
 				.ConcatOne(this)
-				.ConcatOneIfNotDefault(_gameLoop)
-				.ToList();
+				.ConcatOneIfNotDefault(_gameLoop);
 		}
 
 		private void StartServices()
@@ -66,7 +68,12 @@ namespace Subterran
 			// Actually construct all the services
 			foreach (var constructor in sorted)
 			{
-				_services.Add(ConstructUsingDependencies(constructor, CreateDependenciesList()));
+				var service = ConstructUsingDependencies(constructor,
+					CreateDependenciesList()
+						// If a ServiceInfo is requested it should give its own info
+						.ConcatOne(_info.Services.First(s => s.ServiceType == constructor.DeclaringType))
+						.ToList());
+				_services.Add(service);
 			}
 		}
 
@@ -111,7 +118,11 @@ namespace Subterran
 			while (unsorted.Count != 0)
 			{
 				var constructor = unsorted[itemNumber];
-				var available = sorted.Select(c => c.DeclaringType).ToList();
+				var available = sorted
+					.Select(c => c.DeclaringType)
+					// Service info is always available as special dependency
+					.ConcatOne(typeof (ServiceInfo))
+					.ToList();
 
 				if (AreDependenciesAvailable(constructor, available))
 				{
@@ -131,7 +142,10 @@ namespace Subterran
 					// If there is no next one, there's a problem
 					// This means there's nothing in the list we can construct anymore
 					if (itemNumber >= unsorted.Count)
-						throw new InvalidOperationException("Can not resolve dependencies for " + constructor.DeclaringType);
+					{
+						throw new InvalidOperationException(
+							"Can not resolve dependencies for " + constructor.DeclaringType + ".");
+					}
 				}
 			}
 
@@ -181,10 +195,10 @@ namespace Subterran
 				// Add the first dependency matching what's requested to the list of parameters
 				var availableParam = availableDependencies.FirstOrDefault(s => reqParam.ParameterType.IsInstanceOfType(s));
 
-				if(availableParam == null)
+				if (availableParam == null)
 					throw new InvalidOperationException("Unable to resolve dependency " + reqParam.ParameterType + ".");
 
-                resolvedParams.Add(availableParam);
+				resolvedParams.Add(availableParam);
 			}
 
 			return constructor.Invoke(resolvedParams.ToArray());

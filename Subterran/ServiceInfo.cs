@@ -7,14 +7,15 @@ namespace Subterran
 	{
 		[JsonConverter(typeof(TypeConverter))]
 		public Type ServiceType { get; set; }
-		public ConfigPath Configuration { get; set; }
+
+		public string ConfigString { get; set; }
 
 		public object Clone()
 		{
 			var value = new ServiceInfo();
 
 			value.ServiceType = ServiceType;
-			value.Configuration = Configuration;
+			value.ConfigString = ConfigString;
 
 			return value;
 		}

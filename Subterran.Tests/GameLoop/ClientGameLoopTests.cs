@@ -19,8 +19,7 @@ namespace Subterran.Tests.GameLoop
 			// Arrange
 			var window = Substitute.For<IWindowService>();
 
-			var loop = new ClientGameLoop(new GameInstance(new GameInfo()),
-				window, Substitute.For<IWorldStateService>(), Substitute.For<IInputService>());
+			var loop = new ClientGameLoop(window, Substitute.For<IWorldStateService>(), Substitute.For<IInputService>());
 
 			// Act
 			loop.UpdateTick(TimeSpan.FromSeconds(0.1f));
@@ -36,8 +35,7 @@ namespace Subterran.Tests.GameLoop
 			var input = Substitute.For<IInputService>();
 			input.IsKeyDown(Key.Escape).Returns(true);
 
-			var loop = new ClientGameLoop(new GameInstance(new GameInfo()),
-				Substitute.For<IWindowService>(), Substitute.For<IWorldStateService>(), input);
+			var loop = new ClientGameLoop(Substitute.For<IWindowService>(), Substitute.For<IWorldStateService>(), input);
 
 			var wasStopped = false;
 			loop.Stopped += (s, e) => wasStopped = true;

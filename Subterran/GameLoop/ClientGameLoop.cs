@@ -14,17 +14,16 @@ namespace Subterran.GameLoop
 		private readonly IWindowService _window;
 		private readonly IWorldStateService _world;
 
-		public ClientGameLoop(GameInstance game, IWindowService window, IWorldStateService world, IInputService input)
+		public ClientGameLoop(IWindowService window, IWorldStateService world, IInputService input)
 		{
-			StContract.ArgumentNotNull(game, "game");
 			StContract.ArgumentNotNull(window, "window");
 			StContract.ArgumentNotNull(world, "world");
+			StContract.ArgumentNotNull(input, "input");
 
 			_window = window;
 			_world = world;
 			_input = input;
 			
-			_window.Title = game.Name;
 			_window.Closing += OnWindowClosing;
 			
 			// Set up our game loops

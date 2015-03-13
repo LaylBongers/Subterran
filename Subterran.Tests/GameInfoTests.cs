@@ -40,7 +40,7 @@ namespace Subterran.Tests
 					new JObject
 					{
 						["ServiceType"] = "Subterran.Tests.GameInfoTests+FakeService",
-						["Configuration"] = "FakeFile.json"
+						["ConfigString"] = "Some config data!"
 					}
 				}
 			};
@@ -53,7 +53,7 @@ namespace Subterran.Tests
 			Assert.Equal(1, services.Count);
 			var service = services[0];
 			Assert.Equal(typeof (FakeService), service.ServiceType);
-			Assert.Equal("FakeFile.json", service.Configuration.Path);
+			Assert.Equal("Some config data!", service.ConfigString);
 		}
 
 		private sealed class FakeService

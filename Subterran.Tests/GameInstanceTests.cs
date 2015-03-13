@@ -76,7 +76,7 @@ namespace Subterran.Tests
 		}
 
 		[Fact]
-		public void Run_WithBootstrapper_RunsGameLoop()
+		public void Run_WithGameLoop_RunsGameLoop()
 		{
 			// Arrange
 			RunningGameLoop.Ran = false;
@@ -91,6 +91,30 @@ namespace Subterran.Tests
 
 			// Assert
 			Assert.True(RunningGameLoop.Ran);
+		}
+
+		[Fact]
+		public void Run_WithServiceThatNeedsServiceInfo_GetsOwnInfo()
+		{
+			// Arrange
+			InformedService.ReceivedInfo = null;
+			var info = new GameInfo
+			{
+				Services =
+				{
+					new ServiceInfo {ServiceType = typeof (InformedService), ConfigString = "Maaaagic!"}
+				},
+				GameLoopType = typeof (RunningGameLoop)
+			};
+			var instance = new GameInstance(info);
+
+			// Act
+			instance.Run();
+
+			// Assert
+			Assert.NotNull(InformedService.ReceivedInfo);
+			Assert.Equal(InformedService.ReceivedInfo?.ServiceType, typeof (InformedService));
+			Assert.Equal(InformedService.ReceivedInfo?.ConfigString, "Maaaagic!");
 		}
 
 		private sealed class StartingService
@@ -147,6 +171,16 @@ namespace Subterran.Tests
 			public void StopRunning()
 			{
 			}
+		}
+
+		private sealed class InformedService
+		{
+			public InformedService(ServiceInfo info)
+			{
+				ReceivedInfo = info;
+			}
+
+			public static ServiceInfo ReceivedInfo { get; set; }
 		}
 	}
 }
