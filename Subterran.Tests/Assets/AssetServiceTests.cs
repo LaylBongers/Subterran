@@ -22,7 +22,7 @@ namespace Subterran.Tests.Assets
 			assetManager.AddSource("Fake", new FakeAssetSource(json.ToString()));
 
 			// Act
-			var value = assetManager.GetAsset<Dictionary<string, string>>("@Fake/Something");
+			var value = assetManager.GetAsset<Dictionary<string, string>>(AssetInfo.FromString("@Fake/Something"));
 
 			// Assert
 			Assert.True(value.ContainsKey(expectedKey));

@@ -56,7 +56,7 @@
     <Compile Include="Assets\StandardAssetService.cs" />
     <Compile Include="Assets\DirectoryAssetSource.cs" />
     <Compile Include="Assets\IAssetSource.cs" />
-    <Compile Include="Assets\AssetPath.cs" />
+    <Compile Include="Assets\AssetInfo.cs" />
     <Compile Include="Disposable.cs" />
     <Compile Include="Input\IInputService.cs" />
     <Compile Include="Input\StandardInputService.cs" />
@@ -72,6 +72,7 @@
     </Compile>
     <Compile Include="GameLoop\ClientGameLoop.cs" />
     <Compile Include="IGameLoop.cs" />
+    <Compile Include="WorldState\EntityInfo.cs" />
     <Compile Include="WorldState\IInitializable.cs" />
     <Compile Include="GameLoop\LoopManager.cs" />
     <Compile Include="GameLoop\GameLoopTimer.cs" />
@@ -97,6 +98,7 @@
     <Compile Include="TimeSpanExtensions.cs" />
     <Compile Include="StMath.cs" />
     <Compile Include="WorldState\IWorldStateService.cs" />
+    <Compile Include="WorldState\SceneInfo.cs" />
     <Compile Include="WorldState\Transform.cs" />
     <Compile Include="TypeConverter.cs" />
     <Compile Include="Vector3i.cs" />

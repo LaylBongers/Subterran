@@ -23,9 +23,9 @@ namespace Subterran.GameLoop
 			_window = window;
 			_world = world;
 			_input = input;
-			
+
 			_window.Closing += OnWindowClosing;
-			
+
 			// Set up our game loops
 			_loopManager = new LoopManager
 			{

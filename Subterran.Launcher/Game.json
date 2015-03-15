@@ -2,7 +2,10 @@
 	"Name": "Launcher Sample",
 	"Services": [
 		{ "ServiceType": "Subterran.Assets.StandardAssetService" },
-		{ "ServiceType": "Subterran.WorldState.StandardWorldStateService" },
+		{
+			"ServiceType": "Subterran.WorldState.StandardWorldStateService",
+			"ConfigString": "@Assets/DefaultScene.json"
+		},
 		{ "ServiceType": "Subterran.StandardWindowService" },
 		{ "ServiceType": "Subterran.Input.StandardInputService" }
 	],

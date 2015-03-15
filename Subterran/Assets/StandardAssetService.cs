@@ -12,13 +12,8 @@ namespace Subterran.Assets
 		{
 			_assetSources.Add(name, source);
 		}
-
-		public T GetAsset<T>(string path)
-		{
-			return GetAsset<T>(new AssetPath(path));
-		}
-
-		public T GetAsset<T>(AssetPath path)
+		
+		public T GetAsset<T>(AssetInfo path)
 		{
 			if (path == null)
 				throw new ArgumentNullException("path");

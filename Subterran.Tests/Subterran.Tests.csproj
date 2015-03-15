@@ -67,7 +67,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets\AssetUriTests.cs" />
+    <Compile Include="Assets\AssetInfoTests.cs" />
     <Compile Include="GameInfoTests.cs" />
     <Compile Include="Assets\AssetServiceTests.cs" />
     <Compile Include="DisposableTests.cs" />
@@ -81,6 +81,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="StMathTests.cs" />
     <Compile Include="Toolbox\SimplePhysics\PhysicsWorldComponentTests.cs" />
+    <Compile Include="WorldState\StandardWorldStateServiceTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

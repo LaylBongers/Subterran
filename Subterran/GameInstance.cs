@@ -88,14 +88,12 @@ namespace Subterran
 
 		private List<ConstructorInfo> GetServiceConstructors()
 		{
-			// Detect all the services
-			var serviceConstructors = new List<ConstructorInfo>();
-			foreach (var serviceInfo in _info.Services)
-			{
-				serviceConstructors.Add(GetConstructorForType(serviceInfo.ServiceType));
-			}
-
-			return serviceConstructors;
+			return _info
+				// From all the services
+				.Services
+				// Get the constructor for the service's type
+				.Select(serviceInfo => GetConstructorForType(serviceInfo.ServiceType))
+				.ToList();
 		}
 
 		private static ConstructorInfo GetConstructorForType(Type type)
@@ -159,22 +157,12 @@ namespace Subterran
 			// If there's no parameters, there's no dependencies to resolve
 			if (reqParameters.Length == 0)
 				return true;
-
-			// Go through all parameters
-			foreach (var reqParam in reqParameters)
-			{
-				var requestedType = reqParam.ParameterType;
-
-				// Check if the requested time is available
-				if (availableTypes.Any(c => requestedType.IsAssignableFrom(c)))
-					continue;
-
-				// It's not in the list of available parameters, so dependencies are not available
-				return false;
-			}
-
-			// No unavailable dependencies were found
-			return true;
+			
+			return reqParameters
+				// Get the type for each parameter
+				.Select(reqParam => reqParam.ParameterType)
+				// Verify that all these types have a matching available type
+				.All(requestedType => availableTypes.Any(requestedType.IsAssignableFrom));
 		}
 
 		private static object ConstructUsingDependencies(Type type, IList<object> availableDependencies)
