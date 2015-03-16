@@ -25,6 +25,7 @@ namespace Subterran.Assets
 		{
 			if (ReferenceEquals(null, other)) return false;
 			if (ReferenceEquals(this, other)) return true;
+
 			return string.Equals(Source, other.Source) && string.Equals(RelativePath, other.RelativePath);
 		}
 
@@ -32,7 +33,9 @@ namespace Subterran.Assets
 		{
 			if (ReferenceEquals(null, obj)) return false;
 			if (ReferenceEquals(this, obj)) return true;
+
 			if (obj.GetType() != GetType()) return false;
+
 			return Equals((AssetInfo) obj);
 		}
 

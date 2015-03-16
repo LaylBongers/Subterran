@@ -37,7 +37,7 @@ build:
 
 # This is for publishing to coveralls.io
 after_test:
-  - ps: .\packages\OpenCover.4.5.3723\OpenCover.Console.exe -register:user -target:"packages\xunit.runner.console.2.0.0-rc4-build2924\tools\xunit.console.exe" "-targetargs:Subterran.Tests\bin\$env:CONFIGURATION\Subterran.Tests.dll -noshadow -appveyor" -filter:"+[Subterran*]* -[Subterran.Tests*]*" -output:coverage.xml
+  - ps: .\packages\OpenCover.4.5.3723\OpenCover.Console.exe -register:user -target:"packages\xunit.runner.console.2.0.0-rc4-build2924\tools\xunit.console.exe" "-targetargs:Subterran.Tests\bin\$env:CONFIGURATION\Subterran.Tests.dll -noshadow -appveyor" "-filter:+[Subterran*]* -[Subterran.Tests*]*" -output:coverage.xml
   - .\packages\coveralls.io.1.2.5-beta\tools\coveralls.net.exe --opencover coverage.xml
 
 artifacts:
