@@ -6,17 +6,7 @@
 
 		public Entity ToWorld()
 		{
-			return EntityInfoToEntity(Root);
-		}
-
-		private static Entity EntityInfoToEntity(EntityInfo entityInfo)
-		{
-			var entity = new Entity
-			{
-				Name = entityInfo.Name
-			};
-
-			return entity;
+			return Root.ToEntity();
 		}
 	}
 }

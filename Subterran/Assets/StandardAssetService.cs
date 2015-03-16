@@ -7,7 +7,18 @@ namespace Subterran.Assets
 	public sealed class StandardAssetService : IAssetService
 	{
 		private readonly Dictionary<string, IAssetSource> _assetSources = new Dictionary<string, IAssetSource>();
-		
+
+		public StandardAssetService(ServiceInfo info)
+		{
+			StContract.ArgumentNotNull(info, "info");
+
+			var configFile = info.ConfigString;
+			if (string.IsNullOrEmpty(configFile))
+			{
+				string.Format("nothing");
+			}
+		}
+
 		public void AddSource(string name, IAssetSource source)
 		{
 			_assetSources.Add(name, source);

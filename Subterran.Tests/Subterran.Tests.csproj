@@ -69,7 +69,7 @@
   <ItemGroup>
     <Compile Include="Assets\AssetInfoTests.cs" />
     <Compile Include="GameInfoTests.cs" />
-    <Compile Include="Assets\AssetServiceTests.cs" />
+    <Compile Include="Assets\StandardAssetServiceTests.cs" />
     <Compile Include="DisposableTests.cs" />
     <Compile Include="GameLoop\ClientGameLoopTests.cs" />
     <Compile Include="StReflectionTests.cs" />
