@@ -33,6 +33,7 @@ namespace VoxelWorld
 					blockTargetReferenceEntity,
 					CreatePlayerEntity(game.Window, blockTargetReferenceEntity),
 					CreateOminousEntity(ominousMaterial),
+					CreateTexturedMeshEntity(fullbrightTextureShader),
 
 					// Row #0
 					//CreateVoxelWorldEntity(new Vector3(100, 0, 100)),
@@ -65,6 +66,30 @@ namespace VoxelWorld
 			};
 
 			return game;
+		}
+
+		private static Entity CreateTexturedMeshEntity(Shader shader)
+		{
+			var capsule = Wavefront.LoadObj("./Graphics/Capsule.st.obj");
+			var material = BasicMaterials.CreateFullbrightTexture(shader, capsule.Models[0].Material.Texture.FullName);
+            var meshRenderer = new MeshRendererComponent<TexturedVertex>
+			{
+				Material = material
+			};
+			meshRenderer.SetMesh(capsule.Models[0].Mesh);
+
+			return new Entity
+			{
+				Name = "Textured Mesh",
+				Transform =
+				{
+					Position = new Vector3(20, 25, 0)
+				},
+				Components =
+				{
+					meshRenderer
+				}
+			};
 		}
 
 		private static Entity CreateScriptsEntity(BasicSubterranGame game)
