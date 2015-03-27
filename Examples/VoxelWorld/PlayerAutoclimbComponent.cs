@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using OpenTK;
-using Subterran;
 using Subterran.Toolbox;
 using Subterran.Toolbox.SimplePhysics;
 using Subterran.WorldState;
@@ -11,10 +10,10 @@ namespace VoxelWorld
 {
 	internal class PlayerAutoclimbComponent : EntityComponent, IInitializable, IUpdatable
 	{
-		private bool _climbing;
 		private Vector3 _climbTarget;
-		private RigidbodyComponent _rigidbody;
 		private SensorComponent _jumpSensor;
+		private RigidbodyComponent _rigidbody;
+		public bool IsClimbing { get; private set; }
 
 		public void Initialize()
 		{
@@ -24,7 +23,7 @@ namespace VoxelWorld
 
 		public void Update(TimeSpan elapsed)
 		{
-			if (_climbing)
+			if (IsClimbing)
 			{
 				Climb(elapsed);
 			}
@@ -46,7 +45,7 @@ namespace VoxelWorld
 			if (Math.Abs(distance.X) <= Math.Abs(tickDistance.X))
 			{
 				Entity.Transform.Position = _climbTarget;
-				_climbing = false;
+				IsClimbing = false;
 				_rigidbody.Enabled = true;
 			}
 			else
@@ -100,7 +99,7 @@ namespace VoxelWorld
 
 				// The new position is valid, set it as a target so we can move to it
 				_climbTarget = Entity.Transform.Position + climbOffset;
-				_climbing = true;
+				IsClimbing = true;
 				_rigidbody.Enabled = false;
 				return;
 			}

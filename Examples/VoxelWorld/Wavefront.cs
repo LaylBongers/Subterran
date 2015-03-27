@@ -12,7 +12,7 @@ namespace VoxelWorld
 {
 	public static class Wavefront
 	{
-		private static readonly Vector2 _openGlUvCorrection = new Vector2(1, -1);
+		private static readonly Vector2 OpenGlUvCorrection = new Vector2(1, -1);
 
 		public static WavefrontFile LoadObj(string path)
 		{
@@ -116,7 +116,7 @@ namespace VoxelWorld
 				// Indices start at 1 for who knows what reason
 				var vertex = new TexturedVertex();
 				vertex.Position = vPositions[values[0] - 1];
-				vertex.TexCoord = vUvs[values[2] - 1]*_openGlUvCorrection;
+				vertex.TexCoord = vUvs[values[2] - 1]*OpenGlUvCorrection;
 				yield return vertex;
 			}
 		}

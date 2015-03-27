@@ -20,7 +20,8 @@ namespace VoxelWorld
 
 			var worldMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTextureShader, "./Graphics/Tilemap.png");
 			var ominousMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTextureShader, "./Graphics/OminousCube.png");
-			var targetReferenceMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTextureShader, "./Graphics/TargetReference.png");
+			var targetReferenceMaterial = BasicMaterials.CreateFullbrightTexture(fullbrightTextureShader,
+				"./Graphics/TargetReference.png");
 
 			var blockTargetReferenceEntity = CreateBlockTargetReferenceEntity(targetReferenceMaterial);
 
@@ -72,7 +73,7 @@ namespace VoxelWorld
 		{
 			var capsule = Wavefront.LoadObj("./Graphics/Capsule.st.obj");
 			var material = BasicMaterials.CreateFullbrightTexture(shader, capsule.Models[0].Material.Texture.FullName);
-            var meshRenderer = new MeshRendererComponent<TexturedVertex>
+			var meshRenderer = new MeshRendererComponent<TexturedVertex>
 			{
 				Material = material
 			};
@@ -212,6 +213,15 @@ namespace VoxelWorld
 					new RigidbodyComponent
 					{
 						Gravity = new Vector3(0, -14, 0),
+						Collider = new CubeCollider
+						{
+							Origin = new Vector3(-0.4f, 0, -0.4f),
+							Size = new Vector3(0.8f, 1.8f, 0.8f)
+						}
+					},
+					new SensorComponent
+					{
+						Name = "UncrouchSensor",
 						Collider = new CubeCollider
 						{
 							Origin = new Vector3(-0.4f, 0, -0.4f),
